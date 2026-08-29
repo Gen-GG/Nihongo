@@ -3782,139 +3782,95 @@ const VGRP=[
   {v:"shiru",en:"know",g:1,trap:1},{v:"modoru",en:"go back",g:1,trap:1},{v:"tomaru",en:"stop / stay",g:1,trap:1}
 ];
 const PQ=[
-    {pre:"hon",post:"yomimasu",a:"wo",en:"read a book",why:"<b>wo</b> marks the thing the action hits (the book)."},
-    {pre:"toshokan",post:"ikimasu",a:"ni",en:"go to the library",why:"<b>ni</b> marks the destination you're heading to."},
-    {pre:"kafe",post:"tabemasu",a:"de",en:"eat at a cafe",why:"<b>de</b> marks where the action happens."},
-    {pre:"tomodachi",post:"aimasu",a:"ni",en:"meet a friend",why:"<b>au</b> (meet) takes <b>ni</b> for the person you meet."},
-    {pre:"inu",post:"suki desu",a:"ga",en:"like dogs",why:"<b>suki</b> always takes <b>ga</b> for the thing you like."},
-    {pre:"tomodachi",post:"ikimasu",a:"to",en:"go with a friend",why:"<b>to</b> = with (a person)."},
-    {pre:"mizu",post:"nomimasu",a:"wo",en:"drink water",why:"<b>wo</b> marks the object being drunk."},
-    {pre:"ie",post:"imasu",a:"ni",en:"be at home",why:"<b>ni</b> marks where someone/something exists."},
-    {pre:"sushi",post:"tabemashita",a:"wo",en:"ate sushi",why:"<b>wo</b> marks the object being eaten."},
-    {pre:"nihongo",post:"wakarimasu",a:"ga",en:"understand Japanese",why:"<b>wakaru</b> (understand) takes <b>ga</b>."},
-    {pre:"ongaku",post:"kikimasu",a:"wo",en:"listen to music",why:"<b>wo</b> marks the thing you listen to."},
-    {pre:"eki",post:"aimasu",a:"de",en:"meet at the station",why:"<b>de</b> marks where the meeting happens (the place)."},
-    {pre:"eiga",post:"mimasu",a:"wo",en:"watch a movie",why:"<b>wo</b> marks the thing you watch."},
-    {pre:"kouhii",post:"nomimasu",a:"wo",en:"drink coffee",why:"<b>wo</b> marks the object being drunk."},
-    {pre:"nihongo",post:"benkyoushimasu",a:"wo",en:"study Japanese",why:"<b>wo</b> marks what you study."},
-    {pre:"kouen",post:"ikimasu",a:"ni",en:"go to the park",why:"<b>ni</b> marks the destination."},
-    {pre:"sensei",post:"hanashimasu",a:"to",en:"talk with the teacher",why:"<b>to</b> = with (a person)."},
-    {pre:"manga",post:"yomimasu",a:"wo",en:"read manga",why:"<b>wo</b> marks the thing read."},
-    {pre:"kanojo",post:"aimasu",a:"ni",en:"meet her",why:"<b>au</b> (meet) takes <b>ni</b> for the person."},
-    {pre:"resutoran",post:"tabemasu",a:"de",en:"eat at a restaurant",why:"<b>de</b> marks where the action happens."},
-    {pre:"pan",post:"tabemasu",a:"wo",en:"eat bread",why:"<b>wo</b> marks the thing eaten."},
-    {pre:"ocha",post:"nomimasu",a:"wo",en:"drink tea",why:"<b>wo</b> marks the thing drunk."},
-    {pre:"kouen",post:"ikimasu",a:"ni",en:"go to the park",why:"<b>ni</b> marks the destination."},
-    {pre:"ie",post:"kaerimasu",a:"ni",en:"go home",why:"<b>ni</b> marks where you're heading."},
-    {pre:"eki",post:"tsukimasu",a:"ni",en:"arrive at the station",why:"<b>tsuku</b> (arrive) takes <b>ni</b> for the place reached."},
-    {pre:"tomodachi",post:"asobimasu",a:"to",en:"play with a friend",why:"<b>to</b> = with (a person)."},
-    {pre:"kanojo",post:"hanashimasu",a:"to",en:"talk with her",why:"<b>to</b> = with (a person)."},
-    {pre:"kuruma",post:"kaimasu",a:"wo",en:"buy a car",why:"<b>wo</b> marks the thing bought."},
-    {pre:"umi",post:"oyogimasu",a:"de",en:"swim at the sea",why:"<b>de</b> marks where the action happens."},
-    {pre:"nihongo",post:"oshiemasu",a:"wo",en:"teach Japanese",why:"<b>wo</b> marks what is taught."},
-    {pre:"inu",post:"suki desu",a:"ga",en:"like dogs",why:"<b>suki</b> always takes <b>ga</b>."},
-    {pre:"natto",post:"kirai desu",a:"ga",en:"dislike natto",why:"<b>kirai</b> takes <b>ga</b>, like suki."},
-    {pre:"toshokan",post:"benkyoushimasu",a:"de",en:"study at the library",why:"<b>de</b> = where the action happens."},
-    {pre:"roku-ji",post:"okimasu",a:"ni",en:"wake up at 6",why:"<b>ni</b> marks a clock time."},
-    {pre:"juu-ji",post:"nemasu",a:"ni",en:"sleep at 10",why:"<b>ni</b> marks a clock time."},
-    {pre:"basutei",post:"machimasu",a:"de",en:"wait at the bus stop",why:"<b>de</b> = where the action happens."},
-    {pre:"konbini",post:"kaimasu",a:"de",en:"buy at the convenience store",why:"<b>de</b> = where the action happens."},
-    {pre:"doa",post:"akemasu",a:"wo",en:"open the door",why:"<b>wo</b> marks the thing acted on."},
-    {pre:"terebi",post:"mimasu",a:"wo",en:"watch TV",why:"<b>wo</b> marks the thing watched."},
-    // ----- more objects (wo), incl. Lesson 6 verbs -----
-    {pre:"gyuunyuu",post:"nomimasu",a:"wo",en:"drink milk",why:"<b>wo</b> marks the object drunk."},
-    {pre:"tomato",post:"kaimasu",a:"wo",en:"buy tomatoes",why:"<b>wo</b> marks the thing bought."},
-    {pre:"botan",post:"oshimasu",a:"wo",en:"press the button",why:"<b>wo</b> marks the thing pressed."},
-    {pre:"takushii",post:"yobimasu",a:"wo",en:"call a taxi",why:"<b>wo</b> marks the thing called."},
-    {pre:"te",post:"araimasu",a:"wo",en:"wash your hands",why:"<b>wo</b> marks the thing washed."},
-    {pre:"heya",post:"soujishimasu",a:"wo",en:"clean the room",why:"<b>wo</b> marks the thing cleaned."},
-    // ----- destination / time (ni) -----
-    {pre:"kaisha",post:"ikimasu",a:"ni",en:"go to the office",why:"<b>ni</b> marks the destination."},
-    {pre:"puuru",post:"ikimasu",a:"ni",en:"go to the pool",why:"<b>ni</b> marks the destination."},
-    {pre:"getsuyoubi",post:"ikimasu",a:"ni",en:"go on Monday",why:"<b>ni</b> marks a specific day/time."},
-    {pre:"tomodachi",post:"agemasu",a:"ni",en:"give to a friend",why:"<b>ni</b> marks the recipient (to whom)."},
-    {pre:"ie",post:"modorimasu",a:"ni",en:"return home",why:"<b>ni</b> marks where you head back to."},
-    // ----- place / means (de) -----
-    {pre:"puuru",post:"oyogimasu",a:"de",en:"swim in the pool",why:"<b>de</b> = where the action happens."},
-    {pre:"kafe",post:"benkyoushimasu",a:"de",en:"study at a cafe",why:"<b>de</b> = where the action happens."},
-    {pre:"suupaa",post:"kaimasu",a:"de",en:"buy at the supermarket",why:"<b>de</b> = place of the action."},
-    {pre:"densha",post:"ikimasu",a:"de",en:"go by train",why:"<b>de</b> also marks the means: by train."},
-    {pre:"takushii",post:"kaerimasu",a:"de",en:"go home by taxi",why:"<b>de</b> = by (means of transport)."},
-    {pre:"ohashi",post:"tabemasu",a:"de",en:"eat with chopsticks",why:"<b>de</b> marks the tool used."},
-    {pre:"genkin",post:"kaimasu",a:"de",en:"buy with cash",why:"<b>de</b> = by means of (cash)."},
-    {pre:"kaado",post:"kaimasu",a:"de",en:"buy with a card",why:"<b>de</b> = by means of (card)."},
-    // ----- with a person (to) -----
-    {pre:"kazoku",post:"ikimasu",a:"to",en:"go with family",why:"<b>to</b> = with (a person)."},
-    {pre:"tomodachi",post:"oyogimasu",a:"to",en:"swim with a friend",why:"<b>to</b> = with (a person)."},
-    {pre:"kanojo",post:"asobimasu",a:"to",en:"hang out with her",why:"<b>to</b> = with (a person)."},
-    // ----- also / too (mo) -----
-    {pre:"watashi",post:"ikimasu",a:"mo",en:"I go too",why:"<b>mo</b> = also / too (it replaces wa/ga)."},
-    {pre:"kore",post:"tabemasu",a:"mo",en:"eat this too",why:"<b>mo</b> = also / too (it replaces wo)."},
-    {pre:"biiru",post:"nomimasu",a:"mo",en:"drink beer too",why:"<b>mo</b> = also / too."},
-    {pre:"kanojo",post:"kimasu",a:"mo",en:"she comes too",why:"<b>mo</b> = also / too."},
-    // ----- topic (wa) -----
-    {pre:"watashi",post:"jen desu",a:"wa",en:"I'm Jen",why:"<b>wa</b> sets the topic: as for me, …"},
-    {pre:"kyou",post:"atsui desu",a:"wa",en:"today is hot",why:"<b>wa</b> marks the topic (as for today)."},
-    {pre:"ramen",post:"oishii desu",a:"wa",en:"the ramen is tasty",why:"<b>wa</b> marks the topic."},
-    {pre:"nihongo",post:"muzukashii desu",a:"wa",en:"Japanese is hard",why:"<b>wa</b> marks the topic."},
-    // ----- subject / exists / suki–wakaru (ga) -----
-    {pre:"inu",post:"imasu",a:"ga",en:"there is a dog",why:"<b>ga</b> marks what exists (with imasu)."},
-    {pre:"sushi",post:"suki desu",a:"ga",en:"like sushi",why:"<b>suki</b> takes <b>ga</b>."},
-    {pre:"tomato",post:"kirai desu",a:"ga",en:"dislike tomatoes",why:"<b>kirai</b> takes <b>ga</b>."},
-    {pre:"nihongo",post:"wakarimasu",a:"ga",en:"understand Japanese",why:"<b>wakaru</b> takes <b>ga</b>."},
-    // ----- from / until (kara / made) -----
-    {pre:"asa",post:"benkyoushimasu",a:"kara",en:"study from morning",why:"<b>kara</b> = from / since a starting point."},
-    {pre:"ie",post:"ikimasu",a:"kara",en:"go from home",why:"<b>kara</b> = from (a starting place)."},
-    {pre:"yoru",post:"benkyoushimasu",a:"made",en:"study until night",why:"<b>made</b> = until / up to an end point."},
-    {pre:"eki",post:"ikimasu",a:"made",en:"go all the way to the station",why:"<b>made</b> = as far as / up to."}
+    {s:["watashi",{b:"wa"},"mainichi nihongo wo benkyoushimasu"],en:"I study Japanese every day.",why:"<b>wa</b> sets the topic — 'as for me, …'."},
+    {s:["mainichi asa kouhii",{b:"wo"},"nomimasu"],en:"I drink coffee every morning.",why:"<b>wo</b> marks the object being drunk."},
+    {s:["ashita roku-ji",{b:"ni"},"okimasu"],en:"Tomorrow I'll get up at six.",why:"<b>ni</b> marks a clock time."},
+    {s:["kyou no tenki",{b:"wa"},"dou desu ka"],en:"How's the weather today?",why:"<b>wa</b> marks the topic."},
+    {s:["hirugohan",{b:"wo"},"tabemashita ka"],en:"Did you eat lunch?",why:"<b>wo</b> marks the object eaten."},
+    {s:["shuumatsu doko",{b:"ni"},"ikimasu ka"],en:"Where are you going this weekend?",why:"<b>ni</b> marks the destination."},
+    {s:["dare",{b:"to"},"eiga wo mimasu ka"],en:"Who are you watching a movie with?",why:"<b>to</b> = with (whom)."},
+    {s:["donna tabemono",{b:"ga"},"suki desu ka"],en:"What kind of food do you like?",why:"<b>suki</b> takes <b>ga</b>."},
+    {s:["isogashii",{b:"kara"},"ikimasen"],en:"I'm busy, so I won't go.",why:"<b>kara</b> = because (it gives the reason)."},
+    {s:["ame da",{b:"kara"},"ie ni imasu"],en:"It's raining, so I'm staying home.",why:"<b>kara</b> = so / because."},
+    {s:["tomodachi",{b:"mo"},"isshoni ikimasu"],en:"My friend is coming along too.",why:"<b>mo</b> = also / too."},
+    {s:["kanojo",{b:"wa"},"nihonjin desu"],en:"She's Japanese.",why:"<b>wa</b> marks the topic."},
+    {s:["sukoshi nihongo",{b:"ga"},"wakarimasu"],en:"I understand a little Japanese.",why:"<b>wakaru</b> takes <b>ga</b>."},
+    {s:["mainichi juu-ji",{b:"ni"},"nemasu"],en:"I go to bed at ten every day.",why:"<b>ni</b> marks a clock time."},
+    {s:["shigoto wa nanji",{b:"kara"},"desu ka"],en:"What time does work start?",why:"<b>kara</b> = from (a starting time)."},
+    {s:["eki made basu",{b:"de"},"ikimasu"],en:"I take the bus to the station.",why:"<b>de</b> marks the means — by bus."},
+    {s:["konbini de mizu",{b:"wo"},"kaimasu"],en:"I buy water at the convenience store.",why:"<b>wo</b> marks the thing bought."},
+    {s:["kyou wa jimu",{b:"ni"},"ikimasen"],en:"I'm not going to the gym today.",why:"<b>ni</b> marks the destination."},
+    {s:["ie kara eki",{b:"made"},"juppun desu"],en:"It's ten minutes from home to the station.",why:"<b>made</b> = up to (kara…made = from…to)."},
+    {s:["doyoubi",{b:"ni"},"tomodachi to asobimasu"],en:"On Saturday I hang out with friends.",why:"<b>ni</b> marks the day / time."},
+    {s:["watashi",{b:"wa"},"inu",{b:"ga"},"suki desu"],en:"I like dogs.",why:"<b>wa</b> = the topic (as for me); <b>ga</b> = the thing liked (suki takes ga)."},
+    {s:["mainichi densha",{b:"de"},"kaisha",{b:"ni"},"ikimasu"],en:"Every day I go to the office by train.",why:"<b>de</b> = by (means); <b>ni</b> = destination."},
+    {s:["kinou tomodachi",{b:"to"},"kafe",{b:"de"},"hon",{b:"wo"},"yomimashita"],en:"Yesterday I read a book at a cafe with a friend.",why:"<b>to</b> = with; <b>de</b> = where; <b>wo</b> = the object."},
+    {s:["ie",{b:"kara"},"eki",{b:"made"},"basu",{b:"de"},"ikimasu"],en:"I go from home to the station by bus.",why:"<b>kara</b> = from; <b>made</b> = to; <b>de</b> = by (means)."},
+    {s:["asa",{b:"wa"},"pan",{b:"wo"},"tabemasu"],en:"In the morning I eat bread.",why:"<b>wa</b> = topic (as for mornings); <b>wo</b> = the object."},
+    {s:["shuumatsu tomodachi",{b:"to"},"eiga",{b:"wo"},"mimasu"],en:"On the weekend I watch a movie with a friend.",why:"<b>to</b> = with; <b>wo</b> = the thing watched."},
+    {s:["kyou kafe",{b:"de"},"tomodachi",{b:"ni"},"aimasu"],en:"Today I'm meeting a friend at a cafe.",why:"<b>de</b> = where; <b>ni</b> = the person you meet (au takes ni)."},
+    {s:["watashi",{b:"wa"},"nihongo",{b:"ga"},"wakarimasu"],en:"I understand Japanese.",why:"<b>wa</b> = topic; <b>ga</b> = what's understood (wakaru takes ga)."},
+    {s:["mainichi ie",{b:"de"},"nihongo",{b:"wo"},"benkyoushimasu"],en:"I study Japanese at home every day.",why:"<b>de</b> = where; <b>wo</b> = the object studied."},
+    {s:["konbini",{b:"de"},"ocha",{b:"to"},"onigiri",{b:"wo"},"kaimashita"],en:"I bought tea and a rice ball at the convenience store.",why:"<b>de</b> = where; <b>to</b> = and; <b>wo</b> = the objects bought."},
+    {s:["doyoubi",{b:"ni"},"kazoku",{b:"to"},"umi",{b:"ni"},"ikimasu"],en:"On Saturday I go to the beach with my family.",why:"first <b>ni</b> = time; <b>to</b> = with; second <b>ni</b> = destination."},
+    {s:["kono densha",{b:"wa"},"eki",{b:"ni"},"tomarimasu ka"],en:"Does this train stop at the station?",why:"<b>wa</b> = topic; <b>ni</b> = the place (tomaru takes ni)."},
+    {s:["asagohan ni pan",{b:"to"},"tamago wo tabemasu"],en:"For breakfast I eat bread and eggs.",why:"<b>to</b> = and (it joins two nouns)."},
+    {s:["tomodachi",{b:"ni"},"purezento wo agemasu"],en:"I give a present to my friend.",why:"<b>ni</b> marks the recipient — to whom."},
+    {s:["yoru ie de terebi",{b:"wo"},"mimasu"],en:"At night I watch TV at home.",why:"<b>wo</b> marks the thing watched."}
   ];
 (function(){
   const box=document.getElementById('pdrill'); if(!box) return;
   const PARTS=PPARTS;
-  const Q=PQ;
-  let order=[], i=0, score=0, answered=false;
   const shuffle=a=>{for(let j=a.length-1;j>0;j--){const k=Math.floor(Math.random()*(j+1));[a[j],a[k]]=[a[k],a[j]];}return a;};
-  function start(){ order=shuffle(Q.map((_,ix)=>ix)); i=0; score=0; render(); }
+  const blanksOf=q=>q.s.filter(t=>typeof t==='object');
+  let order=[], qi=0, score=0;
+  function start(){ order=shuffle(PQ.map((_,ix)=>ix)); qi=0; score=0; render(); }
   function render(){
-    if(i>=order.length){
-      box.innerHTML=`<div style="text-align:center;padding:14px">
-        <div style="font-size:1.1rem;font-weight:600;margin-bottom:6px">Done! ${score} / ${order.length} right</div>
-        <button class="btn primary" id="pdAgain">Go again</button></div>`;
+    if(qi>=order.length){
+      box.innerHTML=`<div style="text-align:center;padding:14px"><div style="font-size:1.1rem;font-weight:600;margin-bottom:6px">Done! ${score} / ${order.length} sentences fully right</div><button class="btn primary" id="pdAgain">Go again</button></div>`;
       document.getElementById('pdAgain').onclick=start; return;
     }
-    answered=false;
-    const q=Q[order[i]];
-    box.innerHTML=
-      `<div style="font-size:.8rem;color:var(--ink2);margin-bottom:6px">Question ${i+1} of ${order.length} · score ${score} · <span id="pdReset" style="cursor:pointer;text-decoration:underline">↺ restart</span></div>`+
-      `<div style="font-size:1.25rem;margin:6px 0 4px"><span style="color:#1560c0;font-weight:600">${q.pre}</span> <span id="pdBlank" style="display:inline-block;min-width:44px;border-bottom:2px dashed var(--ink2);text-align:center;color:var(--bad)">___</span> <span style="color:#1560c0;font-weight:600">${q.post}</span></div>`+
-      `<div style="font-size:.9rem;color:var(--ink2);margin-bottom:10px">"${q.en}"</div>`+
-      `<div id="pdOpts" style="display:flex;flex-wrap:wrap;gap:8px">`+
-        PARTS.map(p=>`<button class="btn pdopt" data-p="${p}" style="font-size:1rem;padding:8px 16px">${p}</button>`).join('')+
-      `</div>`+
-      `<div id="pdFb" style="margin-top:12px;min-height:24px"></div>`;
-    box.querySelectorAll('.pdopt').forEach(b=>{ b.onclick=()=>choose(b.dataset.p,q); });
-    const rb=document.getElementById('pdReset'); if(rb) rb.onclick=start;
-  }
-  function choose(p,q){
-    if(answered) return; answered=true;
-    const fb=document.getElementById('pdFb'), blank=document.getElementById('pdBlank');
-    const correct=p===q.a;
-    if(correct){ score++; blank.textContent=q.a; blank.style.color='var(--good)'; }
-    else{ blank.textContent=q.a; blank.style.color='var(--good)'; }
-    box.querySelectorAll('.pdopt').forEach(b=>{
-      if(b.dataset.p===q.a) b.style.background='#12a150', b.style.color='#fff';
-      else if(b.dataset.p===p) b.style.background='#f3d0d0';
-      b.disabled=true;
-    });
-    const full=`${q.pre} ${q.a} ${q.post}`;
-    fb.innerHTML=`<div style="font-weight:600;color:${correct?'var(--good)':'var(--bad)'}">${correct?'✓ Correct!':'✗ Not quite.'}</div>`+
-      `<div style="margin:4px 0">${q.why}</div>`+
-      `<div style="margin-top:6px"><span style="color:#1560c0;font-weight:600">${full}</span> — ${q.en} `+
-      `<button class="btn" id="pdHear" style="padding:3px 10px;font-size:.85rem">🔊 hear it</button></div>`+
-      `<button class="btn primary" id="pdNext" style="margin-top:10px">Next →</button>`;
-    document.getElementById('pdHear').onclick=()=>speakSentence(full);
-    document.getElementById('pdNext').onclick=()=>{ i++; render(); };
-    speakSentence(full);
+    const q=PQ[order[qi]], blanks=blanksOf(q); let filled=[], graded=false;
+    function sentenceHTML(){
+      let bi=-1;
+      return q.s.map(t=>{
+        if(typeof t==='string') return `<span style="color:#1560c0;font-weight:600">${t}</span>`;
+        bi++; const idx=bi;
+        if(idx<filled.length){ const val=filled[idx]; const col=graded?(val===blanks[idx].b?'var(--good)':'var(--bad)'):'var(--good)';
+          return `<span style="display:inline-block;min-width:34px;text-align:center;border-bottom:2px solid ${col};color:${col};font-weight:700">${val}</span>`; }
+        const active=idx===filled.length&&!graded;
+        return `<span style="display:inline-block;min-width:34px;text-align:center;border-bottom:2px dashed ${active?'var(--accent)':'var(--ink2)'};color:var(--bad)">___</span>`;
+      }).join(' ');
+    }
+    function draw(){
+      box.innerHTML=
+        `<div style="font-size:.8rem;color:var(--ink2);margin-bottom:6px">Sentence ${qi+1} of ${order.length} · score ${score} · <span id="pdReset" style="cursor:pointer;text-decoration:underline">↺ restart</span></div>`+
+        `<div style="font-size:1.2rem;line-height:2;margin:6px 0">${sentenceHTML()}</div>`+
+        `<div style="font-size:.9rem;color:var(--ink2);margin-bottom:8px">"${q.en}"</div>`+
+        (blanks.length>1?`<div style="font-size:.8rem;color:var(--ink2);margin-bottom:6px">Tap the particles left → right (${Math.min(filled.length,blanks.length)}/${blanks.length} filled)</div>`:``)+
+        `<div id="pdOpts" style="display:flex;flex-wrap:wrap;gap:8px">`+PARTS.map(p=>`<button class="btn pdopt" data-p="${p}" style="font-size:1rem;padding:8px 16px">${p}</button>`).join('')+`</div>`+
+        (blanks.length>1?`<div style="margin-top:8px"><button class="btn" id="pdUndo">↶ undo</button></div>`:``)+
+        `<div id="pdFb" style="margin-top:12px;min-height:24px"></div>`;
+      box.querySelectorAll('.pdopt').forEach(b=>{ b.onclick=()=>{ filled.push(b.dataset.p); if(filled.length>=blanks.length) grade(); else draw(); }; });
+      const u=box.querySelector('#pdUndo'); if(u) u.onclick=()=>{ if(filled.length){ filled.pop(); draw(); } };
+      const r=box.querySelector('#pdReset'); if(r) r.onclick=start;
+    }
+    function grade(){
+      graded=true; let allright=true; blanks.forEach((bk,k)=>{ if(filled[k]!==bk.b) allright=false; }); if(allright) score++;
+      let bi=-1; const full=q.s.map(t=> typeof t==='string'? t : blanks[++bi].b ).join(' ');
+      box.innerHTML=
+        `<div style="font-size:.8rem;color:var(--ink2);margin-bottom:6px">Sentence ${qi+1} of ${order.length} · score ${score}</div>`+
+        `<div style="font-size:1.2rem;line-height:2;margin:6px 0">${sentenceHTML()}</div>`+
+        `<div style="font-size:.9rem;color:var(--ink2);margin-bottom:8px">"${q.en}"</div>`+
+        `<div style="font-weight:600;color:${allright?'var(--good)':'var(--bad)'}">${allright?'✓ All correct!':'✗ Check the red one(s).'}</div>`+
+        `<div style="margin:4px 0">${q.why}</div>`+
+        `<div style="margin-top:6px"><span style="color:#1560c0;font-weight:600">${full}</span> <button class="btn" id="pdHear" style="padding:3px 10px;font-size:.85rem">🔊 hear it</button></div>`+
+        `<div style="margin-top:10px"><button class="btn primary" id="pdNext">Next →</button></div>`;
+      document.getElementById('pdHear').onclick=()=>speakSentence(full);
+      document.getElementById('pdNext').onclick=()=>{ qi++; render(); };
+      speakSentence(full);
+    }
+    draw();
   }
   start();
 })();
@@ -4303,24 +4259,40 @@ const PQ=[
     box.querySelector('#vgNext').onclick=renderVgroup;
   }
 
-  // ---- PARTICLES: fill-in reps (shares the Grammar bank) ----
+  // ---- PARTICLES: fill-in reps (shares the Grammar bank; supports multiple blanks) ----
   function renderParticle(){
-    const q=pick(PQ);
-    box.innerHTML=`<div class="tip">Tap the particle that fills the blank — more reps of the Grammar-tab drill.</div>
-      <div style="font-size:1.3rem;margin:8px 0"><span style="color:#1560c0;font-weight:600">${q.pre}</span> <span id="ppBlank" style="display:inline-block;min-width:44px;border-bottom:2px dashed var(--ink2);text-align:center;color:var(--bad)">___</span> <span style="color:#1560c0;font-weight:600">${q.post}</span></div>
-      <div style="font-size:.9rem;color:var(--ink2);margin-bottom:8px">"${q.en}"</div>
-      <div id="ppOpts" style="display:flex;flex-wrap:wrap;gap:8px">${PPARTS.map(p=>`<button class="btn pp" data-p="${p}" style="padding:8px 16px">${p}</button>`).join('')}</div>
-      <div id="ppFb" style="margin-top:12px;min-height:24px"></div>
-      <div style="margin-top:8px"><button class="btn" id="ppNext">Next →</button></div>`;
-    const fb=box.querySelector('#ppFb'), blank=box.querySelector('#ppBlank');
-    box.querySelectorAll('.pp').forEach(b=>{ b.onclick=()=>{
-      const ok=b.dataset.p===q.a; blank.textContent=q.a; blank.style.color='var(--good)';
-      box.querySelectorAll('.pp').forEach(x=>{ if(x.dataset.p===q.a) x.style.background='#12a150',x.style.color='#fff'; else if(x===b) x.style.background='#f3d0d0'; x.disabled=true; });
-      const full=`${q.pre} ${q.a} ${q.post}`;
-      fb.innerHTML=`<div style="font-weight:600;color:${ok?'var(--good)':'var(--bad)'}">${ok?'✓ Correct!':'✗ Not quite.'}</div><div style="margin:4px 0">${q.why}</div><div><span style="color:#1560c0;font-weight:600">${full}</span> <button class="btn" id="ppHear" style="padding:3px 10px;font-size:.85rem">🔊</button></div>`;
+    const q=pick(PQ), blanks=q.s.filter(t=>typeof t==='object'); let filled=[], graded=false;
+    function sentenceHTML(){
+      let bi=-1;
+      return q.s.map(t=>{
+        if(typeof t==='string') return `<span style="color:#1560c0;font-weight:600">${t}</span>`;
+        bi++; const idx=bi;
+        if(idx<filled.length){ const val=filled[idx]; const col=graded?(val===blanks[idx].b?'var(--good)':'var(--bad)'):'var(--good)';
+          return `<span style="display:inline-block;min-width:34px;text-align:center;border-bottom:2px solid ${col};color:${col};font-weight:700">${val}</span>`; }
+        const active=idx===filled.length&&!graded;
+        return `<span style="display:inline-block;min-width:34px;text-align:center;border-bottom:2px dashed ${active?'var(--accent)':'var(--ink2)'};color:var(--bad)">___</span>`;
+      }).join(' ');
+    }
+    function draw(){
+      box.innerHTML=`<div class="tip">Tap the particle${blanks.length>1?'s, left → right':''} to fill the blank${blanks.length>1?'s':''} — everyday sentences.</div>
+        <div style="font-size:1.25rem;line-height:2;margin:8px 0">${sentenceHTML()}</div>
+        <div style="font-size:.9rem;color:var(--ink2);margin-bottom:8px">"${q.en}"</div>
+        <div style="display:flex;flex-wrap:wrap;gap:8px">${PPARTS.map(p=>`<button class="btn pp" data-p="${p}" style="padding:8px 16px">${p}</button>`).join('')}</div>
+        <div style="margin-top:8px">${blanks.length>1?'<button class="btn" id="ppUndo">↶ undo</button> ':''}<button class="btn" id="ppNext">Next →</button></div>
+        <div id="ppFb" style="margin-top:12px;min-height:24px"></div>`;
+      if(!graded) box.querySelectorAll('.pp').forEach(b=>{ b.onclick=()=>{ filled.push(b.dataset.p); if(filled.length>=blanks.length) grade(); else draw(); }; });
+      const u=box.querySelector('#ppUndo'); if(u) u.onclick=()=>{ if(filled.length&&!graded){ filled.pop(); draw(); } };
+      box.querySelector('#ppNext').onclick=renderParticle;
+    }
+    function grade(){
+      graded=true; let allright=true; blanks.forEach((bk,k)=>{ if(filled[k]!==bk.b) allright=false; });
+      let bi=-1; const full=q.s.map(t=> typeof t==='string'? t : blanks[++bi].b ).join(' ');
+      draw();
+      const fb=box.querySelector('#ppFb');
+      fb.innerHTML=`<div style="font-weight:600;color:${allright?'var(--good)':'var(--bad)'}">${allright?'✓ All correct!':'✗ Check the red one(s).'}</div><div style="margin:4px 0">${q.why}</div><div><span style="color:#1560c0;font-weight:600">${full}</span> <button class="btn" id="ppHear" style="padding:3px 10px;font-size:.85rem">🔊</button></div>`;
       const hb=box.querySelector('#ppHear'); if(hb) hb.onclick=()=>speakSentence(full); speakSentence(full);
-    };});
-    box.querySelector('#ppNext').onclick=renderParticle;
+    }
+    draw();
   }
 
   const RENDER={order:renderOrder,conj:renderConj,vgroup:renderVgroup,particle:renderParticle,build:renderBuild,adj:renderAdj,frames:renderFrames,read:renderRead};
