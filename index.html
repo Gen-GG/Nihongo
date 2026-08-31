@@ -146,12 +146,12 @@
   .qa .how b{color:var(--accent)}
   .newtag{display:inline-block;background:#fff0b3;color:#8a6d00;font-size:.68rem;font-weight:700;padding:1px 7px;border-radius:20px;margin-left:6px}
   /* word hover tooltips */
-  .gl{border-bottom:1px dotted currentColor;cursor:help;position:relative}
-  .gl:hover::after,.gl.tap::after{content:attr(data-def);position:absolute;left:50%;bottom:135%;
+  .gl{border-bottom:1px dotted currentColor;cursor:pointer;position:relative}
+  .gl.tap::after{content:attr(data-def);position:absolute;left:50%;bottom:135%;
     transform:translateX(-50%);background:#111;color:#fff;padding:6px 11px;border-radius:8px;
     font-size:.8rem;font-weight:600;white-space:nowrap;max-width:240px;z-index:60;pointer-events:none;
     box-shadow:0 4px 14px rgba(0,0,0,.3)}
-  .gl:hover::before,.gl.tap::before{content:"";position:absolute;left:50%;bottom:135%;
+  .gl.tap::before{content:"";position:absolute;left:50%;bottom:135%;
     transform:translate(-50%,90%);border:6px solid transparent;border-top-color:#111;z-index:60;pointer-events:none}
   .gl.speaking{background:#ffe08a;border-radius:4px}
   /* dancing panda + yuzu rain */
@@ -1023,8 +1023,25 @@
 <section id="grammar">
   <h2>🧭 Grammar — practice first</h2>
 
-  <h3>✍️ Pick the particle</h3>
-  <div class="tip">Read the sentence, look at the <b>verb at the end</b>, and tap the particle that fills the blank. Instant feedback + why + hear it. Now with <b>~75 sentences</b> across wa · ga · wo · ni · de · to · mo · kara · made.</div>
+  <h3>🙇 Sounding polite (so you never come across as rude)</h3>
+  <div class="tip"><b>The one safe rule:</b> end your sentences with <b>–masu</b> (for verbs) and <b>desu</b> (for everything else). This <b>polite form is never rude</b> with anyone — strangers, shop staff, coworkers, teachers, older people. When in doubt, use it.</div>
+  <div class="tip">The <b>plain / casual</b> forms you're also learning — <b>taberu, tabenai, iku, da</b> — are for <b>close friends and family only.</b> With people you don't know well, casual can sound blunt or even rude. You learn the plain forms because bigger grammar is built on them, but <b>when you actually speak, default to –masu / desu.</b></div>
+  <div class="note"><table>
+    <tr><td><b>casual (friends)</b></td><td><b>polite (anyone) ✓</b></td></tr>
+    <tr><td class="jp">taberu</td><td class="jp">tabemasu</td></tr>
+    <tr><td class="jp">tabenai</td><td class="jp">tabemasen</td></tr>
+    <tr><td class="jp">iku</td><td class="jp">ikimasu</td></tr>
+    <tr><td class="jp">nomu</td><td class="jp">nomimasu</td></tr>
+    <tr><td class="jp">ame da</td><td class="jp">ame desu</td></tr>
+    <tr><td class="jp">nani?</td><td class="jp">nan desu ka?</td></tr>
+  </table></div>
+  <div class="tip"><b>Three easy softeners</b> that instantly make you sound more polite: <b>sumimasen</b> (excuse me / sorry — a polite way to open a request), <b>onegaishimasu</b> or <b>~ kudasai</b> (please), and adding <b>ne</b> at the end ("…, right?" — softens the whole sentence).</div>
+  <div class="ex"><b>Sumimasen, mizu wo onegaishimasu.</b> — Excuse me, water please. (polite &amp; safe)<br>
+    <b>Kohii wo nomimasu ka?</b> — Would you like coffee? (polite)<br>
+    <b>Ii tenki desu ne.</b> — Nice weather, isn't it? (soft &amp; friendly)</div>
+
+  <h3 style="margin-top:28px">✍️ Pick the particle</h3>
+  <div class="tip">Read the everyday sentence, look at the <b>verb at the end</b>, and tap the particle for each blank. These sentences are <b>polite (–masu / desu)</b> — the safe way to talk to anyone. Instant feedback + why + hear it.</div>
   <div id="pdrill" class="note"></div>
 
   <h3 style="margin-top:28px">🔗 Which particle does the verb want?</h3>
@@ -1264,7 +1281,8 @@
 <section id="talk">
   <h2>Back-and-forth: how a reply works</h2>
   <p>Each lesson as a real conversation. The trick: <b>most answers re-use the question's shape</b> and swap the question word (nani/dare/doko…) for your own info. Use the <b>Studying</b> menu up top to switch between lessons.</p>
-  <div class="tip">💡 <b>Forgot a word?</b> Hover over any <span class="gl" data-def="like this!">dotted-underline word</span> to see its meaning. <b>Click / tap it to hear it spoken in Japanese</b> 🔊 — great for listening practice.</div>
+  <div class="tip">🙇 <b>A note on politeness:</b> some replies here are in the <b>casual</b> form (like <b>tabenai</b>, <b>iku</b>) — those are for <b>close friends and family.</b> With anyone else, use the <b>polite</b> version instead (<b>tabemasen</b>, <b>ikimasu</b>) so you never sound rude. If you're unsure, the –masu / desu form is always safe.</div>
+  <div class="tip">💡 <b>Click / tap any <span class="gl" data-def="like this!">dotted-underline word</span></b> to <b>hear it spoken</b> 🔊 <b>and</b> see its English meaning pop up. Tap again (or tap elsewhere) to hide the meaning. Great for testing yourself — try to recall the meaning <i>before</i> you tap.</div>
   <div class="fc-bar" style="justify-content:flex-start">
     <label style="font-weight:600;color:var(--ink2)">🔊 Voice:</label>
     <select id="voiceSel"></select>
@@ -1926,6 +1944,53 @@
   <div class="lesson-block" data-lesson="l6">
   <h3 style="color:var(--accent);margin-top:36px">📝 Homework 6 · 0827 (shukusai)</h3>
   <div class="tip">All about the <b>NAI-form</b> (plain negative). Answer keys are filled in below — tap any word to hear it 🔊. Practice these live in <b>Practice → 🔀 Conjugation</b> and <b>Grammar → 🚫 NAI-form</b>.</div>
+
+  <h3>🧠 Memory helpers — the 30 verbs</h3>
+  <div class="tip">Hard to memorize a flat list — so here they're in small themed groups, each with a real everyday sentence (tap to hear it) and a silly sound-hook. <b>Learn 5–6 at a time</b>, say them out loud, then drill them in Flashcards (deck <b>Lesson 6</b>, set to meaning → Japanese).</div>
+
+  <h4>Start &amp; finish</h4>
+  <div class="ex"><b>hajimeru</b> — to start (Group 2)<br>📝 <b>Ima kara hajimemasu.</b> — Let's start now.<br>🧠 <i>"ha-JI-meru" — how do I begin?</i></div>
+  <div class="ex"><b>owaru</b> — to finish / end (Group 1)<br>📝 <b>Shigoto wa roku-ji ni owarimasu.</b> — Work finishes at six.<br>🧠 <i>"OH-wa-ru" — oh, it's over.</i></div>
+
+  <h4>Around the house</h4>
+  <div class="ex"><b>tsukuru</b> — to make (Group 1)<br>📝 <b>Gohan wo tsukurimasu.</b> — I make dinner.<br>🧠 <i>"ts-KOO-ru" — I craft a good score.</i></div>
+  <div class="ex"><b>arau</b> — to wash (Group 1)<br>📝 <b>Te wo araimasu.</b> — I wash my hands.<br>🧠 <i>"a-RAU" — wash off the whole row of dirt.</i></div>
+  <div class="ex"><b>souji suru</b> — to clean (Group 3)<br>📝 <b>Heya wo souji shimasu.</b> — I clean the room.<br>🧠 <i>"so-o-ji" — so tidy.</i></div>
+  <div class="ex"><b>sentaku suru</b> — to do laundry (Group 3)<br>📝 <b>Doyoubi ni sentaku shimasu.</b> — I do laundry on Saturday.<br>🧠 <i>"sen-taku" — send the socks to the wash.</i></div>
+  <div class="ex"><b>nugu</b> — to take off (clothes) (Group 1)<br>📝 <b>Kutsu wo nugimasu.</b> — I take off my shoes.<br>🧠 <i>"NEW-gu" — off with the old, on with the new.</i></div>
+
+  <h4>Coming &amp; going</h4>
+  <div class="ex"><b>tsuku</b> — to arrive (Group 1)<br>📝 <b>Eki ni tsukimasu.</b> — I arrive at the station.<br>🧠 <i>"ts-KOO" — the train pulls in.</i></div>
+  <div class="ex"><b>dekakeru</b> — to go out (Group 2)<br>📝 <b>Asa hayaku dekakemasu.</b> — I go out early in the morning.<br>🧠 <i>"deck-a-keru" — head out onto the deck.</i></div>
+  <div class="ex"><b>modoru</b> — to return / go back (Group 1)<br>📝 <b>Ie ni modorimasu.</b> — I go back home.<br>🧠 <i>"mo-DO-ru" — model my way back.</i></div>
+  <div class="ex"><b>ugoku</b> — to move (Group 1)<br>📝 <b>Densha ga ugokimasu.</b> — The train moves.<br>🧠 <i>"u-GO-ku" — 'you go' = it moves.</i></div>
+  <div class="ex"><b>tomaru</b> — to stop / stay overnight (Group 1)<br>📝 <b>Hoteru ni tomarimasu.</b> — I stay at a hotel.<br>🧠 <i>"to-MA-ru" — stay at Hotel Mar.</i></div>
+
+  <h4>Mind &amp; memory</h4>
+  <div class="ex"><b>wakaru</b> — to understand (Group 1)<br>📝 <b>Nihongo ga wakarimasu.</b> — I understand Japanese.<br>🧠 <i>"wa-KA-ru" — 'what car?' oh, now I get it.</i></div>
+  <div class="ex"><b>oboeru</b> — to remember / memorize (Group 2)<br>📝 <b>Kanji wo oboemasu.</b> — I memorize kanji.<br>🧠 <i>"o-BO-eru" — a bore to memorize, but I remember.</i></div>
+  <div class="ex"><b>wasureru</b> — to forget (Group 2)<br>📝 <b>Namae wo wasuremasu.</b> — I forget names.<br>🧠 <i>"wa-SURE-ru" — I 'was sure'… but I forgot.</i></div>
+  <div class="ex"><b>shiru</b> — to know (Group 1)<br>📝 <b>Ano hito wo shirimasu.</b> — I know that person.<br>🧠 <i>"SHI-ru" — 'she knew' = to know.</i></div>
+  <div class="ex"><b>omou</b> — to think (Group 1)<br>📝 <b>Ii to omoimasu.</b> — I think it's good.<br>🧠 <i>"o-MO" — 'oh, hmm' — I think.</i></div>
+  <div class="ex"><b>mayou</b> — to get lost / be unsure (Group 1)<br>📝 <b>Eki de mayoimasu.</b> — I get lost at the station.<br>🧠 <i>"ma-YO" — 'my oh my, I'm lost.'</i></div>
+
+  <h4>Talking &amp; asking</h4>
+  <div class="ex"><b>iu</b> — to say (Group 1)<br>📝 <b>Namae wo iimasu.</b> — I say my name.<br>🧠 <i>"i-u" → 'you' — I say it to you.</i></div>
+  <div class="ex"><b>tsutaeru</b> — to tell / communicate (Group 2)<br>📝 <b>Sensei ni tsutaemasu.</b> — I'll tell the teacher.<br>🧠 <i>"tsu-TA-eru" — I tell Sue.</i></div>
+  <div class="ex"><b>shitsumon suru</b> — to ask a question (Group 3)<br>📝 <b>Sensei ni shitsumon shimasu.</b> — I ask the teacher a question.<br>🧠 <i>"shitsu-mon" — 'shh, a question.'</i></div>
+  <div class="ex"><b>setsumei suru</b> — to explain (Group 3)<br>📝 <b>Sensei ga setsumei shimasu.</b> — The teacher explains.<br>🧠 <i>"setsu-mei" — 'sets my' explanation straight.</i></div>
+  <div class="ex"><b>warau</b> — to laugh (Group 1)<br>📝 <b>Minna ga waraimasu.</b> — Everyone laughs.<br>🧠 <i>"wa-RAU" — 'ha-ha' in a row.</i></div>
+
+  <h4>Getting, needing, being able</h4>
+  <div class="ex"><b>morau</b> — to receive / get (Group 1)<br>📝 <b>Purezento wo moraimasu.</b> — I receive a present.<br>🧠 <i>"mo-RAU" — a whole row of gifts.</i></div>
+  <div class="ex"><b>iru</b> — to need (Group 1 — looks like ru-verb, isn't!)<br>📝 <b>Okane ga irimasu.</b> — I need money.<br>🧠 <i>"i-ru" — 'I really' need it.</i></div>
+  <div class="ex"><b>dekiru</b> — can do / be able to (Group 2)<br>📝 <b>Nihongo ga sukoshi dekimasu.</b> — I can do a little Japanese.<br>🧠 <i>"de-KI-ru" — with 'the key' I can do it.</i></div>
+
+  <h4>When things go wrong</h4>
+  <div class="ex"><b>okureru</b> — to be late (Group 2)<br>📝 <b>Kaigi ni okuremasu.</b> — I'm late for the meeting.<br>🧠 <i>"o-KU-reru" — 'oh, cure' comes too late.</i></div>
+  <div class="ex"><b>nokosu</b> — to leave (food) unfinished (Group 1)<br>📝 <b>Gohan wo nokoshimasu.</b> — I leave some food.<br>🧠 <i>"no-KO-su" — 'no, can't finish' — leave it.</i></div>
+  <div class="ex"><b>kowareru</b> — to break / be broken (Group 2)<br>📝 <b>Sumaho ga kowaremasu.</b> — The phone breaks.<br>🧠 <i>"ko-WA-reru" — ka-whack, it breaks.</i></div>
+  <div class="ex"><b>komaru</b> — to have trouble / be stuck (Group 1)<br>📝 <b>Totemo komarimasu.</b> — I'm really in trouble.<br>🧠 <i>"ko-MA-ru" — a 'comma' problem, stuck in a bind.</i></div>
 
   <h3>The rule in one line</h3>
   <div class="tip"><b>Group 2 (ru-verbs):</b> drop <b>ru</b> + <b>nai</b>. &nbsp; <b>Group 1 (u-verbs):</b> last sound <b>-u → -a</b> row + <b>nai</b> (plain <b>-u</b> → <b>-wa</b>). &nbsp; <b>Group 3:</b> suru → <b>shinai</b>, kuru → <b>konai</b>.</div>
@@ -3091,7 +3156,8 @@ document.addEventListener('click',e=>{
   const g=e.target.closest('.gl');
   document.querySelectorAll('.gl.tap').forEach(x=>{if(x!==g)x.classList.remove('tap');});
   if(g){
-    g.classList.toggle('tap');
+    g.classList.add('tap');                                              // show the meaning on click
+    g.addEventListener('mouseleave',()=>g.classList.remove('tap'),{once:true}); // hide it when the cursor leaves
     g.classList.add('speaking'); setTimeout(()=>g.classList.remove('speaking'),400);
     speak(g.dataset.w||g.textContent);
   }
@@ -3791,7 +3857,7 @@ const PQ=[
     {s:["dare",{b:"to"},"eiga wo mimasu ka"],en:"Who are you watching a movie with?",why:"<b>to</b> = with (whom)."},
     {s:["donna tabemono",{b:"ga"},"suki desu ka"],en:"What kind of food do you like?",why:"<b>suki</b> takes <b>ga</b>."},
     {s:["isogashii",{b:"kara"},"ikimasen"],en:"I'm busy, so I won't go.",why:"<b>kara</b> = because (it gives the reason)."},
-    {s:["ame da",{b:"kara"},"ie ni imasu"],en:"It's raining, so I'm staying home.",why:"<b>kara</b> = so / because."},
+    {s:["ame desu",{b:"kara"},"ie ni imasu"],en:"It's raining, so I'm staying home.",why:"<b>kara</b> = so / because (after <b>desu</b> it stays polite)."},
     {s:["tomodachi",{b:"mo"},"isshoni ikimasu"],en:"My friend is coming along too.",why:"<b>mo</b> = also / too."},
     {s:["kanojo",{b:"wa"},"nihonjin desu"],en:"She's Japanese.",why:"<b>wa</b> marks the topic."},
     {s:["sukoshi nihongo",{b:"ga"},"wakarimasu"],en:"I understand a little Japanese.",why:"<b>wakaru</b> takes <b>ga</b>."},
