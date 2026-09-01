@@ -210,6 +210,22 @@
   .ph .pj{color:var(--ink2);font-weight:700;font-size:1.02rem}   /* question / Japanese = blue */
   .ph .pe{color:#111;margin-left:26px;margin-top:2px;font-size:.92rem} /* answer / English = black, offset */
 
+  /* te-form sentence map (Homework 7) */
+  .temap{margin:14px 0 18px;display:flex;flex-direction:column;gap:3px;align-items:flex-start}
+  .te-row{display:flex;align-items:center;gap:10px}
+  .te-tag{font-size:.66rem;font-weight:800;letter-spacing:.06em;color:var(--muted);min-width:46px;text-align:right}
+  .te-chip{background:rgba(63,125,84,.14);color:var(--ink2);border:1px solid rgba(63,125,84,.28);border-radius:11px;padding:6px 13px;font-weight:700;font-size:1.02rem}
+  .te-chip .en,.te-fin .en{font-weight:500;font-size:.82rem;margin-left:8px;opacity:.85}
+  .te-chip .en{color:var(--muted)}
+  .te-time .te-chip{background:rgba(120,130,120,.12);color:var(--ink);border-color:var(--line)}
+  .te-fin{background:linear-gradient(135deg,#4a8d61,#2f6444);color:#fff;border-radius:11px;padding:7px 14px;font-weight:700;font-size:1.02rem;box-shadow:var(--shadow-sm)}
+  .te-fin .en{color:rgba(255,255,255,.9)}
+  .te-arrow{color:var(--ink2);font-weight:700;font-size:.8rem;margin-left:56px}
+  .te-legend{display:flex;gap:16px;flex-wrap:wrap;font-size:.8rem;font-weight:600;color:var(--muted);margin:6px 0 4px}
+  .te-legend b{display:inline-block;width:12px;height:12px;border-radius:3px;vertical-align:middle;margin-right:5px}
+  body.dark .te-chip{background:rgba(120,200,160,.14);color:#a7e3c1;border-color:rgba(120,200,160,.28)}
+  body.dark .te-time .te-chip{background:rgba(200,210,200,.10);color:#e6efe8;border-color:var(--line)}
+
   /* ============================ DARK MODE ============================ */
   body.dark{
     --ink:#e9f1ea; --ink2:#7fd3a6; --bg:#0f1512; --card:#18211d;
@@ -325,6 +341,7 @@
     <option value="l4">Lesson 4 · 0820</option>
     <option value="l5">Lesson 5 · 0825</option>
     <option value="l6">Lesson 6 · 0827</option>
+    <option value="l7">Lesson 7 · 0831</option>
     <option value="hw3fake">Fake Homework 3 (bonus)</option>
   </select>
   <label id="defToggleWrap" title="When off, tapping a word only plays the sound — the English stays hidden for listening practice." style="margin-left:18px;font-weight:400;font-size:.9rem;cursor:pointer;white-space:nowrap;display:inline-flex;align-items:center;gap:8px">
@@ -1101,6 +1118,119 @@
     <tr><td class="jp">chikoku</td><td>being late / lateness</td></tr>
   </table></div>
   </div><!-- /l6 -->
+
+  <div class="lesson-block" data-lesson="l7">
+  <h3 style="color:var(--accent)">Lesson 7 · 0831</h3>
+
+  <div class="tip">The big new skill is the <b>TE-form</b> — the verb's "connector" form. It's how you make polite requests (<b>~te kudasai</b> = please do), say "don't do" (<b>~nai de kudasai</b>), and describe something happening right now (<b>~te imasu</b> = -ing). You also learned <b>node/kara</b> (because), <b>~toki</b> (when), and <b>zenzen/amari ~nai</b> (not at all / not much).</div>
+
+  <h3>1 · How to build the TE-form</h3>
+  <div class="tip"><b>Group 2 (ru-verbs):</b> drop <b>ru</b>, add <b>te</b>.</div>
+  <div class="note"><table>
+    <tr><td class="jp">taberu → tabete</td><td>eat</td></tr>
+    <tr><td class="jp">miru → mite</td><td>watch</td></tr>
+    <tr><td class="jp">dekakeru → dekakete</td><td>go out</td></tr>
+  </table></div>
+  <div class="tip"><b>Group 1 (u-verbs):</b> the ending decides the te-form. This is the part to memorize.</div>
+  <div class="note"><table>
+    <tr><td><b>ends in</b></td><td><b>becomes</b></td><td><b>example</b></td></tr>
+    <tr><td>u · tsu · ru</td><td class="jp">tte</td><td class="jp">kau → katte · matsu → matte · kaeru → kaette</td></tr>
+    <tr><td>mu · bu · nu</td><td class="jp">nde</td><td class="jp">nomu → nonde · asobu → asonde · shinu → shinde</td></tr>
+    <tr><td>ku</td><td class="jp">ite</td><td class="jp">kaku → kaite · kiku → kiite</td></tr>
+    <tr><td>gu</td><td class="jp">ide</td><td class="jp">oyogu → oyoide · nugu → nuide</td></tr>
+    <tr><td>su</td><td class="jp">shite</td><td class="jp">hanasu → hanashite</td></tr>
+  </table></div>
+  <div class="tip"><b>Exception:</b> <b>iku → itte</b> (not "iite"). <b>Group 3 (irregular):</b> <b>suru → shite</b>, <b>kuru → kite</b>. Suru-verbs follow suru: <b>benkyou suru → benkyou shite</b>, <b>souji suru → souji shite</b>.</div>
+
+  <h3>2 · Please do / please don't</h3>
+  <div class="tip"><b>~te kudasai</b> = please do ~. Take the te-form and add <b>kudasai</b>.</div>
+  <div class="note"><table>
+    <tr><td class="jp">mite kudasai</td><td>please look</td></tr>
+    <tr><td class="jp">kiite kudasai</td><td>please listen</td></tr>
+    <tr><td class="jp">setsumei shite kudasai</td><td>please explain</td></tr>
+  </table></div>
+  <div class="tip"><b>~nai de kudasai</b> = please <b>don't</b> ~. This one uses the <b>NAI-form + de</b> (not the te-form): tabenai → <b>tabenai de</b>.</div>
+  <div class="note"><table>
+    <tr><td class="jp">watashi no purin wo tabenai de (kudasai)</td><td>please don't eat my pudding</td></tr>
+    <tr><td class="jp">densha no naka de hanasanai de</td><td>don't talk inside the train</td></tr>
+    <tr><td class="jp">esukareeta wo noboranai de kudasai</td><td>please don't climb the escalator</td></tr>
+    <tr><td class="jp">ashita miitingu dakara okurenai de ne</td><td>we have a meeting tomorrow, so don't be late, ok?</td></tr>
+  </table></div>
+
+  <h3>3 · ~te imasu = happening now / ongoing</h3>
+  <div class="tip">Te-form + <b>imasu</b> = "-ing" or an ongoing state. Great for "I'm running late" or "the train is delayed".</div>
+  <div class="note"><table>
+    <tr><td class="jp">oshigoto ni okurete imasu</td><td>I'm running late for work</td></tr>
+    <tr><td class="jp">chikoku shite imasu</td><td>I'm late</td></tr>
+    <tr><td class="jp">densha ga okurete iru</td><td>the train is delayed (casual)</td></tr>
+  </table></div>
+
+  <h3>4 · node / kara = because</h3>
+  <div class="tip"><b>node</b> (more formal) and <b>kara</b> (more casual) both mean "because". They come <b>after</b> the reason: [reason] + node/kara + [result].</div>
+  <div class="note"><table>
+    <tr><td class="jp">otto to isshoni miru node kowakunai desu</td><td>I watch with my husband, so it's not scary</td></tr>
+    <tr><td class="jp">miru kara / miru node</td><td>because (I) watch</td></tr>
+  </table></div>
+
+  <h3>5 · ~toki = when</h3>
+  <div class="tip"><b>toki</b> = "when / at the time of". Noun + <b>no toki</b>; verb (plain) + <b>toki</b>.</div>
+  <div class="note"><table>
+    <tr><td class="jp">oshigoto no toki unten shimasu</td><td>I drive when it's for work</td></tr>
+    <tr><td class="jp">oshigoto ni iku toki ni unten shimasu ka?</td><td>do you drive when you go to work?</td></tr>
+  </table></div>
+
+  <h3>6 · Not at all / not much / a little</h3>
+  <div class="tip"><b>zenzen ~nai</b> = not at all. <b>amari ~nai</b> = not much / rarely. <b>sukoshi (dake)</b> = a little (only). <b>sukoshimo ~nai</b> = not even a little (<b>mo</b> = even).</div>
+  <div class="note"><table>
+    <tr><td class="jp">zenzen nomanai desu</td><td>I don't drink at all</td></tr>
+    <tr><td class="jp">amari shinai desu</td><td>I don't do it much</td></tr>
+    <tr><td class="jp">sukoshi dake nara nomimasu</td><td>if it's just a little, I'll drink</td></tr>
+    <tr><td class="jp">sukoshimo nomanai desu ka?</td><td>you don't drink even a little?</td></tr>
+  </table></div>
+
+  <h3>7 · Polite past negative: masen deshita</h3>
+  <div class="tip"><b>desu → deshita</b> (was). <b>~masen → ~masen deshita</b> (didn't ~). This is the polite past-negative.</div>
+  <div class="note"><table>
+    <tr><td class="jp">dekakemasu → dekakemasen deshita</td><td>go out → didn't go out</td></tr>
+    <tr><td class="jp">senshuumatsu wa dekakemashita ka?</td><td>did you go out last weekend?</td></tr>
+    <tr><td class="jp">iie, dekakemasen deshita</td><td>no, I didn't go out</td></tr>
+  </table></div>
+
+  <h3>8 · Counting times: ~kai</h3>
+  <div class="tip"><b>kai</b> = counter for "times". <b>isshuukan ni sankai</b> = three times a week. <b>nan kai?</b> = how many times?</div>
+  <div class="note"><table>
+    <tr><td class="jp">isshuukan ni nan kai sentaku shimasu ka?</td><td>how many times a week do you do laundry?</td></tr>
+    <tr><td class="jp">isshuukan ni sankai souji shimasu</td><td>I clean three times a week</td></tr>
+  </table></div>
+
+  <h3>9 · New vocabulary</h3>
+  <div class="note"><table>
+    <tr><td class="jp">noboru</td><td>to climb</td></tr>
+    <tr><td class="jp">erabu</td><td>to choose / pick</td></tr>
+    <tr><td class="jp">shaberu</td><td>to chat / talk (= hanasu)</td></tr>
+    <tr><td class="jp">undou suru</td><td>to exercise</td></tr>
+    <tr><td class="jp">unten suru</td><td>to drive</td></tr>
+    <tr><td class="jp">rikai suru</td><td>to understand</td></tr>
+    <tr><td class="jp">ki</td><td>tree</td></tr>
+    <tr><td class="jp">kaidan</td><td>stairs</td></tr>
+    <tr><td class="jp">esukareeta</td><td>escalator</td></tr>
+    <tr><td class="jp">purin</td><td>pudding / custard</td></tr>
+    <tr><td class="jp">osake</td><td>alcohol / sake</td></tr>
+    <tr><td class="jp">horaeiga</td><td>horror movie</td></tr>
+    <tr><td class="jp">kowakunai</td><td>not scary</td></tr>
+    <tr><td class="jp">kutsushita</td><td>socks</td></tr>
+    <tr><td class="jp">shitagi</td><td>underwear</td></tr>
+    <tr><td class="jp">zubon</td><td>pants / trousers</td></tr>
+    <tr><td class="jp">nokorimono</td><td>leftovers</td></tr>
+    <tr><td class="jp">ryokan</td><td>Japanese inn</td></tr>
+    <tr><td class="jp">shashin</td><td>photo</td></tr>
+    <tr><td class="jp">miitingu</td><td>meeting</td></tr>
+    <tr><td class="jp">shukudai</td><td>homework</td></tr>
+    <tr><td class="jp">shigotoba</td><td>workplace (ba = place)</td></tr>
+    <tr><td class="jp">tekitou ni</td><td>randomly / casually</td></tr>
+    <tr><td class="jp">attoiuma</td><td>in no time / before you know it</td></tr>
+  </table></div>
+  </div><!-- /l7 -->
 </section>
 
 <!-- ============ GRAMMAR ============ -->
@@ -1257,6 +1387,7 @@
       <option value="l4">Set: Lesson 4 (0820)</option>
       <option value="l5">Set: Lesson 5 (0825)</option>
       <option value="l6">Set: Lesson 6 (0827)</option>
+      <option value="l7">Set: Lesson 7 (0831)</option>
       <option value="hw1">Set: Homework 1</option>
       <option value="hw2">Set: Homework 2</option>
       <option value="hw3">Set: Homework 3</option>
@@ -1337,6 +1468,14 @@
     <div class="tip"><b>Plain negatives, together:</b><br>
     "Niku wo tabenai. Kouhii mo nomanai. Kyou wa jimu ni ikanai.
     Getsuyoubi wa kaimono shinai."</div>
+  </div>
+
+  <div class="lesson-block" data-lesson="l7">
+    <h3 style="color:var(--accent)">Lesson 7 · 0831</h3>
+    <div class="note" id="phraseBoxL7"></div>
+    <div class="tip"><b>TE-form in one breath:</b><br>
+    "Mite kudasai. Setsumei shite kudasai. Watashi no purin wo tabenai de.
+    Oshigoto ni okurete imasu."</div>
   </div>
 </section>
 
@@ -1424,6 +1563,15 @@
   <h3>Question → easy answer, explained</h3>
   <div id="qaBoxL6"></div>
   </div><!-- /l6 -->
+
+  <div class="lesson-block" data-lesson="l7">
+  <h3 style="color:var(--accent)">Lesson 7 · 0831</h3>
+  <div class="tip"><b>New this lesson:</b> the <b>TE-form</b> &nbsp;·&nbsp; <b>~te kudasai</b> = please do &nbsp;·&nbsp; <b>~nai de kudasai</b> = please don't &nbsp;·&nbsp; <b>~te imasu</b> = -ing &nbsp;·&nbsp; <b>node/kara</b> = because &nbsp;·&nbsp; <b>toki</b> = when &nbsp;·&nbsp; <b>zenzen/amari ~nai</b>. Marked <span class="newtag">new</span> below.</div>
+  <h3>The whole exchange as a chat</h3>
+  <div class="chat" id="chatL7"></div>
+  <h3>Question → easy answer, explained</h3>
+  <div id="qaBoxL7"></div>
+  </div><!-- /l7 -->
 </section>
 
 <!-- ============ KANA ============ -->
@@ -2093,12 +2241,16 @@
   </table></div>
 
   <h3>Exercise C — Build the sentence <span style="color:var(--ink2);font-weight:400">(with answers)</span></h3>
-  <div class="ex"><b>Niku wo tabenai.</b> — I don't eat meat.<br>
-    <b>Kouhii wo nomanai.</b> — I don't drink coffee.<br>
-    <b>Anime wo minai.</b> — I don't watch anime.<br>
-    <b>Kyou jimu ni ikanai.</b> — I don't go to the gym today.<br>
-    <b>Kyou nihongo wo benkyou shinai.</b> — I don't study Japanese today.<br>
-    <b>Getsuyoubi wa kaimono shinai.</b> — I don't shop on Mondays.</div>
+  <div class="tip"><b>Make it polite:</b> a plain negative on its own (tabenai) is casual. Add <b>desu</b> for a polite present, and <b>deshita</b> for a polite past. So "I don't eat meat" (polite) = <b>Niku wo tabenai desu</b>, and "I didn't eat meat" = <b>Niku wo tabenai deshita</b>. (The strict textbook past-negative is <b>tabemasen deshita</b> / <b>tabenakatta</b>.)</div>
+  <div class="ex"><b>Niku wo tabenai desu.</b> — I don't eat meat.<br>
+    <b>Kouhii wo nomanai desu.</b> — I don't drink coffee.<br>
+    <b>Anime wo minai desu.</b> — I don't watch anime.<br>
+    <b>Kyou jimu ni ikanai desu.</b> — I don't go to the gym today.<br>
+    <b>Kyou nihongo wo benkyou shinai desu.</b> — I don't study Japanese today.<br>
+    <b>Getsuyoubi wa kaimono shinai desu.</b> — I don't shop on Mondays.</div>
+  <div class="ex"><b>Past (polite):</b><br>
+    <b>Niku wo tabenai deshita.</b> — I didn't eat meat.<br>
+    <b>Kinou jimu ni ikanai deshita.</b> — I didn't go to the gym yesterday.</div>
 
   <h3>The 30 verbs — masu → dictionary → NAI</h3>
   <div class="tip">The full homework verb list, with meanings. These are all in Flashcards → <b>Lesson 6</b> and the <b>HW6 · NAI-form drill</b> deck.</div>
@@ -2135,10 +2287,208 @@
     <tr><td class="jp">komarimasu → komaru → komaranai</td><td>to have trouble</td></tr>
   </table></div>
   </div><!-- /hw for l6 -->
+
+  <div class="lesson-block" data-lesson="l7">
+  <h3 style="color:var(--accent);margin-top:36px">Homework 7 · 0831 (te-form + tenses)</h3>
+  <div class="tip"><b>Your assignment:</b> your teacher didn't hand out a sheet — instead, <b>write your own question &amp; answer sentences</b> using the verbs and vocab you know, across <b>different tenses</b> (polite, past, negative, past-negative) and <b>start using the TE-form</b> (<b>~te kudasai</b>, <b>~te imasu</b>). The worked examples below are models to copy the pattern from — then make your own.</div>
+
+  <h3>1 · One verb, every tense (the pattern to copy)</h3>
+  <div class="note"><table>
+    <tr><td><b>tense</b></td><td><b>example</b></td><td><b>English</b></td></tr>
+    <tr><td>polite</td><td class="jp">mainichi yorugohan wo tsukurimasu</td><td>I make dinner every day</td></tr>
+    <tr><td>past</td><td class="jp">kinou yorugohan wo tsukurimashita</td><td>I made dinner yesterday</td></tr>
+    <tr><td>negative</td><td class="jp">kyou wa tsukurimasen</td><td>I'm not making it today</td></tr>
+    <tr><td>past-neg</td><td class="jp">kinou wa tsukurimasen deshita</td><td>I didn't make it yesterday</td></tr>
+    <tr><td>te-form</td><td class="jp">shichi ji ni tsukuri hajimemasu</td><td>I start making it at 7</td></tr>
+  </table></div>
+
+  <h3>2 · Model Q &amp; A sets</h3>
+  <div class="ex"><b>Q:</b> Hora eiga wo mimasu ka? — Do you watch horror movies?<br>
+    <b>A (present):</b> Hai, mimasu. — Yes, I do.<br>
+    <b>A (past):</b> Kinou hora eiga wo mimashita. — I watched one yesterday.<br>
+    <b>A (te + because):</b> Otto to miru node kowakunai desu. — I watch with my husband, so it's not scary.</div>
+  <div class="ex"><b>Q:</b> Osake wo nomimasu ka? — Do you drink alcohol?<br>
+    <b>A (negative):</b> Zenzen nomanai desu. — I don't drink at all.<br>
+    <b>A (a little):</b> Sukoshi dake nara nomimasu. — If it's just a little, I'll drink.</div>
+  <div class="ex"><b>Q:</b> Senshuumatsu wa dekakemashita ka? — Did you go out last weekend?<br>
+    <b>A (past-neg):</b> Iie, dekakemasen deshita. — No, I didn't go out.</div>
+  <div class="ex"><b>Q:</b> Isshuukan ni nan kai souji shimasu ka? — How many times a week do you clean?<br>
+    <b>A:</b> Isshuukan ni sankai souji shimasu. — I clean three times a week.</div>
+  <div class="ex"><b>Q:</b> Ima nani wo shite imasu ka? — What are you doing now?<br>
+    <b>A (te imasu):</b> Nihongo wo benkyou shite imasu. — I'm studying Japanese.<br>
+    <b>A (running late):</b> Oshigoto ni okurete imasu. — I'm running late for work.</div>
+  <div class="ex"><b>Requests (te kudasai / naide kudasai):</b><br>
+    Setsumei shite kudasai. — Please explain.<br>
+    Watashi no purin wo tabenai de kudasai. — Please don't eat my pudding.<br>
+    Ashita miitingu dakara okurenai de ne. — We have a meeting tomorrow, so don't be late, ok?</div>
+
+  <h3>2b · Longer sentences to read (te-form chains)</h3>
+  <div class="tip"><b>This is the key use of the te-form:</b> it <b>links actions in order</b> — "do this, <i>and then</i> this, <i>and then</i> this." Every action in the middle becomes a te-form; <b>only the very last verb carries the tense</b> (present, past, etc.). Read these out loud a few times and watch how they're stacked.</div>
+
+  <div class="note">
+  <div class="te-legend"><span><b style="background:rgba(63,125,84,.5)"></b>green = te-form ("and then")</span><span><b style="background:#3f7d54"></b>dark box = final verb (sets the tense)</span></div>
+  <div class="temap">
+    <div class="te-row te-time"><span class="te-tag">WHEN</span><span class="te-chip">Asa shichi ji ni<span class="en">in the morning at 7</span></span></div>
+    <div class="te-arrow">↓ and then</div>
+    <div class="te-row"><span class="te-tag">TE</span><span class="te-chip">okite,<span class="en">wake up</span></span></div>
+    <div class="te-arrow">↓</div>
+    <div class="te-row"><span class="te-tag">TE</span><span class="te-chip">koohii wo nonde,<span class="en">drink coffee</span></span></div>
+    <div class="te-arrow">↓</div>
+    <div class="te-row"><span class="te-tag">TE</span><span class="te-chip">nihongo wo benkyou shite,<span class="en">study Japanese</span></span></div>
+    <div class="te-arrow">↓</div>
+    <div class="te-row"><span class="te-tag">END</span><span class="te-fin">shigoto ni ikimasu.<span class="en">go to work · ★ tense lives here</span></span></div>
+  </div>
+  <div class="tip" style="margin-bottom:0">Same sentence, <b>past</b> — only the bottom box changes:</div>
+  <div class="temap">
+    <div class="te-row te-time"><span class="te-tag">WHEN</span><span class="te-chip">Kesa<span class="en">this morning</span></span></div>
+    <div class="te-arrow">↓</div>
+    <div class="te-row"><span class="te-tag">TE</span><span class="te-chip">okite,<span class="en">woke up</span></span></div>
+    <div class="te-arrow">↓</div>
+    <div class="te-row"><span class="te-tag">TE</span><span class="te-chip">koohii wo nonde,<span class="en">drank coffee</span></span></div>
+    <div class="te-arrow">↓</div>
+    <div class="te-row"><span class="te-tag">TE</span><span class="te-chip">nihongo wo benkyou shite,<span class="en">studied Japanese</span></span></div>
+    <div class="te-arrow">↓</div>
+    <div class="te-row"><span class="te-tag">END</span><span class="te-fin">shigoto ni ikimashita.<span class="en">went to work · ★ now it's past</span></span></div>
+  </div>
+  </div>
+
+  <h4>More daily-routine chains (present)</h4>
+  <div class="ex"><b>Asa shichi ji ni okite, koohii wo nonde, sukoshi nihongo wo benkyou shite, shigoto ni ikimasu.</b><br>
+    — In the morning I wake up at 7, drink coffee, study a little Japanese, and then go to work.</div>
+  <div class="ex"><b>Shigoto ga owatte, ie ni kaette, sentaku wo shite, yorugohan wo tsukurimasu.</b><br>
+    — Work finishes, I go home, do the laundry, and make dinner.</div>
+  <div class="ex"><b>Doyoubi wa ie wo souji shite, fuku wo aratte, tomodachi to koohii wo nomimasu.</b><br>
+    — On Saturday I clean the house, wash clothes, and have coffee with a friend.</div>
+  <div class="ex"><b>Otto to isshoni yorugohan wo tabete, hora eiga wo mite, juu ji ni nemasu.</b><br>
+    — I eat dinner with my husband, watch a horror movie, and go to bed at 10.</div>
+
+  <h4>Same idea, but past — notice only the LAST verb changes</h4>
+  <div class="ex"><b>Kinou wa jimu ni itte, undou shite, ie ni kaette, hayaku nemashita.</b><br>
+    — Yesterday I went to the gym, exercised, went home, and slept early.<br>
+    <i>Only <b>nemashita</b> is past — itte / shite / kaette stay in te-form, but the whole sentence reads as past.</i></div>
+
+  <h4>Requests (chain + te kudasai)</h4>
+  <div class="ex"><b>Sumimasen, kutsu wo nuide, te wo aratte, koko de matte kudasai.</b><br>
+    — Excuse me — please take off your shoes, wash your hands, and wait here.</div>
+  <div class="ex"><b>Kono hon wo yonde, wakaranai kanji wo shitsumon shite kudasai.</b><br>
+    — Please read this book and ask about any kanji you don't understand.</div>
+
+  <h4>Right now (te imasu) &amp; because / when</h4>
+  <div class="ex"><b>Ima ie ni ite, otto to yorugohan wo tsukutte imasu.</b><br>
+    — Right now I'm at home, making dinner with my husband.</div>
+  <div class="ex"><b>Hora eiga wa kowai desu ga, otto to isshoni miru node, zenzen kowakunai desu.</b><br>
+    — Horror movies are scary, but because I watch with my husband, they're not scary at all. (<b>ga</b> = but)</div>
+  <div class="ex"><b>Shigoto ni iku toki wa, koohii wo katte, densha no naka de nihongo wo benkyou shimasu.</b><br>
+    — When I go to work, I buy a coffee and study Japanese on the train.</div>
+
+  <h4>A wider mix of verbs — here's another one mapped out</h4>
+  <div class="note">
+  <div class="temap">
+    <div class="te-row te-time"><span class="te-tag">WHERE</span><span class="te-chip">Eki de<span class="en">at the station</span></span></div>
+    <div class="te-arrow">↓ and then</div>
+    <div class="te-row"><span class="te-tag">TE</span><span class="te-chip">tomodachi ni atte,<span class="en">meet a friend</span></span></div>
+    <div class="te-arrow">↓</div>
+    <div class="te-row"><span class="te-tag">TE</span><span class="te-chip">kafe ni itte,<span class="en">go to a cafe</span></span></div>
+    <div class="te-arrow">↓</div>
+    <div class="te-row"><span class="te-tag">TE</span><span class="te-chip">koohii wo nonde,<span class="en">drink coffee</span></span></div>
+    <div class="te-arrow">↓</div>
+    <div class="te-row"><span class="te-tag">END</span><span class="te-fin">takusan hanashimasu.<span class="en">talk a lot · ★ tense here</span></span></div>
+  </div>
+  </div>
+
+  <h4>More chains — present</h4>
+  <div class="ex"><b>Hon wo erande, kafe de koohii wo nonde, sukoshi yonde, kanji wo oboemasu.</b><br>
+    — I pick a book, drink coffee at the cafe, read a little, and memorize the kanji.</div>
+  <div class="ex"><b>Asa okite, doa wo akete, ongaku wo kiite, koohii wo nomimasu.</b><br>
+    — I wake up, open the door, listen to music, and drink coffee.</div>
+  <div class="ex"><b>Jimu ni itte, oyoide, sukoshi hashitte, ie ni kaette, mizu wo takusan nomimasu.</b><br>
+    — I go to the gym, swim, run a little, go home, and drink lots of water.</div>
+  <div class="ex"><b>Shigoto ga owatte, kaimono wo shite, ie ni modotte, yorugohan wo tsukutte, otto to tabemasu.</b><br>
+    — Work finishes, I shop, return home, make dinner, and eat with my husband.</div>
+
+  <h4>More chains — past (only the last verb is past)</h4>
+  <div class="ex"><b>Kinou tomodachi ni atte, kafe de hanashite, isshoni kaimono wo shite, eiga wo mimashita.</b><br>
+    — Yesterday I met a friend, chatted at a cafe, went shopping together, and watched a movie.</div>
+  <div class="ex"><b>Senshuu ie de sentaku wo shite, souji wo shite, fuku wo aratte, sukoshi yasumimashita.</b><br>
+    — Last week I did laundry, cleaned, washed clothes, and rested a little.</div>
+
+  <h4>Requests &amp; right-now (wider verbs)</h4>
+  <div class="ex"><b>Namae wo kaite, koko de matte, watashi wo yonde kudasai.</b><br>
+    — Please write your name, wait here, and call me.</div>
+  <div class="ex"><b>Ongaku wo kiite, kono uta wo oboete, tomodachi ni oshiete kudasai.</b><br>
+    — Please listen to the music, memorize this song, and teach it to your friend.</div>
+  <div class="ex"><b>Ima tomodachi wo matte ite, koohii wo nonde imasu.</b><br>
+    — Right now I'm waiting for a friend and drinking coffee.</div>
+  <div class="ex"><b>Otto wa ima ongaku wo kiite, hon wo yonde imasu.</b><br>
+    — My husband is listening to music and reading a book right now.</div>
+
+  <h4>Because / when (wider verbs)</h4>
+  <div class="ex"><b>Ashita hayaku okiru node, kyou wa sentaku wo shite, hayaku nemasu.</b><br>
+    — Because I wake up early tomorrow, today I'll do laundry and go to bed early.</div>
+  <div class="ex"><b>Hon wo yomu toki wa, koohii wo nonde, ongaku wo kiite, sukoshi yasumimasu.</b><br>
+    — When I read, I drink coffee, listen to music, and relax a bit.</div>
+
+  <div class="tip"><b>How they're stacked (sentence 1):</b><br>
+    [when] <b>Asa shichi ji ni</b> → [action] <b>okite,</b> → [object + action] <b>koohii wo nonde,</b> → [object + action] <b>nihongo wo benkyou shite,</b> → [final: sets the tense] <b>shigoto ni ikimasu.</b><br>
+    Swap the last verb to <b>ikimashita</b> and the entire chain becomes past — nothing else changes.</div>
+
+  <h3>3 · TE-form reference (dictionary → te)</h3>
+  <div class="tip">Build your own sentences from these. Group 2 = drop ru +te; Group 1 by ending; Group 3 = shite / kite.</div>
+  <div class="note"><table>
+    <tr><td class="jp">taberu → tabete</td><td>eat</td></tr>
+    <tr><td class="jp">miru → mite</td><td>watch</td></tr>
+    <tr><td class="jp">dekakeru → dekakete</td><td>go out</td></tr>
+    <tr><td class="jp">nomu → nonde</td><td>drink</td></tr>
+    <tr><td class="jp">yomu → yonde</td><td>read</td></tr>
+    <tr><td class="jp">asobu → asonde</td><td>play</td></tr>
+    <tr><td class="jp">kaku → kaite</td><td>write</td></tr>
+    <tr><td class="jp">kiku → kiite</td><td>listen</td></tr>
+    <tr><td class="jp">oyogu → oyoide</td><td>swim</td></tr>
+    <tr><td class="jp">nugu → nuide</td><td>take off</td></tr>
+    <tr><td class="jp">hanasu → hanashite</td><td>speak</td></tr>
+    <tr><td class="jp">kau → katte</td><td>buy</td></tr>
+    <tr><td class="jp">matsu → matte</td><td>wait</td></tr>
+    <tr><td class="jp">kaeru → kaette</td><td>go home</td></tr>
+    <tr><td class="jp">iku → itte</td><td>go (exception)</td></tr>
+    <tr><td class="jp">suru → shite</td><td>do</td></tr>
+    <tr><td class="jp">kuru → kite</td><td>come</td></tr>
+  </table></div>
+
+  <h3>4 · New vocabulary this lesson</h3>
+  <div class="note"><table>
+    <tr><td class="jp">noboru</td><td>to climb</td></tr>
+    <tr><td class="jp">erabu</td><td>to choose / pick</td></tr>
+    <tr><td class="jp">shaberu</td><td>to chat / talk</td></tr>
+    <tr><td class="jp">undou suru</td><td>to exercise</td></tr>
+    <tr><td class="jp">unten suru</td><td>to drive</td></tr>
+    <tr><td class="jp">rikai suru</td><td>to understand</td></tr>
+    <tr><td class="jp">ki</td><td>tree</td></tr>
+    <tr><td class="jp">kaidan</td><td>stairs</td></tr>
+    <tr><td class="jp">esukareeta</td><td>escalator</td></tr>
+    <tr><td class="jp">purin</td><td>pudding / custard</td></tr>
+    <tr><td class="jp">osake</td><td>alcohol / sake</td></tr>
+    <tr><td class="jp">horaeiga</td><td>horror movie</td></tr>
+    <tr><td class="jp">kowakunai</td><td>not scary</td></tr>
+    <tr><td class="jp">kutsushita</td><td>socks</td></tr>
+    <tr><td class="jp">shitagi</td><td>underwear</td></tr>
+    <tr><td class="jp">zubon</td><td>pants / trousers</td></tr>
+    <tr><td class="jp">nokorimono</td><td>leftovers</td></tr>
+    <tr><td class="jp">ryokan</td><td>Japanese inn</td></tr>
+    <tr><td class="jp">shashin</td><td>photo</td></tr>
+    <tr><td class="jp">miitingu</td><td>meeting</td></tr>
+    <tr><td class="jp">shukudai</td><td>homework</td></tr>
+    <tr><td class="jp">shigotoba</td><td>workplace</td></tr>
+    <tr><td class="jp">tekitou ni</td><td>randomly / casually</td></tr>
+    <tr><td class="jp">attoiuma</td><td>in no time</td></tr>
+    <tr><td class="jp">node / kara</td><td>because (formal / casual)</td></tr>
+    <tr><td class="jp">toki</td><td>when</td></tr>
+    <tr><td class="jp">zenzen / amari</td><td>(not) at all / (not) much</td></tr>
+    <tr><td class="jp">sankai · nan kai</td><td>three times · how many times</td></tr>
+  </table></div>
+  </div><!-- /hw for l7 -->
 </section>
 </main>
 
-<footer>Trial (0803) · Lesson 1 (0810) · Lesson 2 (0813) · Lesson 3 (0818) · Lesson 4 (0820) + homework · use the “Studying” menu up top to switch lessons · keep adding after each lesson </footer>
 
 <script>
 /* ---- Adjective colour categories (applied site-wide by annotate) ----
@@ -2376,6 +2726,21 @@ const decks = {
   ],
   "HW6 · NAI-form drill (30 verbs)": [
     ["arawanai","don't wash"],["tsukuranai","don't make"],["nuganai","don't take off"],["tsukanai","don't arrive"],["dekakenai","don't go out"],["modoranai","don't go back"],["ugokanai","don't move"],["nokosanai","don't leave unfinished"],["tomaranai","don't stop / stay"],["wakaranai","don't understand"],["dekinai","can't do"],["iranai","don't need"],["okurenai","not be late"],["iwanai","don't say"],["tsutaenai","don't tell"],["morawanai","don't receive"],["warawanai","don't laugh"],["omowanai","don't think"],["oboenai","don't remember"],["wasurenai","don't forget"],["mayowanai","don't get lost"],["shiranai","don't know"],["kowarenai","don't break"],["komaranai","not be in trouble"],["owaranai","don't finish"],["yasumanai","don't rest"],["hashiranai","don't run"],["tsukawanai","don't use"],["yobanai","don't call"],["osanai","don't push"]
+  ],
+  "L7 · New verbs (dictionary)": [
+    ["noboru","to climb"],["erabu","to choose / pick"],["shaberu","to chat / talk"]
+  ],
+  "L7 · Suru-verbs (Group 3)": [
+    ["undousuru","to exercise"],["untensuru","to drive"],["rikaisuru","to understand"]
+  ],
+  "L7 · Te-form (start here)": [
+    ["tabete","eat → te-form"],["nonde","drink → te-form"],["mite","watch → te-form"],["shite","do → te-form"],["kite","come → te-form"],["itte","go / say → te-form"],["kaite","write → te-form"],["yonde","read → te-form"],["kiite","listen → te-form"],["katte","buy → te-form"],["hanashite","speak → te-form"],["matte","wait → te-form"],["asonde","play → te-form"],["kaette","go home → te-form"]
+  ],
+  "L7 · Everyday nouns": [
+    ["osake","alcohol / sake"],["purin","pudding"],["horaeiga","horror movie"],["kutsushita","socks"],["shitagi","underwear"],["zubon","pants / trousers"],["nokorimono","leftovers"],["ryokan","Japanese inn"],["shashin","photo"],["miitingu","meeting"],["shukudai","homework"],["kaidan","stairs"],["esukareeta","escalator"],["ki","tree"],["ba","place"],["shigotoba","workplace"],["unten","driving"],["rikai","understanding"]
+  ],
+  "L7 · Adverbs & connectors": [
+    ["attoiuma","in no time"],["tekitouni","randomly / casually"],["node","because (formal)"],["sankai","three times"],["kowakunai","not scary"]
   ]
 };
 const TRIAL_CATS=["Greetings & basics","Particles","desu & verbs","Question words","Likes & food","Self-introduction","Family & languages","Descriptions"];
@@ -2392,6 +2757,7 @@ const L5_CATS=["L5 · Frequency & time","L5 · This / that & directions","L5 · 
 const HW5_CATS=["HW5 · Verbs & daily life"];
 const L6_CATS=["L6 · New verbs (dictionary)","L6 · Suru-verbs (Group 3)","L6 · Plain negative (NAI-form)","L6 · Everyday nouns","L6 · Adverbs & frequency"];
 const HW6_CATS=["HW6 · NAI-form drill (30 verbs)"];
+const L7_CATS=["L7 · New verbs (dictionary)","L7 · Suru-verbs (Group 3)","L7 · Te-form (start here)","L7 · Everyday nouns","L7 · Adverbs & connectors"];
 function catsForLesson(les){
   return les==='trial'?TRIAL_CATS.slice()
     : les==='l1'?[...L1_CATS,...HW1_CATS]
@@ -2400,6 +2766,7 @@ function catsForLesson(les){
     : les==='l4'?[...L4_CATS,...HW4_CATS]
     : les==='l5'?[...L5_CATS,...HW5_CATS]
     : les==='l6'?[...L6_CATS,...HW6_CATS]
+    : les==='l7'?L7_CATS.slice()
     : les==='hw1'?HW1_CATS.slice()
     : les==='hw2'?HW2_CATS.slice()
     : les==='hw3'?HW3_CATS.slice()
@@ -2407,7 +2774,7 @@ function catsForLesson(les){
     : les==='hw4'?HW4_CATS.slice()
     : les==='hw5'?HW5_CATS.slice()
     : les==='hw6'?HW6_CATS.slice()
-    : [...TRIAL_CATS,...L1_CATS,...HW1_CATS,...L2_CATS,...HW2_CATS,...L3_CATS,...HW3_CATS,...L4_CATS,...HW4_CATS,...L5_CATS,...HW5_CATS,...L6_CATS,...HW6_CATS];
+    : [...TRIAL_CATS,...L1_CATS,...HW1_CATS,...L2_CATS,...HW2_CATS,...L3_CATS,...HW3_CATS,...L4_CATS,...HW4_CATS,...L5_CATS,...HW5_CATS,...L6_CATS,...HW6_CATS,...L7_CATS];
 }
 function poolFor(les){ const a=[]; catsForLesson(les).forEach(c=>{ if(decks[c]) a.push(...decks[c]); }); return a; }
 
@@ -2644,7 +3011,34 @@ const KANA={
   shinkansen:"しんかんせん", gyuunyuu:"ぎゅうにゅう", hayaku:"はやく", osoku:"おそく", reizouko:"れいぞうこ", botan:"ボタン",
   kaigi:"かいぎ", ofisu:"オフィス", takushii:"タクシー", uubaa:"ウーバー", sutaffu:"スタッフ", tomato:"トマト",
   hikouki:"ひこうき", kaado:"カード", genkin:"げんきん", fudan:"ふだん", taitei:"たいてい", rokeeshon:"ロケーション",
-  chikoku:"ちこく", nanimo:"なにも", puuru:"プール"
+  chikoku:"ちこく", nanimo:"なにも", puuru:"プール",
+  // ===== Lesson 7 — new vocab =====
+  attoiuma:"あっというま", noboru:"のぼる", noborimasu:"のぼります", noboranai:"のぼらない", noboranaide:"のぼらないで",
+  ki:"き", kaidan:"かいだん", esukareeta:"エスカレーター", purin:"プリン",
+  tekitou:"てきとう", tekitouni:"てきとうに", erabu:"えらぶ", erabimasu:"えらびます", erabanai:"えらばない",
+  osake:"おさけ", shaberu:"しゃべる", horaeiga:"ホラーえいが", kowakunai:"こわくない",
+  node:"ので", undousuru:"うんどうする", undoushimasu:"うんどうします", shukudai:"しゅくだい",
+  unten:"うんてん", untensuru:"うんてんする", untenshimasu:"うんてんします",
+  kutsushita:"くつした", shitagi:"したぎ", zubon:"ズボン", ba:"ば", shigotoba:"しごとば", nokorimono:"のこりもの",
+  ryokan:"りょかん", shashin:"しゃしん", miitingu:"ミーティング", rikai:"りかい", rikaisuru:"りかいする", rikaishimasu:"りかいします",
+  sankai:"さんかい",
+  // ===== Lesson 7 — te-forms =====
+  shite:"して", kite:"きて", itte:"いって", kaette:"かえって", tsuite:"ついて", atte:"あって", matte:"まって",
+  nete:"ねて", okite:"おきて", tabete:"たべて", nonde:"のんで", hanashite:"はなして", kiite:"きいて", mite:"みて",
+  yonde:"よんで", kaite:"かいて", katte:"かって", aratte:"あらって", benkyoushite:"べんきょうして", oshiete:"おしえて",
+  asonde:"あそんで", oyoide:"およいで", tsukutte:"つくって", akete:"あけて", wakatte:"わかって", chigatte:"ちがって",
+  shinde:"しんで", owatte:"おわって", nuide:"ぬいで", dekakete:"でかけて", modotte:"もどって", ugoite:"うごいて",
+  nokoshite:"のこして", tomatte:"とまって", dekite:"できて", okurete:"おくれて", tsutaete:"つたえて", moratte:"もらって",
+  yasunde:"やすんで", hashitte:"はしって", tsukatte:"つかって", oshite:"おして", omotte:"おもって", waratte:"わらって",
+  oboete:"おぼえて", wasurete:"わすれて", mayotte:"まよって", shitte:"しって", kowarete:"こわれて", komatte:"こまって",
+  shitsumonshite:"しつもんして", setsumeishite:"せつめいして", soujishite:"そうじして", sentakushite:"せんたくして", ite:"いて",
+  // ===== Lesson 7 — new verb full forms + te =====
+  noborimashita:"のぼりました", noborimasen:"のぼりません", nobotte:"のぼって",
+  erabimashita:"えらびました", erabimasen:"えらびません", erande:"えらんで",
+  shaberimasu:"しゃべります", shaberimashita:"しゃべりました", shaberimasen:"しゃべりません", shaberanai:"しゃべらない", shabette:"しゃべって",
+  undoushimashita:"うんどうしました", undoushimasen:"うんどうしません", undoushinai:"うんどうしない", undoushite:"うんどうして",
+  untenshimashita:"うんてんしました", untenshimasen:"うんてんしません", untenshinai:"うんてんしない", untenshite:"うんてんして",
+  rikaishimashita:"りかいしました", rikaishimasen:"りかいしません", rikaishinai:"りかいしない", rikaishite:"りかいして"
 };
 
 /* ---------- TABS ---------- */
@@ -3079,7 +3473,34 @@ const GL={
   shinkansen:"bullet train", gyuunyuu:"milk", hayaku:"early / fast (adv)", osoku:"late (adv)", reizouko:"refrigerator", botan:"button",
   kaigi:"meeting", ofisu:"office", takushii:"taxi", uubaa:"Uber", sutaffu:"staff", tomato:"tomato",
   hikouki:"airplane", kaado:"card", genkin:"cash", fudan:"usually / normally", taitei:"usually / mostly", rokeeshon:"location",
-  chikoku:"lateness / being late", nanimo:"(not) anything (+ negative)", puuru:"pool"
+  chikoku:"lateness / being late", nanimo:"(not) anything (+ negative)", puuru:"pool",
+  // ===== Lesson 7 — new vocab =====
+  attoiuma:"in no time / before you know it", noboru:"to climb", noborimasu:"climb (polite)", noboranai:"don't climb (plain neg)", noboranaide:"don't climb (please)",
+  ki:"tree", kaidan:"stairs", esukareeta:"escalator", purin:"pudding / custard",
+  tekitou:"rough / casual", tekitouni:"randomly / casually", erabu:"to choose / pick", erabimasu:"choose (polite)", erabanai:"don't choose (plain neg)",
+  osake:"alcohol / sake", shaberu:"to chat / talk", horaeiga:"horror movie", kowakunai:"not scary",
+  node:"because (formal)", undousuru:"to exercise", undoushimasu:"exercise (polite)", shukudai:"homework",
+  unten:"driving", untensuru:"to drive", untenshimasu:"drive (polite)",
+  kutsushita:"socks", shitagi:"underwear", zubon:"pants / trousers", ba:"place", shigotoba:"workplace", nokorimono:"leftovers",
+  ryokan:"Japanese inn", shashin:"photo", miitingu:"meeting", rikai:"understanding", rikaisuru:"to understand", rikaishimasu:"understand (polite)",
+  sankai:"three times",
+  // ===== Lesson 7 — te-forms =====
+  shite:"do (te-form)", kite:"come (te-form)", itte:"go / say (te-form)", kaette:"return home (te-form)", tsuite:"arrive (te-form)", atte:"meet (te-form)", matte:"wait (te-form)",
+  nete:"sleep (te-form)", okite:"wake up (te-form)", tabete:"eat (te-form)", nonde:"drink (te-form)", hanashite:"speak (te-form)", kiite:"listen (te-form)", mite:"watch (te-form)",
+  yonde:"read / call (te-form)", kaite:"write (te-form)", katte:"buy (te-form)", aratte:"wash (te-form)", benkyoushite:"study (te-form)", oshiete:"teach (te-form)",
+  asonde:"play (te-form)", oyoide:"swim (te-form)", tsukutte:"make (te-form)", akete:"open (te-form)", wakatte:"understand (te-form)", chigatte:"differ (te-form)",
+  shinde:"die (te-form)", owatte:"finish (te-form)", nuide:"take off (te-form)", dekakete:"go out (te-form)", modotte:"go back (te-form)", ugoite:"move (te-form)",
+  nokoshite:"leave unfinished (te-form)", tomatte:"stop / stay (te-form)", dekite:"be able (te-form)", okurete:"be late (te-form)", tsutaete:"tell (te-form)", moratte:"receive (te-form)",
+  yasunde:"rest (te-form)", hashitte:"run (te-form)", tsukatte:"use (te-form)", oshite:"push (te-form)", omotte:"think (te-form)", waratte:"laugh (te-form)",
+  oboete:"remember (te-form)", wasurete:"forget (te-form)", mayotte:"be unsure (te-form)", shitte:"know (te-form)", kowarete:"break (te-form)", komatte:"have trouble (te-form)",
+  shitsumonshite:"ask a question (te-form)", setsumeishite:"explain (te-form)", soujishite:"clean (te-form)", sentakushite:"do laundry (te-form)", ite:"exist / be (te-form)",
+  // ===== Lesson 7 — new verb full forms + te =====
+  noborimashita:"climbed (polite past)", noborimasen:"don't climb (polite)", nobotte:"climb (te-form)",
+  erabimashita:"chose (polite past)", erabimasen:"don't choose (polite)", erande:"choose (te-form)",
+  shaberimasu:"chat (polite)", shaberimashita:"chatted (polite past)", shaberimasen:"don't chat (polite)", shaberanai:"don't chat (plain neg)", shabette:"chat (te-form)",
+  undoushimashita:"exercised (polite past)", undoushimasen:"don't exercise (polite)", undoushinai:"don't exercise (plain neg)", undoushite:"exercise (te-form)",
+  untenshimashita:"drove (polite past)", untenshimasen:"don't drive (polite)", untenshinai:"don't drive (plain neg)", untenshite:"drive (te-form)",
+  rikaishimashita:"understood (polite past)", rikaishimasen:"don't understand (polite)", rikaishinai:"don't understand (plain neg)", rikaishite:"understand (te-form)"
 };
 function annotate(str){
   const hadNew=/class="newtag"/.test(str);
@@ -3498,6 +3919,23 @@ const phrasesL6=[
 ];
 renderPhrases(phrasesL6,'phraseBoxL6');
 
+const phrasesL7=[
+  ["Mite kudasai.","Please look."],
+  ["Setsumei shite kudasai.","Please explain."],
+  ["Watashi no purin wo tabenai de.","Don't eat my pudding."],
+  ["Densha no naka de hanasanai de.","Don't talk on the train."],
+  ["Oshigoto ni okurete imasu.","I'm running late for work."],
+  ["Chikoku shite imasu.","I'm late."],
+  ["Otto to isshoni miru node kowakunai desu.","I watch with my husband, so it's not scary."],
+  ["Oshigoto no toki unten shimasu.","I drive when it's for work."],
+  ["Zenzen nomanai desu.","I don't drink at all."],
+  ["Sukoshi dake nara nomimasu.","If it's just a little, I'll drink."],
+  ["Senshuumatsu wa dekakemasen deshita.","I didn't go out last weekend."],
+  ["Isshuukan ni sankai souji shimasu.","I clean three times a week."],
+  ["Kinou no nokorimono wo tabemashita.","I ate yesterday's leftovers."]
+];
+renderPhrases(phrasesL7,'phraseBoxL7');
+
 /* ---------- TALK ---------- */
 const NEW=`<span class="newtag">new</span>`;
 // [question romaji, question en, answer romaji, answer en, how-it-works note]
@@ -3771,6 +4209,18 @@ const talkL6=[
 ];
 renderTalk(talkL6,'chatL6','qaBoxL6');
 
+const talkL7=[
+  ["Hora eiga wo mimasu ka?","Do you watch horror movies?",`Hai, otto to isshoni mimasu. ${NEW}`,"Yes, I watch with my husband.","<b>isshoni</b> = together."],
+  ["Kowaku nai desu ka?","Isn't it scary?",`Otto to miru node kowakunai desu. ${NEW}`,"With my husband, so it's not scary.","<b>node</b> = because: reason + node + result."],
+  ["Osake wo nomimasu ka?","Do you drink alcohol?",`Zenzen nomanai desu. ${NEW}`,"I don't drink at all.","<b>zenzen ~nai</b> = not at all."],
+  ["Fudan nani wo shimasu ka?","What do you usually do?",`Amari nanimo shinai desu. ${NEW}`,"I don't do much.","<b>amari ~nai</b> = not much / rarely."],
+  ["Senshuumatsu wa dekakemashita ka?","Did you go out last weekend?",`Iie, dekakemasen deshita. ${NEW}`,"No, I didn't go out.","Polite past-negative: <b>~masen deshita</b>."],
+  ["Isshuukan ni nan kai sentaku shimasu ka?","How many times a week do you do laundry?",`Sankai shimasu. ${NEW}`,"Three times.","<b>kai</b> = times; <b>nan kai</b> = how many times."],
+  ["Oshigoto ni iku toki unten shimasu ka?","Do you drive when you go to work?",`Hai, oshigoto no toki unten shimasu. ${NEW}`,"Yes, I drive when it's for work.","<b>toki</b> = when (noun + no toki)."],
+  ["Setsumei shite kudasai.","Please explain.",`Hai, setsumei shimasu. ${NEW}`,"Sure, I'll explain.","<b>~te kudasai</b> = please do; te-form of suru is <b>shite</b>."]
+];
+renderTalk(talkL7,'chatL7','qaBoxL7');
+
 /* ---------- ALL: master reference — every word sorted by meaning (word-level, not by deck) ---------- */
 function renderAllNotes(){
   const box=document.getElementById('allNotes'); if(!box) return;
@@ -3880,8 +4330,17 @@ function renderAllNotes(){
     ["shitsumonsuru","to ask a question","shitsumonshimasu","shitsumonshimashita","shitsumonshimasen","shitsumonshinai"],
     ["setsumeisuru","to explain","setsumeishimasu","setsumeishimashita","setsumeishimasen","setsumeishinai"],
     ["soujisuru","to clean","soujishimasu","soujishimashita","soujishimasen","soujishinai"],
-    ["sentakusuru","to do laundry","sentakushimasu","sentakushimashita","sentakushimasen","sentakushinai"]
+    ["sentakusuru","to do laundry","sentakushimasu","sentakushimashita","sentakushimasen","sentakushinai"],
+    // ----- Lesson 7 verbs -----
+    ["noboru","to climb","noborimasu","noborimashita","noborimasen","noboranai"],
+    ["erabu","to choose / pick","erabimasu","erabimashita","erabimasen","erabanai"],
+    ["shaberu","to chat / talk","shaberimasu","shaberimashita","shaberimasen","shaberanai"],
+    ["undousuru","to exercise","undoushimasu","undoushimashita","undoushimasen","undoushinai"],
+    ["untensuru","to drive","untenshimasu","untenshimashita","untenshimasen","untenshinai"],
+    ["rikaisuru","to understand","rikaishimasu","rikaishimashita","rikaishimasen","rikaishinai"]
   ];
+  // te-form for each verb (shown on the verb card in All-Notes)
+  const TE={suru:"shite",kuru:"kite",iku:"itte",kaeru:"kaette",tsuku:"tsuite",au:"atte",matsu:"matte",neru:"nete",okiru:"okite",taberu:"tabete",nomu:"nonde",hanasu:"hanashite",kiku:"kiite",miru:"mite",yomu:"yonde",kaku:"kaite",kau:"katte",arau:"aratte",benkyousuru:"benkyoushite",oshieru:"oshiete",asobu:"asonde",oyogu:"oyoide",tsukuru:"tsukutte",akeru:"akete",hajimeru:"hajimete",wakaru:"wakatte",chigau:"chigatte",shinu:"shinde",owaru:"owatte",nugu:"nuide",dekakeru:"dekakete",modoru:"modotte",ugoku:"ugoite",nokosu:"nokoshite",tomaru:"tomatte",dekiru:"dekite",iru:"itte",okureru:"okurete",iu:"itte",tsutaeru:"tsutaete",morau:"moratte",yasumu:"yasunde",hashiru:"hashitte",tsukau:"tsukatte",yobu:"yonde",osu:"oshite",omou:"omotte",warau:"waratte",oboeru:"oboete",wasureru:"wasurete",mayou:"mayotte",shiru:"shitte",kowareru:"kowarete",komaru:"komatte",shitsumonsuru:"shitsumonshite",setsumeisuru:"setsumeishite",soujisuru:"soujishite",sentakusuru:"sentakushite",noboru:"nobotte",erabu:"erande",shaberu:"shabette",undousuru:"undoushite",untensuru:"untenshite",rikaisuru:"rikaishite"};
   const VERBS=[
     {en:"to be (desu)", forms:[["da","dictionary (casual)"],["desu","polite"],["deshita","past — deshita"],["janai","negative — is not"]]},
     {en:"to exist / have (living things)", forms:[["imasu","polite"],["imashita","past — imashita"],["imasen","negative — imasen"],["inai","plain neg — inai"]]}
@@ -3891,10 +4350,11 @@ function renderAllNotes(){
     [v[3],"past — mashita"],
     [v[4],"negative — masen"],
     [v[5],"plain neg — nai"]
-  ]})));
+  ].concat(TE[v[0]]?[[TE[v[0]],"te-form — te"]]:[]) })));
   // a couple of casual-past (plain past) forms taught in the lessons
   (VERBS.find(v=>v.en==="to eat")||{forms:[]}).forms.push(["tabeta","casual past — ta"]);
   (VERBS.find(v=>v.en==="to start")||{forms:[]}).forms.push(["hajimeta","casual past — ta"]);
+  (VERBS.find(v=>v.en==="to exist / have (living things)")||{forms:[]}).forms.push(["ite","te-form — te"]);
   // gather every word (all lessons, minus Fake HW3), plus a few taught words that aren't flashcards
   const words={}, extras=[["doko","where"],["donokurai","how long / how much"],["yo","(emphasis: you know)"],["mae","before / front"],["demo","but"]];
   Object.keys(decks).filter(k=>!/^Fake HW3/.test(k)).forEach(k=>{ decks[k].forEach(p=>{ const r=p[0].toLowerCase(); if(!(r in words)) words[r]=p[1]; }); });
@@ -4190,6 +4650,8 @@ const PQ=[
     {d:"iu",en:"say",p:"iimasu",pa:"iimashita",n:"iimasen",na:"iwanai"},
     {d:"morau",en:"receive",p:"moraimasu",pa:"moraimashita",n:"moraimasen",na:"morawanai"}
   ];
+  const TEP={taberu:"tabete",nomu:"nonde",iku:"itte",miru:"mite",kaku:"kaite",yomu:"yonde",kiku:"kiite",kau:"katte",au:"atte",suru:"shite",neru:"nete",kaeru:"kaette",hanasu:"hanashite",asobu:"asonde",matsu:"matte",oyogu:"oyoide",akeru:"akete",oshieru:"oshiete",tsukuru:"tsukutte",tsuku:"tsuite",okiru:"okite",benkyousuru:"benkyoushite",wakaru:"wakatte",kuru:"kite",arau:"aratte",yobu:"yonde",tsukau:"tsukatte",owaru:"owatte",nugu:"nuide",dekakeru:"dekakete",modoru:"modotte",ugoku:"ugoite",tomaru:"tomatte",hashiru:"hashitte",osu:"oshite",warau:"waratte",omou:"omotte",iu:"itte",morau:"moratte"};
+  CONJ.forEach(v=>{ v.te=TEP[v.d]; });
   const BUILD=[
     {en:"I ate sushi at a restaurant.",ja:"resutoran de sushi wo tabemashita"},
     {en:"I drink coffee every day.",ja:"mainichi kouhii wo nomimasu"},
@@ -4295,7 +4757,7 @@ const PQ=[
 
   // ---- CONJUGATION ----
   function renderConj(){
-    const v=pick(CONJ); const forms=[['polite','p'],['past','pa'],['polite negative','n'],['plain negative','na']]; const t=pick(forms);
+    const v=pick(CONJ); const forms=[['polite','p'],['past','pa'],['polite negative','n'],['plain negative','na'],['te-form','te']]; const t=pick(forms);
     box.innerHTML=`<div class="tip">Type the <b>${t[0]}</b> form of this verb:</div>
       <div style="font-size:1.4rem;margin:8px 0">${blue(v.d)} <span style="color:var(--ink2);font-size:1rem">(${v.en})</span> → <b>${t[0]}</b></div>
       <input id="conjIn" class="quiz-input" placeholder="type the form, then Enter" autocapitalize="off" autocomplete="off" spellcheck="false">
