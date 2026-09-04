@@ -2688,17 +2688,18 @@
   <h3>Part A — Te-form by group (quick reference)</h3>
   <div class="note"><table>
     <tr><td><b>group</b></td><td><b>rule</b></td><td><b>examples</b></td></tr>
-    <tr><td>Group 2</td><td class="jp">drop ru + te</td><td class="jp">taberu→tabete · miru→mite · miseru→misete</td></tr>
-    <tr><td>Group 3</td><td class="jp">irregular</td><td class="jp">suru→shite · kuru→kite · yoyaku suru→yoyaku shite</td></tr>
-    <tr><td>Group 1: u·tsu·ru</td><td class="jp">→ tte</td><td class="jp">kau→katte · matsu→matte · suwaru→suwatte · hairu→haitte</td></tr>
-    <tr><td>Group 1: mu·bu·nu</td><td class="jp">→ nde</td><td class="jp">nomu→nonde · asobu→asonde · tanomu→tanonde</td></tr>
-    <tr><td>Group 1: ku</td><td class="jp">→ ite</td><td class="jp">kiku→kiite · aruku→aruite (exception: iku→itte)</td></tr>
+    <tr><td>Group 2</td><td class="jp">drop ru + te</td><td class="jp">taberu→tabete · miru→mite · neru→nete · okiru→okite · akeru→akete · miseru→misete</td></tr>
+    <tr><td>Group 3</td><td class="jp">irregular</td><td class="jp">suru→shite · kuru→kite · benkyou suru→benkyou shite · yoyaku suru→yoyaku shite · souji suru→souji shite · ryokou suru→ryokou shite</td></tr>
+    <tr><td>Group 1: u·tsu·ru</td><td class="jp">→ tte</td><td class="jp">kau→katte · matsu→matte · kaeru→kaette · suwaru→suwatte · tomaru→tomatte · hairu→haitte</td></tr>
+    <tr><td>Group 1: mu·bu·nu</td><td class="jp">→ nde</td><td class="jp">nomu→nonde · yomu→yonde · asobu→asonde · shinu→shinde · tanomu→tanonde</td></tr>
+    <tr><td>Group 1: ku</td><td class="jp">→ ite</td><td class="jp">kiku→kiite · aruku→aruite · haku→haite (exception: iku→itte)</td></tr>
     <tr><td>Group 1: gu</td><td class="jp">→ ide</td><td class="jp">oyogu→oyoide · isogu→isoide</td></tr>
     <tr><td>Group 1: su</td><td class="jp">→ shite</td><td class="jp">hanasu→hanashite · sagasu→sagashite</td></tr>
   </table></div>
   <div class="ex"><b>Connecting actions:</b> the first verb becomes te-form; the last verb sets the tense.<br>
     <b>Resutoran ni itte, menu wo mite, raamen wo tanomimasu.</b> — I go to a restaurant, look at the menu, and order ramen.<br>
     <b>Koohii wo katte, nonde, shigoto ni ikimasu.</b> — I buy a coffee, drink it, and go to work.</div>
+  <div class="tip"><b>The te-form has no single English meaning</b> — it connects to other grammar: <b>tabete, nomu</b> (eat and drink) · <b>tabete imasu</b> (am eating) · <b>tabete kudasai</b> (please eat) · <b>tabete mo ii desu ka</b> (may I eat).</div>
 
   <h3>Part B — Sentence building (with answers)</h3>
   <div class="note"><table>
@@ -2717,6 +2718,8 @@
     <b>A:</b> Otto to ikimasu.</div>
   <div class="ex"><b>Q: Donna resutoran ga suki desu ka?</b> — What kind of restaurant do you like?<br>
     <b>A:</b> Shizuka na resutoran ga suki desu.</div>
+  <div class="ex"><b>Q: Shizuka na resutoran ga suki desu ka?</b> — Do you like quiet restaurants?<br>
+    <b>A:</b> Hai, suki desu.</div>
   <div class="ex"><b>Q: Nigiyaka na resutoran ga suki desu ka?</b> — Do you like lively restaurants?<br>
     <b>A:</b> Iie, urusai node amari suki janai desu. (No, they're noisy, so I don't like them much.)</div>
   <div class="ex"><b>Q: Teeburu seki, kauntaa seki, madogawa no seki no naka de, ichiban dore ga suki desu ka?</b> — Among a table seat, counter seat, and window seat, which do you like most?<br>
@@ -4715,7 +4718,10 @@ function renderAllNotes(){
   (VERBS.find(v=>v.en==="to start")||{forms:[]}).forms.push(["hajimeta","casual past — ta"]);
   (VERBS.find(v=>v.en==="to exist / have (living things)")||{forms:[]}).forms.push(["ite","te-form — te"]);
   // gather every word (all lessons, minus Fake HW3), plus a few taught words that aren't flashcards
-  const words={}, extras=[["doko","where"],["donokurai","how long / how much"],["yo","(emphasis: you know)"],["mae","before / front"],["demo","but"]];
+  const words={}, extras=[["doko","where"],["donokurai","how long / how much"],["yo","(emphasis: you know)"],["mae","before / front"],["demo","but"],
+    ["gohanya","casual eatery"],["izakaya","izakaya (pub)"],["raamenya","ramen shop"],["udonya","udon shop"],["suteekiya","steakhouse"],
+    ["ue","on / above"],["oku","back / interior"],["gawa","side"],["douzo","please / go ahead"],["kochira","this way"],["sochira","that way"],
+    ["juuyou","significant"],["jouhou","information"],["tsuzuki","continuation / the rest"],["begetarian","vegetarian"]];
   Object.keys(decks).filter(k=>!/^Fake HW3/.test(k)).forEach(k=>{ decks[k].forEach(p=>{ const r=p[0].toLowerCase(); if(!(r in words)) words[r]=p[1]; }); });
   extras.forEach(p=>{ const r=p[0].toLowerCase(); if(!(r in words)) words[r]=p[1]; });
   const claimed={}; VERBS.forEach(f=>f.forms.forEach(fm=>claimed[fm[0]]=1));   // verb forms live inside their card
