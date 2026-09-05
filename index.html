@@ -65,11 +65,22 @@
   h3{color:var(--ink);font-size:1.15rem;font-weight:700;letter-spacing:-.015em;border-bottom:1px solid var(--line);padding-bottom:8px;margin-top:36px}
   h4{color:var(--ink2);font-size:.98rem;font-weight:700;margin:22px 0 8px;letter-spacing:-.01em}
   .note{background:linear-gradient(180deg,rgba(255,255,255,.92),rgba(255,255,255,.78));border:var(--ring);border-radius:18px;padding:18px 22px;margin:16px 0;
-    -webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);box-shadow:var(--shadow);transition:transform .2s,box-shadow .2s}
+    -webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);box-shadow:var(--shadow);transition:transform .2s,box-shadow .2s;overflow-x:auto}
   .note:hover{transform:translateY(-2px);box-shadow:0 16px 38px -14px rgba(28,60,40,.22)}
+  @media(max-width:600px){
+    main{padding:18px 12px 50px}
+    td{padding:6px 7px}
+    td.jp{width:auto}
+    .note{padding:14px 15px}
+    .note table{font-size:.92rem}
+  }
   table{width:100%;border-collapse:collapse;margin:6px 0}
   td{padding:7px 10px;border-bottom:1px solid var(--line);vertical-align:top}
   td.jp{font-weight:700;color:#1f2a24;white-space:normal;width:40%}
+  /* click-to-hear on lesson/homework Japanese (tables + examples) */
+  .lesson-block td.jp,.lesson-block .ex b{cursor:pointer;transition:color .12s}
+  .lesson-block td.jp:hover,.lesson-block .ex b:hover{color:var(--ink2)}
+  .lesson-block td.jp.speaking,.lesson-block .ex b.speaking{background:rgba(150,205,180,.4);border-radius:5px}
   .tag{display:inline-block;background:#eef;color:var(--ink2);font-size:.72rem;font-weight:700;
     padding:2px 8px;border-radius:20px;margin-left:6px;vertical-align:middle}
   .ex{background:linear-gradient(180deg,rgba(240,247,242,.9),rgba(233,243,237,.75));border-left:3px solid var(--ink2);padding:13px 17px;margin:12px 0;border-radius:0 12px 12px 0;box-shadow:var(--shadow-sm)}
@@ -3332,7 +3343,12 @@ const KANA={
   sagasu:"さがす", sagashimasu:"さがします", sagashimashita:"さがしました", sagashimasen:"さがしません", sagasanai:"さがさない", sagashite:"さがして",
   miseru:"みせる", misemasu:"みせます", misemashita:"みせました", misemasen:"みせません", misenai:"みせない", misete:"みせて",
   arimasu:"あります", arimasen:"ありません",
-  tabetai:"たべたい", nomitai:"のみたい", ikitai:"いきたい", mitai:"みたい", shitai:"したい", yoyakushitai:"よやくしたい", benkyoushitai:"べんきょうしたい", renshuushitai:"れんしゅうしたい"
+  tabetai:"たべたい", nomitai:"のみたい", ikitai:"いきたい", mitai:"みたい", shitai:"したい", yoyakushitai:"よやくしたい", benkyoushitai:"べんきょうしたい", renshuushitai:"れんしゅうしたい",
+  ooi:"おおい", hi:"ひ",
+  ichiji:"いちじ", niji:"にじ", sanji:"さんじ", yoji:"よじ", goji:"ごじ", rokuji:"ろくじ", shichiji:"しちじ", hachiji:"はちじ", kuji:"くじ", juuji:"じゅうじ", juuichiji:"じゅういちじ", juuniji:"じゅうにじ",
+  nikai:"にかい", yonkai:"よんかい", gokai:"ごかい", rokkai:"ろっかい", nanakai:"ななかい", hakkai:"はっかい", kyuukai:"きゅうかい", jukkai:"じゅっかい",
+  ichigatsu:"いちがつ", nigatsu:"にがつ", sangatsu:"さんがつ", shigatsu:"しがつ", gogatsu:"ごがつ", rokugatsu:"ろくがつ", shichigatsu:"しちがつ", hachigatsu:"はちがつ", kugatsu:"くがつ", juugatsu:"じゅうがつ", juuichigatsu:"じゅういちがつ", juunigatsu:"じゅうにがつ",
+  chotto:"ちょっと", goyoyaku:"ごよやく"
 };
 
 /* ---------- TABS ---------- */
@@ -3820,7 +3836,12 @@ const GL={
   sagasu:"to look for", sagashimasu:"look for (polite)", sagashimashita:"looked for (polite past)", sagashimasen:"don't look for (polite)", sagasanai:"don't look for (plain neg)", sagashite:"look for (te-form)",
   miseru:"to show", misemasu:"show (polite)", misemashita:"showed (polite past)", misemasen:"don't show (polite)", misenai:"don't show (plain neg)", misete:"show (te-form)",
   arimasu:"there is / have (objects, events)", arimasen:"there isn't / don't have",
-  tabetai:"want to eat", nomitai:"want to drink", ikitai:"want to go", mitai:"want to see", shitai:"want to do", yoyakushitai:"want to reserve", benkyoushitai:"want to study", renshuushitai:"want to practice"
+  tabetai:"want to eat", nomitai:"want to drink", ikitai:"want to go", mitai:"want to see", shitai:"want to do", yoyakushitai:"want to reserve", benkyoushitai:"want to study", renshuushitai:"want to practice",
+  ooi:"many / a lot", hi:"day",
+  ichiji:"1:00", niji:"2:00", sanji:"3:00", yoji:"4:00", goji:"5:00", rokuji:"6:00", shichiji:"7:00", hachiji:"8:00", kuji:"9:00", juuji:"10:00", juuichiji:"11:00", juuniji:"12:00",
+  nikai:"2 times", yonkai:"4 times", gokai:"5 times", rokkai:"6 times", nanakai:"7 times", hakkai:"8 times", kyuukai:"9 times", jukkai:"10 times",
+  ichigatsu:"January", nigatsu:"February", sangatsu:"March", shigatsu:"April", gogatsu:"May", rokugatsu:"June", shichigatsu:"July", hachigatsu:"August", kugatsu:"September", juugatsu:"October", juuichigatsu:"November", juunigatsu:"December",
+  chotto:"a little / a moment", goyoyaku:"reservation (polite)"
 };
 function annotate(str){
   const hadNew=/class="newtag"/.test(str);
@@ -4747,7 +4768,9 @@ function renderAllNotes(){
     if(key==="iadj"||key==="naadj")
       html+=`<div class="adj-legend"><span><i style="background:#c2570a"></i>i-adjective</span><span><i style="background:#2e7d47"></i>na-adjective</span><span><i style="background:#7b3fa0"></i>irregular</span></div>`;
     html+=`<div class="note"><table>`;
-    arr.forEach(p=>{ html+=`<tr><td class="jp">${annotate(p[0])}</td><td>${p[1]}</td></tr>`; });   // colour comes from annotate (ADJCLASS), so only true adjectives are tinted
+    const ALTREAD={yon:"shi",nana:"shichi",kyuu:"ku"};   // 4·7·9 have two readings — show both
+    arr.forEach(p=>{ const alt=(key==="num"&&ALTREAD[p[0]])?` / ${annotate(ALTREAD[p[0]])}`:'';
+      html+=`<tr><td class="jp">${annotate(p[0])}${alt}</td><td>${p[1]}</td></tr>`; });   // colour comes from annotate (ADJCLASS), so only true adjectives are tinted
     html+="</table></div>";
   });
   box.innerHTML=html;
@@ -4759,6 +4782,19 @@ function speakSentence(romaji){
   const kana=romaji.split(/\s+/).map(t=>KANA[t.toLowerCase()]||t).join('');
   playSpeech(sayable(kana));
 }
+/* Click-to-hear on the static Japanese in lesson & homework blocks (tables + example callouts) */
+document.addEventListener('click',function(e){
+  const el=e.target.closest('.lesson-block td.jp, .lesson-block .ex b');
+  if(!el) return;
+  let t=(el.textContent||'');
+  t=t.split('—')[0].split(' - ')[0];       // drop any English gloss after a dash
+  t=t.replace(/\([^)]*\)/g,' ');            // drop parentheticals
+  t=t.replace(/-/g,'');                      // "yo-ji" → "yoji" so it matches the dictionary
+  t=t.replace(/[→←·、,.:?!/]/g,' ').replace(/\s+/g,' ').trim();
+  if(!t) return;
+  speakSentence(t);
+  el.classList.add('speaking'); setTimeout(()=>el.classList.remove('speaking'),700);
+});
 /* ===== Shared drill data (used by BOTH the Grammar tab and the Practice tab) ===== */
 const PPARTS=["wa","ga","wo","ni","de","to","mo","kara","made"];
 // which particle does each verb WANT for its key noun (verb-first thinking)
