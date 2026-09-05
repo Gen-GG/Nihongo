@@ -3342,13 +3342,14 @@ const KANA={
   isogu:"いそぐ", isogimasu:"いそぎます", isogimashita:"いそぎました", isogimasen:"いそぎません", isoganai:"いそがない", isoide:"いそいで",
   sagasu:"さがす", sagashimasu:"さがします", sagashimashita:"さがしました", sagashimasen:"さがしません", sagasanai:"さがさない", sagashite:"さがして",
   miseru:"みせる", misemasu:"みせます", misemashita:"みせました", misemasen:"みせません", misenai:"みせない", misete:"みせて",
-  arimasu:"あります", arimasen:"ありません",
+  aru:"ある", arimasu:"あります", arimashita:"ありました", arimasen:"ありません",
   tabetai:"たべたい", nomitai:"のみたい", ikitai:"いきたい", mitai:"みたい", shitai:"したい", yoyakushitai:"よやくしたい", benkyoushitai:"べんきょうしたい", renshuushitai:"れんしゅうしたい",
   ooi:"おおい", hi:"ひ",
   ichiji:"いちじ", niji:"にじ", sanji:"さんじ", yoji:"よじ", goji:"ごじ", rokuji:"ろくじ", shichiji:"しちじ", hachiji:"はちじ", kuji:"くじ", juuji:"じゅうじ", juuichiji:"じゅういちじ", juuniji:"じゅうにじ",
   nikai:"にかい", yonkai:"よんかい", gokai:"ごかい", rokkai:"ろっかい", nanakai:"ななかい", hakkai:"はっかい", kyuukai:"きゅうかい", jukkai:"じゅっかい",
   ichigatsu:"いちがつ", nigatsu:"にがつ", sangatsu:"さんがつ", shigatsu:"しがつ", gogatsu:"ごがつ", rokugatsu:"ろくがつ", shichigatsu:"しちがつ", hachigatsu:"はちがつ", kugatsu:"くがつ", juugatsu:"じゅうがつ", juuichigatsu:"じゅういちがつ", juunigatsu:"じゅうにがつ",
-  chotto:"ちょっと", goyoyaku:"ごよやく"
+  chotto:"ちょっと", goyoyaku:"ごよやく",
+  agemasen:"あげません", agenai:"あげない", agete:"あげて", kuremasen:"くれません", kurenai:"くれない", kurete:"くれて"
 };
 
 /* ---------- TABS ---------- */
@@ -3835,13 +3836,14 @@ const GL={
   isogu:"to hurry", isogimasu:"hurry (polite)", isogimashita:"hurried (polite past)", isogimasen:"don't hurry (polite)", isoganai:"don't hurry (plain neg)", isoide:"hurry (te-form)",
   sagasu:"to look for", sagashimasu:"look for (polite)", sagashimashita:"looked for (polite past)", sagashimasen:"don't look for (polite)", sagasanai:"don't look for (plain neg)", sagashite:"look for (te-form)",
   miseru:"to show", misemasu:"show (polite)", misemashita:"showed (polite past)", misemasen:"don't show (polite)", misenai:"don't show (plain neg)", misete:"show (te-form)",
-  arimasu:"there is / have (objects, events)", arimasen:"there isn't / don't have",
+  aru:"to exist / have (things)", arimasu:"there is / have (objects, events)", arimashita:"there was / had (polite past)", arimasen:"there isn't / don't have",
   tabetai:"want to eat", nomitai:"want to drink", ikitai:"want to go", mitai:"want to see", shitai:"want to do", yoyakushitai:"want to reserve", benkyoushitai:"want to study", renshuushitai:"want to practice",
   ooi:"many / a lot", hi:"day",
   ichiji:"1:00", niji:"2:00", sanji:"3:00", yoji:"4:00", goji:"5:00", rokuji:"6:00", shichiji:"7:00", hachiji:"8:00", kuji:"9:00", juuji:"10:00", juuichiji:"11:00", juuniji:"12:00",
   nikai:"2 times", yonkai:"4 times", gokai:"5 times", rokkai:"6 times", nanakai:"7 times", hakkai:"8 times", kyuukai:"9 times", jukkai:"10 times",
   ichigatsu:"January", nigatsu:"February", sangatsu:"March", shigatsu:"April", gogatsu:"May", rokugatsu:"June", shichigatsu:"July", hachigatsu:"August", kugatsu:"September", juugatsu:"October", juuichigatsu:"November", juunigatsu:"December",
-  chotto:"a little / a moment", goyoyaku:"reservation (polite)"
+  chotto:"a little / a moment", goyoyaku:"reservation (polite)",
+  agemasen:"don't give (polite)", agenai:"don't give (plain neg)", agete:"give (te-form)", kuremasen:"don't give me (polite)", kurenai:"don't give me (plain neg)", kurete:"give me (te-form)"
 };
 function annotate(str){
   const hadNew=/class="newtag"/.test(str);
@@ -4597,25 +4599,26 @@ function renderAllNotes(){
   const box=document.getElementById('allNotes'); if(!box) return;
   // ORDERED lists — words render in THIS order inside each section (logical grouping, not alphabetical)
   const ORD={
-    num:"ichi ni san yon shi go roku nana shichi hachi kyuu ku juu nijuu hatachi | ji han sanjuppun | gatsu youbi kai | getsuyoubi kayoubi suiyoubi mokuyoubi kinyoubi doyoubi nichiyoubi | tsuitachi futsuka mikka yokka itsuka muika nanoka youka kokonoka touka hatsuka | asa hiru yoru | kinou kyou ashita | konshuu senshuu raishuu | kongetsu sengetsu raigetsu | kotoshi kyonen rainen | isshuukan | shuumatsu heijitsu yasumi | senshuumatsu shuukan nen ichinen ikkagetsu ikkai jikan | hitori futari ippiki".replace(/ \| /g," ").split(" "),
-    weather:"tenki hare ame haru natsu tsuyu aki fuyu".split(" "),
+    num:"ichi ni san yon shi go roku nana shichi hachi kyuu ku juu nijuu hatachi | ji han sanjuppun | gatsu youbi kai | getsuyoubi kayoubi suiyoubi mokuyoubi kinyoubi doyoubi nichiyoubi | tsuitachi futsuka mikka yokka itsuka muika nanoka youka kokonoka touka hatsuka | asa hiru yoru | kinou kyou ashita | konshuu senshuu raishuu | kongetsu sengetsu raigetsu | kotoshi kyonen rainen | isshuukan | shuumatsu heijitsu yasumi oyasumi | senshuumatsu shuukan nen ichinen ikkagetsu ikkai jikan | hitori futari sannin yonin gonin rokunin nanmeisama ippiki".replace(/ \| /g," ").split(" "),
+    weather:"tenki kikou hare ame haru natsu tsuyu aki fuyu atsui samui atatakai suzushii mushiatsui shikke kansou".split(" "),
     freq:"mainichi maishuu maitsuki maitoshi itsumo fudan taitei yoku tokidoki tamani amari zenzen saikin imasakki".split(" "),
-    part:"wa ga wo o no ni de to mo ka kara made ne yo".split(" "),
+    part:"wa ga wo o no ni de to mo ka kara made ne yo e".split(" "),
     conn:"mae ato sonoato soshite soreto dakara nanode demo hokani".split(" "),
     q:"nani nan nanika nanimo nande naze dare doko itsu nanji nannichi nankai dou donna donokurai dore docchi".split(" "),
     dem:"kore sore are kono sono ano koko soko asoko sokode kocchi socchi acchi migi hidari".split(" "),
-    iadj:"oishii umai mazui takai yasui atsui samui ookii chiisai ii warui hayai osoi muzukashii kowai kawaii ureshii tanoshii omoshiroi nemui isogashii furui atarashii chikai tooi akarui kurai hiroi semai nagai mijikai karui omoi".split(" "),
-    naadj:"kirei kireijanai shizuka nigiyaka benri fuben yuumei genki shinsetsu daijoubu jouzu heta tokui kantan kantanjanai futsuu suteki tokubetsu anzen kiken furendori oopen".split(" "),
+    iadj:"oishii umai mazui takai yasui atsui samui ookii chiisai ii warui hayai osoi muzukashii kowai kawaii ureshii tanoshii omoshiroi nemui isogashii furui atarashii chikai tooi akarui kurai hiroi semai nagai mijikai karui omoi urusai yasashii".split(" "),
+    naadj:"kirei kireijanai shizuka nigiyaka benri fuben yuumei genki shinsetsu daijoubu jouzu heta tokui kantan kantanjanai futsuu suteki tokubetsu anzen kiken furendori oopen daiji taisetsu juuyou".split(" "),
+    dining:"mise seki teeburu kauntaa menu yoyaku goyoyaku tenin iriguchi deguchi mado isu toire kinen madogawa gawa gohanya izakaya raamenya udonya suteekiya".split(" "),
     like:"suki kirai sukijanai ichiban".split(" "),
-    food:"gohan asagohan hirugohan yorugohan pan tamago mizu ocha juusu biiru gyuunyuu kouhii ramen udon soba sushi tempura karee niku sakana yasai tomato tabemono onigiri shiriaru chikin yakitori banmi tonkotsu nihonshoku ryouri okaikei chuumon menyu ohashi".split(" "),
-    act:"terebi dorama manga anime eiga ongaku uta gemu youtube romansu hon borudaringu yoga tenisu undou sanpo souji ryokou kaimono deeto jimu benkyou".split(" "),
-    place:"ie eki basutei suupaa konbini kouen hoteru kuukou resutoran kafe sutaba jimu ofisu puuru rokeeshon shiatoru betonamu amerika naka soto | densha basu shinkansen hikouki takushii uubaa".replace(/ \| /g," ").split(" "),
+    food:"gohan asagohan hirugohan yorugohan pan tamago mizu ocha juusu biiru gyuunyuu kouhii ramen udon soba sushi tempura karee niku sakana yasai tomato tabemono onigiri shiriaru chikin yakitori banmi tonkotsu nihonshoku ryouri okaikei chuumon menyu ohashi purin osake nokorimono".split(" "),
+    act:"terebi dorama manga anime eiga horaeiga ongaku uta gemu youtube romansu hon borudaringu yoga tenisu undou sanpo souji ryokou kaimono deeto jimu benkyou".split(" "),
+    place:"ie eki basutei suupaa konbini kouen hoteru kuukou resutoran kafe sutaba jimu ofisu puuru rokeeshon shiatoru betonamu amerika naka soto ryokan kaidan esukareeta michi shigotoba | densha basu shinkansen hikouki takushii uubaa".replace(/ \| /g," ").split(" "),
     people:"watashi anata kare kanojo kareno karera hito hitobito hitotachi tomodachi tomodachitachi kazoku kyoudai ane ani imouto otouto okaasan otousan oya ryoushin danna dannasan kata okyakusan sutaffu komyuniti namae kuni shusshin shusshinchi shigoto shumi jikoshoukai nihonjin amerikajin italiajin eiseishi shikaeiseishi shika nihongo eigo itariago keigo tameguchi mono koto".split(" "),
     animal:"inu petto doubutsu".split(" "),
-    wear:"fuku kutsu baggu jueri omiyage sumaho kaado genkin ookisa".split(" "),
-    home:"heya reizouko botan doa oto".split(" "),
+    wear:"fuku kutsu baggu jueri omiyage sumaho kaado genkin ookisa kutsushita shitagi zubon".split(" "),
+    home:"heya reizouko botan doa oto shashin".split(" "),
     body:"te ryou ryoute ryoume hamigaki furosu".split(" "),
-    studywork:"kanji anki kamoku kaigi chikoku".split(" "),
+    studywork:"kanji anki kamoku kaigi chikoku tango jouhou miitingu shukudai rikai".split(" "),
     advb:"totemo meccha takusan dekirudake isshoni taihen hayaku osoku chikaku".split(" "),
     greet:["konbanwa","konnichiwa","ohayou","oyasumi","hajimemashite","yoroshiku","onegaishimasu","hai","un","uun","sou","eeto"]
   };
@@ -4635,7 +4638,7 @@ function renderAllNotes(){
     ["dem","This / that / here / there"],["verb","Verbs"],
     ["iadj","i-adjectives (end in -i)"],["naadj","na-adjectives (need な)"],["like","Likes & dislikes"],
     ["food","Food & drink"],["act","Activities, hobbies & media"],
-    ["place","Places"],
+    ["place","Places"],["dining","At a restaurant"],
     ["animal","Animals"],["wear","Clothes & belongings"],["home","Home & objects"],["body","Body & hygiene"],["studywork","Study & work"],
     ["people","People, family & about you"],
     ["greet","Greetings & everyday phrases"],["other","Other useful words"]
@@ -4720,13 +4723,16 @@ function renderAllNotes(){
     ["isogu","to hurry","isogimasu","isogimashita","isogimasen","isoganai"],
     ["miseru","to show","misemasu","misemashita","misemasen","misenai"],
     ["naru","to become","narimasu","narimashita","narimasen","naranai"],
-    ["renshuusuru","to practice","renshuushimasu","renshuushimashita","renshuushimasen","renshuushinai"]
+    ["renshuusuru","to practice","renshuushimasu","renshuushimashita","renshuushimasen","renshuushinai"],
+    ["ageru","to give","agemasu","agemashita","agemasen","agenai"],
+    ["kureru","to give (to me)","kuremasu","kuremashita","kuremasen","kurenai"]
   ];
   // te-form for each verb (shown on the verb card in All-Notes)
-  const TE={suru:"shite",kuru:"kite",iku:"itte",kaeru:"kaette",tsuku:"tsuite",au:"atte",matsu:"matte",neru:"nete",okiru:"okite",taberu:"tabete",nomu:"nonde",hanasu:"hanashite",kiku:"kiite",miru:"mite",yomu:"yonde",kaku:"kaite",kau:"katte",arau:"aratte",benkyousuru:"benkyoushite",oshieru:"oshiete",asobu:"asonde",oyogu:"oyoide",tsukuru:"tsukutte",akeru:"akete",hajimeru:"hajimete",wakaru:"wakatte",chigau:"chigatte",shinu:"shinde",owaru:"owatte",nugu:"nuide",dekakeru:"dekakete",modoru:"modotte",ugoku:"ugoite",nokosu:"nokoshite",tomaru:"tomatte",dekiru:"dekite",iru:"itte",okureru:"okurete",iu:"itte",tsutaeru:"tsutaete",morau:"moratte",yasumu:"yasunde",hashiru:"hashitte",tsukau:"tsukatte",yobu:"yonde",osu:"oshite",omou:"omotte",warau:"waratte",oboeru:"oboete",wasureru:"wasurete",mayou:"mayotte",shiru:"shitte",kowareru:"kowarete",komaru:"komatte",shitsumonsuru:"shitsumonshite",setsumeisuru:"setsumeishite",soujisuru:"soujishite",sentakusuru:"sentakushite",noboru:"nobotte",erabu:"erande",shaberu:"shabette",undousuru:"undoushite",untensuru:"untenshite",rikaisuru:"rikaishite",hairu:"haitte",suwaru:"suwatte",yoyakusuru:"yoyakushite",tanomu:"tanonde",sagasu:"sagashite",aruku:"aruite",haku:"haite",isogu:"isoide",miseru:"misete",naru:"natte",renshuusuru:"renshuushite"};
+  const TE={suru:"shite",kuru:"kite",iku:"itte",kaeru:"kaette",tsuku:"tsuite",au:"atte",matsu:"matte",neru:"nete",okiru:"okite",taberu:"tabete",nomu:"nonde",hanasu:"hanashite",kiku:"kiite",miru:"mite",yomu:"yonde",kaku:"kaite",kau:"katte",arau:"aratte",benkyousuru:"benkyoushite",oshieru:"oshiete",asobu:"asonde",oyogu:"oyoide",tsukuru:"tsukutte",akeru:"akete",hajimeru:"hajimete",wakaru:"wakatte",chigau:"chigatte",shinu:"shinde",owaru:"owatte",nugu:"nuide",dekakeru:"dekakete",modoru:"modotte",ugoku:"ugoite",nokosu:"nokoshite",tomaru:"tomatte",dekiru:"dekite",iru:"itte",okureru:"okurete",iu:"itte",tsutaeru:"tsutaete",morau:"moratte",yasumu:"yasunde",hashiru:"hashitte",tsukau:"tsukatte",yobu:"yonde",osu:"oshite",omou:"omotte",warau:"waratte",oboeru:"oboete",wasureru:"wasurete",mayou:"mayotte",shiru:"shitte",kowareru:"kowarete",komaru:"komatte",shitsumonsuru:"shitsumonshite",setsumeisuru:"setsumeishite",soujisuru:"soujishite",sentakusuru:"sentakushite",noboru:"nobotte",erabu:"erande",shaberu:"shabette",undousuru:"undoushite",untensuru:"untenshite",rikaisuru:"rikaishite",hairu:"haitte",suwaru:"suwatte",yoyakusuru:"yoyakushite",tanomu:"tanonde",sagasu:"sagashite",aruku:"aruite",haku:"haite",isogu:"isoide",miseru:"misete",naru:"natte",renshuusuru:"renshuushite",ageru:"agete",kureru:"kurete"};
   const VERBS=[
     {en:"to be (desu)", forms:[["da","dictionary (casual)"],["desu","polite"],["deshita","past — deshita"],["janai","negative — is not"]]},
-    {en:"to exist / have (living things)", forms:[["imasu","polite"],["imashita","past — imashita"],["imasen","negative — imasen"],["inai","plain neg — inai"]]}
+    {en:"to exist / have (living things)", forms:[["imasu","polite"],["imashita","past — imashita"],["imasen","negative — imasen"],["inai","plain neg — inai"]]},
+    {en:"to exist / have (things & events)", forms:[["aru","dictionary (plain)"],["arimasu","polite"],["arimashita","past — arimashita"],["arimasen","negative — arimasen"],["nai","plain neg — nai"]]}
   ].concat(VCONJ.map(v=>({en:v[1], forms:[
     [v[0],"dictionary (plain)"],
     [v[2],"polite — masu"],
@@ -4746,6 +4752,14 @@ function renderAllNotes(){
   Object.keys(decks).filter(k=>!/^Fake HW3/.test(k)).forEach(k=>{ decks[k].forEach(p=>{ const r=p[0].toLowerCase(); if(!(r in words)) words[r]=p[1]; }); });
   extras.forEach(p=>{ const r=p[0].toLowerCase(); if(!(r in words)) words[r]=p[1]; });
   const claimed={}; VERBS.forEach(f=>f.forms.forEach(fm=>claimed[fm[0]]=1));   // verb forms live inside their card
+  // AUTO-INCLUDE: pull in every dictionary word that appears in any lesson/homework table or example,
+  // so the master vocab is ALWAYS complete — new lessons add their words here automatically.
+  document.querySelectorAll('.lesson-block td.jp, .lesson-block .ex b').forEach(el=>{
+    if(el.querySelector('.gl')) return;   // skip already-annotated cells (the All-Notes' own output)
+    let t=(el.textContent||'').split('—')[0].split(' - ')[0].replace(/\([^)]*\)/g,' ').replace(/-/g,'').replace(/[→←·、,.:?!/0-9]/g,' ');
+    t.split(/\s+/).forEach(w=>{ w=w.toLowerCase().trim();
+      if(w && KANA[w] && GL[w] && !(w in words) && !claimed[w]) words[w]=GL[w]; });
+  });
   const groups={};
   Object.keys(words).forEach(r=>{ if(claimed[r]) return; const c=classify(r,words[r]); (groups[c]=groups[c]||[]).push([r,words[r]]); });
   (groups.num=groups.num||[]).push(["ni","2"],["nijuu","20"]);   // 二 = 2 (collides with the particle) and 二十 = 20 — add explicitly
