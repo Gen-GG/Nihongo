@@ -5570,6 +5570,8 @@ const PQ=[
   ];
   const TEP={taberu:"tabete",nomu:"nonde",iku:"itte",miru:"mite",kaku:"kaite",yomu:"yonde",kiku:"kiite",kau:"katte",au:"atte",suru:"shite",neru:"nete",kaeru:"kaette",hanasu:"hanashite",asobu:"asonde",matsu:"matte",oyogu:"oyoide",akeru:"akete",oshieru:"oshiete",tsukuru:"tsukutte",tsuku:"tsuite",okiru:"okite",benkyousuru:"benkyoushite",wakaru:"wakatte",kuru:"kite",arau:"aratte",yobu:"yonde",tsukau:"tsukatte",owaru:"owatte",nugu:"nuide",dekakeru:"dekakete",modoru:"modotte",ugoku:"ugoite",tomaru:"tomatte",hashiru:"hashitte",osu:"oshite",warau:"waratte",omou:"omotte",iu:"itte",morau:"moratte"};
   CONJ.forEach(v=>{ v.te=TEP[v.d]; });
+  // English past tense for each verb, so the drill can prompt by MEANING ("called") not just the grammar label
+  const ENPAST={taberu:"ate",nomu:"drank",iku:"went",miru:"watched / saw",kaku:"wrote",yomu:"read",kiku:"listened",kau:"bought",au:"met",suru:"did",neru:"slept",kaeru:"went home",hanasu:"spoke",asobu:"played",matsu:"waited",oyogu:"swam",akeru:"opened",oshieru:"taught",tsukuru:"made",tsuku:"arrived",okiru:"woke up",benkyousuru:"studied",wakaru:"understood",kuru:"came",arau:"washed",yobu:"called",tsukau:"used",owaru:"finished",nugu:"took off",dekakeru:"went out",modoru:"went back",ugoku:"moved",tomaru:"stopped / stayed",hashiru:"ran",osu:"pushed",warau:"laughed",omou:"thought",iu:"said",morau:"received"};
   const BUILD=[
     {en:"I ate sushi at a restaurant.",ja:"resutoran de sushi wo tabemashita"},
     {en:"I drink coffee every day.",ja:"mainichi kouhii wo nomimasu"},
@@ -5737,9 +5739,12 @@ const PQ=[
 
   // ---- CONJUGATION ----
   function renderConj(){
-    const v=pick(CONJ); const forms=[['polite','p'],['past','pa'],['polite negative','n'],['plain negative','na'],['te-form','te']]; const t=pick(forms);
-    box.innerHTML=`<div class="tip">Type the <b>${t[0]}</b> form of this verb:</div>
-      <div style="font-size:1.4rem;margin:8px 0">${blue(v.d)} <span style="color:var(--ink2);font-size:1rem">(${v.en})</span> → <b>${t[0]}</b></div>
+    const v=pick(CONJ); const pe=ENPAST[v.d]||(v.en+'ed');
+    // each form: [grammar label, data key, English meaning to show as the prompt]
+    const forms=[['polite','p',v.en],['past','pa',pe],['polite negative','n',"don't "+v.en],['plain negative','na',"don't "+v.en],['te-form','te',null]]; const t=pick(forms);
+    const meaning = t[2] ? `“${t[2]}”` : 'the te-form';
+    box.innerHTML=`<div class="tip">Give the Japanese for <b>${meaning}</b> — the <b>${t[0]}</b> form:</div>
+      <div style="font-size:1.4rem;margin:8px 0">${blue(v.d)} <span style="color:var(--ink2);font-size:1rem">(${v.en})</span> → <b>${meaning}</b> <span style="color:var(--ink2);font-size:.9rem">· ${t[0]}</span></div>
       <input id="conjIn" class="quiz-input" placeholder="type the form, then Enter" autocapitalize="off" autocomplete="off" spellcheck="false">
       <div id="conjFb" style="margin-top:10px;min-height:22px"></div>
       <div style="margin-top:8px"><button class="btn primary" id="conjCheck">Check</button> <button class="btn" id="conjNext">Next →</button></div>`;
