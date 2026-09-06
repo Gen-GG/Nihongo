@@ -77,10 +77,12 @@
   table{width:100%;border-collapse:collapse;margin:6px 0}
   td{padding:7px 10px;border-bottom:1px solid var(--line);vertical-align:top}
   td.jp{font-weight:700;color:#1f2a24;white-space:normal;width:40%}
-  /* click-to-hear on lesson/homework Japanese (tables + examples) */
-  .lesson-block td.jp,.lesson-block .ex b{cursor:pointer;transition:color .12s}
-  .lesson-block td.jp:hover,.lesson-block .ex b:hover{color:var(--ink2)}
-  .lesson-block td.jp.speaking,.lesson-block .ex b.speaking{background:rgba(150,205,180,.4);border-radius:5px}
+  /* click-to-hear: only the hovered/tapped WORD highlights, never the whole sentence */
+  .cw{border-radius:4px;padding:0 2px;margin:0 -2px;transition:background .12s,box-shadow .12s;cursor:pointer}
+  .cw:hover,.cw.hovering{background:rgba(120,195,160,.55);box-shadow:0 0 0 1px rgba(120,195,160,.65)}
+  .cw.speaking{background:rgba(120,195,160,.85)}
+  body.dark .cw:hover,body.dark .cw.hovering{background:rgba(120,200,160,.35);box-shadow:0 0 0 1px rgba(120,200,160,.5)}
+  body.dark .cw.speaking{background:rgba(120,200,160,.55)}
   .tag{display:inline-block;background:#eef;color:var(--ink2);font-size:.72rem;font-weight:700;
     padding:2px 8px;border-radius:20px;margin-left:6px;vertical-align:middle}
   .ex{background:linear-gradient(180deg,rgba(240,247,242,.9),rgba(233,243,237,.75));border-left:3px solid var(--ink2);padding:13px 17px;margin:12px 0;border-radius:0 12px 12px 0;box-shadow:var(--shadow-sm)}
@@ -449,7 +451,8 @@
 
     <h4>9 · ~toki = when</h4>
     <div class="tip">Noun + <b>no toki</b>; verb (plain) + <b>toki</b>.</div>
-    <div class="ex"><b>Oshigoto no toki, unten shimasu.</b> — I drive when it's for work.</div>
+    <div class="ex"><b>Oshigoto no toki, unten shimasu.</b> — I drive when it's for work. (noun + no toki)<br>
+      <b>Ie ni kaeru toki, kaimono wo shimasu.</b> — When I go home, I shop. (verb + toki)</div>
 
     <h4>10 · arimasu vs imasu + where things are</h4>
     <div class="tip"><b>arimasu</b> = things &amp; events; <b>imasu</b> = people &amp; animals. Position words use <b>no</b>: ue (on), naka (inside), oku (back), chikaku (near).</div>
@@ -458,7 +461,8 @@
 
     <h4>11 · naru = become</h4>
     <div class="tip"><b class="adj-i">i-adj</b> → drop i, add <b>ku naru</b>. <b class="adj-na">na-adj</b>/noun → add <b>ni naru</b>.</div>
-    <div class="ex"><b>Kugatsu kara suzushiku narimasu.</b> — From September it gets cool.</div>
+    <div class="ex"><b>Kugatsu kara <span class="adj-i">suzushiku</span> narimasu.</b> — From September it gets cool. (i-adj → ku naru)<br>
+      <b>Nihongo ga <span class="adj-na">jouzu</span> ni narimasu.</b> — I'm getting good at Japanese. (na-adj → ni naru)</div>
 
     <h4>12 · ~to omoimasu = I think</h4>
     <div class="tip">Plain statement + <b>to omoimasu</b>; after a noun / na-adjective use <b>da to omoimasu</b>.</div>
@@ -5218,19 +5222,39 @@ function speakSentence(romaji){
   const kana=romaji.split(/\s+/).map(t=>KANA[t.toLowerCase()]||t).join('');
   playSpeech(sayable(kana));
 }
-/* Click-to-hear on the static Japanese in lesson & homework blocks (tables + example callouts) */
+/* Wrap each Japanese word in the static lesson/homework/grammar cells in its own
+   .cw span so ONLY the word under the cursor highlights (never the whole sentence),
+   and that single word is the click-to-hear target. */
+(function wrapWords(){
+  const cells=document.querySelectorAll('.lesson-block td.jp, .lesson-block .ex b, #grammar td.jp, #grammar .ex b');
+  cells.forEach(el=>{
+    if(el.children.length||el.querySelector('.gl')) return;   // skip annotated/coloured cells
+    const raw=el.textContent; if(!raw||!raw.trim()) return;
+    // only the Japanese part is clickable; keep any English gloss (after — or " - ") as plain text
+    let jp=raw, tail='';
+    const m=raw.match(/\s(?:—|-\s)/);
+    if(raw.indexOf('—')>-1){ jp=raw.slice(0,raw.indexOf('—')); tail=raw.slice(raw.indexOf('—')); }
+    else if(raw.indexOf(' - ')>-1){ jp=raw.slice(0,raw.indexOf(' - ')); tail=raw.slice(raw.indexOf(' - ')); }
+    const wrapped=jp.replace(/([^\s、,.:?!/→←·()]+)/g,'<span class="cw">$1</span>');
+    el.innerHTML=wrapped+tail.replace(/[<>&]/g,c=>({'<':'&lt;','>':'&gt;','&':'&amp;'}[c]));
+  });
+})();
+/* Hover highlight driven by JS (some preview environments don't apply CSS :hover) */
+document.addEventListener('mouseover',function(e){
+  const el=e.target.closest('.cw'); if(!el) return;
+  el.classList.add('hovering');
+});
+document.addEventListener('mouseout',function(e){
+  const el=e.target.closest('.cw'); if(!el) return;
+  el.classList.remove('hovering');
+});
+/* Click-to-hear: speak just the tapped word */
 document.addEventListener('click',function(e){
-  const el=e.target.closest('.lesson-block td.jp, .lesson-block .ex b');
-  if(!el) return;
-  if(el.querySelector('.gl')) return;   // annotated cells (All-Notes) already play per-word audio on their dotted words
-  let t=(el.textContent||'');
-  t=t.split('—')[0].split(' - ')[0];       // drop any English gloss after a dash
-  t=t.replace(/\([^)]*\)/g,' ');            // drop parentheticals
-  t=t.replace(/-/g,'');                      // "yo-ji" → "yoji" so it matches the dictionary
-  t=t.replace(/[→←·、,.:?!/]/g,' ').replace(/\s+/g,' ').trim();
-  if(!t) return;
-  speakSentence(t);
-  el.classList.add('speaking'); setTimeout(()=>el.classList.remove('speaking'),700);
+  const el=e.target.closest('.cw'); if(!el) return;
+  let w=(el.textContent||'').replace(/-/g,'').replace(/[()、,.:?!/]/g,'').trim();
+  if(!w) return;
+  speakSentence(w);
+  el.classList.add('speaking'); setTimeout(()=>el.classList.remove('speaking'),500);
 });
 /* ===== Shared drill data (used by BOTH the Grammar tab and the Practice tab) ===== */
 const PPARTS=["wa","ga","wo","no","ni","de","to","mo","kara","made","e"];
