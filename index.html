@@ -1444,7 +1444,9 @@
     <tr><td>Thing <b>wa</b> Place <b>ni arimasu</b></td><td class="jp"><span class="cw">Toire</span> <span class="cw">wa</span> <span class="cw">mise</span> <span class="cw">no</span> <span class="cw">oku</span> <span class="cw">ni</span> <span class="cw">arimasu</span>. <span class="cw">—</span> <span class="cw">The</span> <span class="cw">restroom</span> <span class="cw">is</span> <span class="cw">at</span> <span class="cw">the</span> <span class="cw">back</span> <span class="cw">of</span> <span class="cw">the</span> <span class="cw">shop</span>.</td></tr>
   </table></div>
   <div class="ex"><b><span class="cw">Eki</span> <span class="cw">no</span> <span class="cw adj-i">chikaku</span> <span class="cw">ni</span> <span class="cw">resutoran</span> <span class="cw">ga</span> <span class="cw">arimasu</span>.</b> — There's a restaurant near the station.<br>
-    <b>Ie no chikaku ni jimu ga arimasu.</b> — There's a gym near my house.</div>
+    <b><span class="cw">Ie</span> <span class="cw">no</span> <span class="cw adj-i">chikaku</span> <span class="cw">ni</span> <span class="cw">jimu</span> <span class="cw">ga</span> <span class="cw">arimasu</span>.</b> — There's a gym near my house.<br>
+    <b><span class="cw">Mise</span> <span class="cw">no</span> <span class="cw">naka</span> <span class="cw">ni</span> <span class="cw">toire</span> <span class="cw">ga</span> <span class="cw">arimasu</span>.</b> — There's a restroom <b>inside</b> the shop.<br>
+    <b><span class="cw">Mado</span> <span class="cw">no</span> <span class="cw">soba</span> <span class="cw">ni</span> <span class="cw">isu</span> <span class="cw">ga</span> <span class="cw">arimasu</span>.</b> — There's a chair <b>beside</b> the window.</div>
 
   <h3>8 · ~tai desu = I want to ~</h3>
   <div class="tip">Take the <b>masu</b> form, drop <b>masu</b>, add <b>tai desu</b>. (Careful: it's the masu-stem, not the te-form.)</div>
@@ -3632,7 +3634,8 @@ const KANA={
   nai:"ない", nara:"なら", dake:"だけ", mou:"もう", ichido:"いちど", kowaku:"こわく", omoshirokatta:"おもしろかった", hora:"ホラー",
   sumimasen:"すみません", irasshaimase:"いらっしゃいませ", ikura:"いくら", massugu:"まっすぐ", nagakatta:"ながかった", sugoi:"すごい",
   kowakatta:"こわかった", kowakunakatta:"こわくなかった",
-  takaku:"たかく", takakatta:"たかかった", nakatta:"なかった", janakatta:"じゃなかった"
+  takaku:"たかく", takakatta:"たかかった", nakatta:"なかった", janakatta:"じゃなかった",
+  yaku:"やく", yakimasu:"やきます", yakimashita:"やきました", yakimasen:"やきません", yakanai:"やかない", yaite:"やいて"
 };
 
 /* ---------- TABS ---------- */
@@ -4130,7 +4133,8 @@ const GL={
   nai:"not / there isn't (plain negative)", nara:"if / in that case", dake:"only / just", mou:"already / (with neg) anymore", ichido:"once / one time", kowaku:"scary (adverb form)", omoshirokatta:"was interesting (i-adj past)", hora:"horror",
   sumimasen:"excuse me / sorry", irasshaimase:"welcome (shop greeting)", ikura:"how much? (price)", massugu:"straight ahead", nagakatta:"was long (i-adj past)", sugoi:"amazing / wow",
   kowakatta:"was scary (i-adj past)", kowakunakatta:"wasn't scary (i-adj past neg)",
-  takaku:"expensive (adverb form)", takakatta:"was expensive (i-adj past)", nakatta:"wasn't / didn't have (past neg)", janakatta:"wasn't (na-adj/noun past neg)"
+  takaku:"expensive (adverb form)", takakatta:"was expensive (i-adj past)", nakatta:"wasn't / didn't have (past neg)", janakatta:"wasn't (na-adj/noun past neg)",
+  yaku:"to bake / grill / roast", yakimasu:"bake / grill (polite)", yakimashita:"baked / grilled (polite past)", yakimasen:"don't bake / grill (polite)", yakanai:"don't bake / grill (plain neg)", yaite:"bake / grill (te-form)"
 };
 function annotate(str){
   const hadNew=/class="newtag"/.test(str);
@@ -5162,6 +5166,7 @@ function renderAllNotes(){
     ["sagasu","to look for","sagashimasu","sagashimashita","sagashimasen","sagasanai"],
     ["aruku","to walk","arukimasu","arukimashita","arukimasen","arukanai"],
     ["haku","to wear (shoes / pants)","hakimasu","hakimashita","hakimasen","hakanai"],
+    ["yaku","to bake / grill / roast","yakimasu","yakimashita","yakimasen","yakanai"],
     ["isogu","to hurry","isogimasu","isogimashita","isogimasen","isoganai"],
     ["miseru","to show","misemasu","misemashita","misemasen","misenai"],
     ["naru","to become","narimasu","narimashita","narimasen","naranai"],
@@ -5170,7 +5175,7 @@ function renderAllNotes(){
     ["kureru","to give (to me)","kuremasu","kuremashita","kuremasen","kurenai"]
   ];
   // te-form for each verb (shown on the verb card in All-Notes)
-  const TE={suru:"shite",kuru:"kite",iku:"itte",kaeru:"kaette",tsuku:"tsuite",au:"atte",matsu:"matte",neru:"nete",okiru:"okite",taberu:"tabete",nomu:"nonde",hanasu:"hanashite",kiku:"kiite",miru:"mite",yomu:"yonde",kaku:"kaite",kau:"katte",arau:"aratte",benkyousuru:"benkyoushite",oshieru:"oshiete",asobu:"asonde",oyogu:"oyoide",tsukuru:"tsukutte",akeru:"akete",hajimeru:"hajimete",wakaru:"wakatte",chigau:"chigatte",shinu:"shinde",owaru:"owatte",nugu:"nuide",dekakeru:"dekakete",modoru:"modotte",ugoku:"ugoite",nokosu:"nokoshite",tomaru:"tomatte",dekiru:"dekite",iru:"itte",okureru:"okurete",iu:"itte",tsutaeru:"tsutaete",morau:"moratte",yasumu:"yasunde",hashiru:"hashitte",tsukau:"tsukatte",yobu:"yonde",osu:"oshite",omou:"omotte",warau:"waratte",oboeru:"oboete",wasureru:"wasurete",mayou:"mayotte",shiru:"shitte",kowareru:"kowarete",komaru:"komatte",shitsumonsuru:"shitsumonshite",setsumeisuru:"setsumeishite",soujisuru:"soujishite",sentakusuru:"sentakushite",noboru:"nobotte",erabu:"erande",shaberu:"shabette",undousuru:"undoushite",untensuru:"untenshite",rikaisuru:"rikaishite",hairu:"haitte",suwaru:"suwatte",yoyakusuru:"yoyakushite",tanomu:"tanonde",sagasu:"sagashite",aruku:"aruite",haku:"haite",isogu:"isoide",miseru:"misete",naru:"natte",renshuusuru:"renshuushite",ageru:"agete",kureru:"kurete"};
+  const TE={suru:"shite",kuru:"kite",iku:"itte",kaeru:"kaette",tsuku:"tsuite",au:"atte",matsu:"matte",neru:"nete",okiru:"okite",taberu:"tabete",nomu:"nonde",hanasu:"hanashite",kiku:"kiite",miru:"mite",yomu:"yonde",kaku:"kaite",kau:"katte",arau:"aratte",benkyousuru:"benkyoushite",oshieru:"oshiete",asobu:"asonde",oyogu:"oyoide",tsukuru:"tsukutte",akeru:"akete",hajimeru:"hajimete",wakaru:"wakatte",chigau:"chigatte",shinu:"shinde",owaru:"owatte",nugu:"nuide",dekakeru:"dekakete",modoru:"modotte",ugoku:"ugoite",nokosu:"nokoshite",tomaru:"tomatte",dekiru:"dekite",iru:"itte",okureru:"okurete",iu:"itte",tsutaeru:"tsutaete",morau:"moratte",yasumu:"yasunde",hashiru:"hashitte",tsukau:"tsukatte",yobu:"yonde",osu:"oshite",omou:"omotte",warau:"waratte",oboeru:"oboete",wasureru:"wasurete",mayou:"mayotte",shiru:"shitte",kowareru:"kowarete",komaru:"komatte",shitsumonsuru:"shitsumonshite",setsumeisuru:"setsumeishite",soujisuru:"soujishite",sentakusuru:"sentakushite",noboru:"nobotte",erabu:"erande",shaberu:"shabette",undousuru:"undoushite",untensuru:"untenshite",rikaisuru:"rikaishite",hairu:"haitte",suwaru:"suwatte",yoyakusuru:"yoyakushite",tanomu:"tanonde",sagasu:"sagashite",aruku:"aruite",haku:"haite",yaku:"yaite",isogu:"isoide",miseru:"misete",naru:"natte",renshuusuru:"renshuushite",ageru:"agete",kureru:"kurete"};
   const VERBS=[
     {en:"to be (desu)", forms:[["da","dictionary (casual)"],["desu","polite"],["deshita","past — deshita"],["janai","negative — is not"]]},
     {en:"to exist / have (living things)", forms:[["imasu","polite"],["imashita","past — imashita"],["imasen","negative — imasen"],["inai","plain neg — inai"]]},
