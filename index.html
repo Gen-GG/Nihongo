@@ -5743,17 +5743,25 @@ const PQ=[
   }
 
   // ---- CONJUGATION ----
+  let conjHint = localStorage.getItem('conjHint')==='1';   // "show verb hint" toggle, remembered between sessions
   function renderConj(){
     const v=pick(CONJ); const pe=ENPAST[v.d]||(v.en+'ed');
-    // each form: [grammar label, data key, English meaning to show as the prompt]
-    const forms=[['polite','p',v.en],['past','pa',pe],['polite negative','n',"don't "+v.en],['plain negative','na',"don't "+v.en],['te-form','te',null]]; const t=pick(forms);
+    // each form: [register/form label, data key, English meaning to show as the prompt]
+    const forms=[['present · polite','p',v.en],['past · polite','pa',pe],['negative · polite','n',"don't "+v.en],['negative · casual','na',"don't "+v.en],['te-form','te',null]]; const t=pick(forms);
     const meaning = t[2] ? `“${t[2]}”` : 'the te-form';
-    box.innerHTML=`<div class="tip">Give the Japanese for <b>${meaning}</b> — the <b>${t[0]}</b> form:</div>
-      <div style="font-size:1.4rem;margin:8px 0">${blue(v.d)} <span style="color:var(--ink2);font-size:1rem">(${v.en})</span> → <b>${meaning}</b> <span style="color:var(--ink2);font-size:.9rem">· ${t[0]}</span></div>
+    const mustShowVerb = !t[2];                              // te-form has no English meaning → always reveal the verb
+    const hintShown = conjHint || mustShowVerb;
+    box.innerHTML=`<div style="display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:4px">
+        <span class="tip" style="margin:0">Type the Japanese for this:</span>
+        <label style="font-size:.82rem;color:var(--ink2);cursor:pointer;white-space:nowrap"><input type="checkbox" id="conjHintCb" ${conjHint?'checked':''}> show verb hint</label></div>
+      <div style="font-size:1.4rem;margin:8px 0"><span id="conjHintWrap" style="${hintShown?'':'display:none'}">${blue(v.d)} <span style="color:var(--ink2);font-size:1rem">(${v.en})</span> → </span><b>${meaning}</b> <span style="color:var(--ink2);font-size:.9rem">· ${t[0]}</span></div>
       <input id="conjIn" class="quiz-input" placeholder="type the form, then Enter" autocapitalize="off" autocomplete="off" spellcheck="false">
       <div id="conjFb" style="margin-top:10px;min-height:22px"></div>
       <div style="margin-top:8px"><button class="btn primary" id="conjCheck">Check</button> <button class="btn" id="conjNext">Next →</button></div>`;
     const inp=box.querySelector('#conjIn'), fb=box.querySelector('#conjFb'); inp.focus();
+    const cb=box.querySelector('#conjHintCb');
+    cb.onchange=()=>{ conjHint=cb.checked; try{localStorage.setItem('conjHint',conjHint?'1':'0');}catch(e){}
+      const w=box.querySelector('#conjHintWrap'); if(w) w.style.display=(conjHint||mustShowVerb)?'':'none'; inp.focus(); };
     function check(){ const ans=v[t[1]]; const ok=normP(inp.value)===normP(ans);
       fb.innerHTML = ok ? `<span style="color:var(--good);font-weight:600">✓ ${ans}</span> <button class="btn" style="padding:3px 10px;font-size:.85rem" id="cjH">🔊</button>`
         : `<span style="color:var(--bad)">✗ answer: <b>${ans}</b></span> <button class="btn" style="padding:3px 10px;font-size:.85rem" id="cjH">🔊</button>`;
