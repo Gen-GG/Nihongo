@@ -65,13 +65,13 @@
   h3{color:var(--ink);font-size:1.15rem;font-weight:700;letter-spacing:-.015em;border-bottom:1px solid var(--line);padding-bottom:8px;margin-top:36px}
   h4{color:var(--ink2);font-size:.98rem;font-weight:700;margin:22px 0 8px;letter-spacing:-.01em}
   .note{background:linear-gradient(180deg,rgba(255,255,255,.92),rgba(255,255,255,.78));border:var(--ring);border-radius:18px;padding:18px 22px;margin:16px 0;
-    -webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);box-shadow:var(--shadow);transition:transform .2s,box-shadow .2s;overflow-x:auto}
+    -webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);box-shadow:var(--shadow);transition:transform .2s,box-shadow .2s;overflow:visible}
   .note:hover{transform:translateY(-2px);box-shadow:0 16px 38px -14px rgba(28,60,40,.22)}
   @media(max-width:600px){
     main{padding:18px 12px 50px}
     td{padding:6px 7px}
     td.jp{width:auto}
-    .note{padding:14px 15px}
+    .note{padding:14px 15px;overflow-x:auto}
     .note table{font-size:.92rem}
   }
   table{width:100%;border-collapse:collapse;margin:6px 0}
@@ -193,7 +193,7 @@
   .ex .gl, .pj .gl, #phrases .gl, #talk .gl, .qrow .gl, .reply .gl{padding:1px 2px}
   .gl.tap::after{content:attr(data-def);position:absolute;left:50%;bottom:135%;
     transform:translateX(-50%);background:#111;color:#fff;padding:6px 11px;border-radius:8px;
-    font-size:.8rem;font-weight:600;white-space:nowrap;max-width:240px;z-index:60;pointer-events:none;
+    font-size:.8rem;font-weight:600;white-space:normal;width:max-content;max-width:min(240px,70vw);text-align:center;z-index:60;pointer-events:none;
     box-shadow:0 4px 14px rgba(0,0,0,.3)}
   .gl.tap::before{content:"";position:absolute;left:50%;bottom:135%;
     transform:translate(-50%,90%);border:6px solid transparent;border-top-color:#111;z-index:60;pointer-events:none}
@@ -3272,6 +3272,26 @@
     <button class="btn" id="tegenPrev">← Back</button>
     <button class="btn" id="tegenShuf">🔀 Shuffle</button>
     <span id="tegenProg" style="margin-left:8px;color:var(--ink2);font-size:.85rem"></span>
+  </div>
+
+  <h3>Fill-in verb quiz ✍️</h3>
+  <div class="tip">You're given the <b>meaning</b> — type all four forms, then <b>Check</b>. It shows which you got right and the answer for any you missed, so you can spot the ones to review. <b>Clear</b> to retry the same verb, <b>Next</b> for a new one.</div>
+  <div class="note" id="vqCard" style="overflow:visible">
+    <div id="vqPrompt" style="font-size:1.35rem;font-weight:800;color:var(--accent);margin-bottom:12px"></div>
+    <div id="vqRows" style="display:grid;gap:10px;max-width:460px">
+      <div style="display:grid;grid-template-columns:130px 1fr auto;gap:10px;align-items:center"><span style="color:var(--ink2);font-size:.9rem">~masu (polite)</span><input id="vq_masu" class="quiz-input" autocapitalize="off" autocomplete="off" spellcheck="false"><span class="vqMark" id="vqm_masu"></span></div>
+      <div style="display:grid;grid-template-columns:130px 1fr auto;gap:10px;align-items:center"><span style="color:var(--ink2);font-size:.9rem">dictionary</span><input id="vq_dict" class="quiz-input" autocapitalize="off" autocomplete="off" spellcheck="false"><span class="vqMark" id="vqm_dict"></span></div>
+      <div style="display:grid;grid-template-columns:130px 1fr auto;gap:10px;align-items:center"><span style="color:var(--ink2);font-size:.9rem">~nai (plain neg)</span><input id="vq_nai" class="quiz-input" autocapitalize="off" autocomplete="off" spellcheck="false"><span class="vqMark" id="vqm_nai"></span></div>
+      <div style="display:grid;grid-template-columns:130px 1fr auto;gap:10px;align-items:center"><span style="color:var(--ink2);font-size:.9rem">te-form</span><input id="vq_te" class="quiz-input" autocapitalize="off" autocomplete="off" spellcheck="false"><span class="vqMark" id="vqm_te"></span></div>
+    </div>
+    <div id="vqFb" style="margin-top:10px;min-height:20px;font-weight:600"></div>
+    <div style="margin-top:10px">
+      <button class="btn primary" id="vqCheck">Check ✓</button>
+      <button class="btn" id="vqClear">Clear ↺</button>
+      <button class="btn" id="vqNext">Next →</button>
+      <button class="btn" id="vqShuf">🔀 Shuffle</button>
+      <span id="vqScore" style="margin-left:8px;color:var(--ink2);font-size:.85rem"></span>
+    </div>
   </div>
 
   <h3>Complete Verb Bank</h3>
@@ -6779,6 +6799,39 @@ function makeGen(list, boxId, prog, nextId, prevId, shufId){
 }
 makeGen(HW10TEI,'teiBox','teiProg','teiNext','teiPrev','teiShuf');
 makeGen(HW10TAI,'taiBox','taiProg','taiNext','taiPrev','taiShuf');
+
+/* ---------- Homework 9: fill-in verb quiz ---------- */
+const VQBANK=[{"en": "to eat", "masu": "tabemasu", "dict": "taberu", "nai": "tabenai", "te": "tabete"}, {"en": "to drink", "masu": "nomimasu", "dict": "nomu", "nai": "nomanai", "te": "nonde"}, {"en": "to see / watch / look", "masu": "mimasu", "dict": "miru", "nai": "minai", "te": "mite"}, {"en": "to read", "masu": "yomimasu", "dict": "yomu", "nai": "yomanai", "te": "yonde"}, {"en": "to listen / ask", "masu": "kikimasu", "dict": "kiku", "nai": "kikanai", "te": "kiite"}, {"en": "to write", "masu": "kakimasu", "dict": "kaku", "nai": "kakanai", "te": "kaite"}, {"en": "to speak / talk", "masu": "hanashimasu", "dict": "hanasu", "nai": "hanasanai", "te": "hanashite"}, {"en": "to buy", "masu": "kaimasu", "dict": "kau", "nai": "kawanai", "te": "katte"}, {"en": "to sleep / go to bed", "masu": "nemasu", "dict": "neru", "nai": "nenai", "te": "nete"}, {"en": "to wake up / get up", "masu": "okimasu", "dict": "okiru", "nai": "okinai", "te": "okite"}, {"en": "to rest / take a day off", "masu": "yasumimasu", "dict": "yasumu", "nai": "yasumanai", "te": "yasunde"}, {"en": "to use", "masu": "tsukaimasu", "dict": "tsukau", "nai": "tsukawanai", "te": "tsukatte"}, {"en": "to make", "masu": "tsukurimasu", "dict": "tsukuru", "nai": "tsukuranai", "te": "tsukutte"}, {"en": "to wash", "masu": "araimasu", "dict": "arau", "nai": "arawanai", "te": "aratte"}, {"en": "to open", "masu": "akemasu", "dict": "akeru", "nai": "akenai", "te": "akete"}, {"en": "to close", "masu": "shimemasu", "dict": "shimeru", "nai": "shimenai", "te": "shimete"}, {"en": "to wear clothes", "masu": "kimasu", "dict": "kiru", "nai": "kinai", "te": "kite"}, {"en": "to take off clothes / shoes", "masu": "nugimasu", "dict": "nugu", "nai": "nuganai", "te": "nuide"}, {"en": "to remember / memorize", "masu": "oboemasu", "dict": "oboeru", "nai": "oboenai", "te": "oboete"}, {"en": "to forget", "masu": "wasuremasu", "dict": "wasureru", "nai": "wasurenai", "te": "wasurete"}, {"en": "to go", "masu": "ikimasu", "dict": "iku", "nai": "ikanai", "te": "itte"}, {"en": "to come", "masu": "kimasu", "dict": "kuru", "nai": "konai", "te": "kite"}, {"en": "to return / go home", "masu": "kaerimasu", "dict": "kaeru", "nai": "kaeranai", "te": "kaette"}, {"en": "to walk", "masu": "arukimasu", "dict": "aruku", "nai": "arukanai", "te": "aruite"}, {"en": "to run", "masu": "hashirimasu", "dict": "hashiru", "nai": "hashiranai", "te": "hashitte"}, {"en": "to swim", "masu": "oyogimasu", "dict": "oyogu", "nai": "oyoganai", "te": "oyoide"}, {"en": "to ride / get on", "masu": "norimasu", "dict": "noru", "nai": "noranai", "te": "notte"}, {"en": "to get off", "masu": "orimasu", "dict": "oriru", "nai": "orinai", "te": "orite"}, {"en": "to transfer / change trains", "masu": "norikaemasu", "dict": "norikaeru", "nai": "norikaenai", "te": "norikaete"}, {"en": "to arrive", "masu": "tsukimasu", "dict": "tsuku", "nai": "tsukanai", "te": "tsuite"}, {"en": "to leave / exit", "masu": "demasu", "dict": "deru", "nai": "denai", "te": "dete"}, {"en": "to enter", "masu": "hairimasu", "dict": "hairu", "nai": "hairanai", "te": "haitte"}, {"en": "to return / go back", "masu": "modorimasu", "dict": "modoru", "nai": "modoranai", "te": "modotte"}, {"en": "to go out", "masu": "dekakemasu", "dict": "dekakeru", "nai": "dekakenai", "te": "dekakete"}, {"en": "to turn", "masu": "magarimasu", "dict": "magaru", "nai": "magaranai", "te": "magatte"}, {"en": "to cross", "masu": "watarimasu", "dict": "wataru", "nai": "wataranai", "te": "watatte"}, {"en": "to move", "masu": "ugokimasu", "dict": "ugoku", "nai": "ugokanai", "te": "ugoite"}, {"en": "to stop / stay overnight", "masu": "tomarimasu", "dict": "tomaru", "nai": "tomaranai", "te": "tomatte"}, {"en": "to be late / be delayed", "masu": "okuremasu", "dict": "okureru", "nai": "okurenai", "te": "okurete"}, {"en": "to get lost / be unsure", "masu": "mayoimasu", "dict": "mayou", "nai": "mayowanai", "te": "mayotte"}, {"en": "to order / request", "masu": "tanomimasu", "dict": "tanomu", "nai": "tanomanai", "te": "tanonde"}, {"en": "to pay", "masu": "haraimasu", "dict": "harau", "nai": "harawanai", "te": "haratte"}, {"en": "to choose", "masu": "erabimasu", "dict": "erabu", "nai": "erabanai", "te": "erande"}, {"en": "to decide", "masu": "kimemasu", "dict": "kimeru", "nai": "kimenai", "te": "kimete"}, {"en": "to make a reservation", "masu": "yoyaku shimasu", "dict": "yoyaku suru", "nai": "yoyaku shinai", "te": "yoyaku shite"}, {"en": "to look for", "masu": "sagashimasu", "dict": "sagasu", "nai": "sagasanai", "te": "sagashite"}, {"en": "to find", "masu": "mitsukemasu", "dict": "mitsukeru", "nai": "mitsukenai", "te": "mitsukete"}, {"en": "to lose", "masu": "nakushimasu", "dict": "nakusu", "nai": "nakusanai", "te": "nakushite"}, {"en": "to drop / lose by dropping", "masu": "otoshimasu", "dict": "otosu", "nai": "otosanai", "te": "otoshite"}, {"en": "to take", "masu": "torimasu", "dict": "toru", "nai": "toranai", "te": "totte"}, {"en": "to hold / carry / have", "masu": "mochimasu", "dict": "motsu", "nai": "motanai", "te": "motte"}, {"en": "to put in", "masu": "iremasu", "dict": "ireru", "nai": "irenai", "te": "irete"}, {"en": "to take out / serve", "masu": "dashimasu", "dict": "dasu", "nai": "dasanai", "te": "dashite"}, {"en": "to leave (food) unfinished", "masu": "nokoshimasu", "dict": "nokosu", "nai": "nokosanai", "te": "nokoshite"}, {"en": "to need", "masu": "irimasu", "dict": "iru", "nai": "iranai", "te": "itte"}, {"en": "to meet", "masu": "aimasu", "dict": "au", "nai": "awanai", "te": "atte"}, {"en": "to call / call over", "masu": "yobimasu", "dict": "yobu", "nai": "yobanai", "te": "yonde"}, {"en": "to say", "masu": "iimasu", "dict": "iu", "nai": "iwanai", "te": "itte"}, {"en": "to answer", "masu": "kotaemasu", "dict": "kotaeru", "nai": "kotaenai", "te": "kotaete"}, {"en": "to tell / communicate", "masu": "tsutaemasu", "dict": "tsutaeru", "nai": "tsutaenai", "te": "tsutaete"}, {"en": "to show", "masu": "misemasu", "dict": "miseru", "nai": "misenai", "te": "misete"}, {"en": "to help", "masu": "tetsudaimasu", "dict": "tetsudau", "nai": "tetsudawanai", "te": "tetsudatte"}, {"en": "to receive / get", "masu": "moraimasu", "dict": "morau", "nai": "morawanai", "te": "moratte"}, {"en": "to give", "masu": "agemasu", "dict": "ageru", "nai": "agenai", "te": "agete"}, {"en": "to borrow / rent", "masu": "karimasu", "dict": "kariru", "nai": "karinai", "te": "karite"}, {"en": "to lend", "masu": "kashimasu", "dict": "kasu", "nai": "kasanai", "te": "kashite"}, {"en": "to know", "masu": "shirimasu", "dict": "shiru", "nai": "shiranai", "te": "shitte"}, {"en": "to understand", "masu": "wakarimasu", "dict": "wakaru", "nai": "wakaranai", "te": "wakatte"}, {"en": "to think", "masu": "omoimasu", "dict": "omou", "nai": "omowanai", "te": "omotte"}, {"en": "to laugh", "masu": "waraimasu", "dict": "warau", "nai": "warawanai", "te": "waratte"}, {"en": "to do", "masu": "shimasu", "dict": "suru", "nai": "shinai", "te": "shite"}, {"en": "to explain", "masu": "setsumei shimasu", "dict": "setsumei suru", "nai": "setsumei shinai", "te": "setsumei shite"}, {"en": "can / be able to", "masu": "dekimasu", "dict": "dekiru", "nai": "dekinai", "te": "dekite"}, {"en": "to start something", "masu": "hajimemasu", "dict": "hajimeru", "nai": "hajimenai", "te": "hajimete"}, {"en": "to finish / end", "masu": "owarimasu", "dict": "owaru", "nai": "owaranai", "te": "owatte"}, {"en": "to sit", "masu": "suwarimasu", "dict": "suwaru", "nai": "suwaranai", "te": "suwatte"}, {"en": "to stand something up", "masu": "tatemasu", "dict": "tateru", "nai": "tatenai", "te": "tatete"}, {"en": "to stand", "masu": "tachimasu", "dict": "tatsu", "nai": "tatanai", "te": "tatte"}, {"en": "to line up", "masu": "narabimasu", "dict": "narabu", "nai": "narabanai", "te": "narande"}, {"en": "to arrange / line up", "masu": "narabemasu", "dict": "naraberu", "nai": "narabenai", "te": "narabete"}, {"en": "to put / place", "masu": "okimasu", "dict": "oku", "nai": "okanai", "te": "oite"}, {"en": "to take something out", "masu": "toridashimasu", "dict": "toridasu", "nai": "toridasanai", "te": "toridashite"}, {"en": "to tidy up / put away", "masu": "katazukemasu", "dict": "katazukeru", "nai": "katazukenai", "te": "katazukete"}, {"en": "to throw away", "masu": "sutemasu", "dict": "suteru", "nai": "sutenai", "te": "sutete"}, {"en": "to pick up", "masu": "hiroimasu", "dict": "hirou", "nai": "hirowanai", "te": "hirotte"}, {"en": "to grill / bake", "masu": "yakimasu", "dict": "yaku", "nai": "yakanai", "te": "yaite"}, {"en": "to cut", "masu": "kirimasu", "dict": "kiru", "nai": "kiranai", "te": "kitte"}, {"en": "to mix", "masu": "mazemasu", "dict": "mazeru", "nai": "mazenai", "te": "mazete"}, {"en": "to pour", "masu": "sosogimasu", "dict": "sosogu", "nai": "sosoganai", "te": "sosoide"}, {"en": "to cool down", "masu": "samashimasu", "dict": "samasu", "nai": "samasanai", "te": "samashite"}, {"en": "to warm / heat", "masu": "atatamemasu", "dict": "atatameru", "nai": "atatamenai", "te": "atatamete"}, {"en": "to check (luggage)", "masu": "azukemasu", "dict": "azukeru", "nai": "azukenai", "te": "azukete"}, {"en": "to receive / pick up", "masu": "uketorimasu", "dict": "uketoru", "nai": "uketoranai", "te": "uketotte"}, {"en": "to return (a thing)", "masu": "kaeshimasu", "dict": "kaesu", "nai": "kaesanai", "te": "kaeshite"}, {"en": "to carry / transport", "masu": "hakobimasu", "dict": "hakobu", "nai": "hakobanai", "te": "hakonde"}, {"en": "to stop / park", "masu": "tomemasu", "dict": "tomeru", "nai": "tomenai", "te": "tomete"}, {"en": "to head toward", "masu": "mukaimasu", "dict": "mukau", "nai": "mukawanai", "te": "mukatte"}, {"en": "to bring (a person)", "masu": "tsuremasu", "dict": "tsureru", "nai": "tsurenai", "te": "tsurete"}, {"en": "to ask / inquire", "masu": "tazunemasu", "dict": "tazuneru", "nai": "tazunenai", "te": "tazunete"}, {"en": "to teach / tell", "masu": "oshiemasu", "dict": "oshieru", "nai": "oshienai", "te": "oshiete"}, {"en": "to contact", "masu": "renraku shimasu", "dict": "renraku suru", "nai": "renraku shinai", "te": "renraku shite"}, {"en": "to check / confirm", "masu": "kakunin shimasu", "dict": "kakunin suru", "nai": "kakunin shinai", "te": "kakunin shite"}, {"en": "to introduce", "masu": "shoukai shimasu", "dict": "shoukai suru", "nai": "shoukai shinai", "te": "shoukai shite"}, {"en": "to feel", "masu": "kanjimasu", "dict": "kanjiru", "nai": "kanjinai", "te": "kanjite"}, {"en": "to enjoy", "masu": "tanoshimimasu", "dict": "tanoshimu", "nai": "tanoshimanai", "te": "tanoshinde"}, {"en": "to continue", "masu": "tsuzukemasu", "dict": "tsuzukeru", "nai": "tsuzukenai", "te": "tsuzukete"}, {"en": "to get used to", "masu": "naremasu", "dict": "nareru", "nai": "narenai", "te": "narete"}, {"en": "to do one's best", "masu": "ganbarimasu", "dict": "ganbaru", "nai": "ganbaranai", "te": "ganbatte"}, {"en": "to practice", "masu": "renshuu shimasu", "dict": "renshuu suru", "nai": "renshuu shinai", "te": "renshuu shite"}, {"en": "to compare", "masu": "kurabemasu", "dict": "kuraberu", "nai": "kurabenai", "te": "kurabete"}, {"en": "to fix / correct", "masu": "naoshimasu", "dict": "naosu", "nai": "naosanai", "te": "naoshite"}];
+(function(){
+  const card=document.getElementById('vqCard'); if(!card) return;
+  let order=VQBANK.map((_,i)=>i), pos=0, done=0, got=0;
+  const norm=s=>(s||'').toLowerCase().replace(/[\s\-\u2013\u2014.,!?]/g,'').trim();
+  const F=['masu','dict','nai','te'];
+  const inp=k=>document.getElementById('vq_'+k), mark=k=>document.getElementById('vqm_'+k);
+  const fb=document.getElementById('vqFb'), score=document.getElementById('vqScore');
+  function load(){ const q=VQBANK[order[pos]];
+    document.getElementById('vqPrompt').textContent=q.en;
+    F.forEach(k=>{ const i=inp(k); i.value=''; i.disabled=false; i.style.borderColor=''; i.style.background=''; mark(k).textContent=''; });
+    fb.innerHTML=''; inp('masu').focus();
+    score.textContent='Verb '+(pos+1)+' / '+VQBANK.length+(done?('  ·  score '+got+'/'+done):'');
+  }
+  function check(){ const q=VQBANK[order[pos]]; let all=true;
+    F.forEach(k=>{ const ok=norm(inp(k).value)===norm(q[k]); const i=inp(k);
+      i.style.borderColor= ok?'var(--good)':'var(--bad)'; i.style.background= ok?'rgba(120,195,160,.12)':'rgba(220,90,90,.10)';
+      mark(k).innerHTML= ok?'<span style="color:var(--good);font-weight:700">✓</span>':('<span style="color:var(--bad)">✗ '+q[k]+'</span>');
+      if(!ok) all=false;
+    });
+    done++; if(all) got++;
+    fb.innerHTML= all?'<span style="color:var(--good)">Perfect — all four correct! 🎉</span>':'<span style="color:var(--ink2)">Check the red ones — correct answers shown.</span>';
+    score.textContent='Verb '+(pos+1)+' / '+VQBANK.length+'  ·  score '+got+'/'+done;
+  }
+  document.getElementById('vqCheck').onclick=check;
+  document.getElementById('vqClear').onclick=load;
+  document.getElementById('vqNext').onclick=()=>{ pos=(pos+1)%order.length; load(); };
+  document.getElementById('vqShuf').onclick=()=>{ for(let i=order.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[order[i],order[j]]=[order[j],order[i]];} pos=0; load(); };
+  inp('te').addEventListener('keydown',e=>{ if(e.key==='Enter') check(); });
+  load();
+})();
 
 </script>
 </body>
