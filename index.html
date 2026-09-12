@@ -6823,7 +6823,7 @@ const VQBANK=[{"en": "to eat", "masu": "tabemasu", "dict": "taberu", "nai": "tab
       if(!ok) all=false;
     });
     done++; if(all) got++;
-    fb.innerHTML= all?'<span style="color:var(--good)">Perfect — all four correct! 🎉</span>':'<span style="color:var(--ink2)">Check the red ones — correct answers shown.</span>';
+    fb.innerHTML= all?'<span style="color:var(--good)">Perfect — all four correct.</span>':'<span style="color:var(--ink2)">Check the red ones — correct answers shown.</span>';
     score.textContent='Verb '+(pos+1)+' / '+VQBANK.length+'  ·  score '+got+'/'+done;
   }
   document.getElementById('vqCheck').onclick=check;
