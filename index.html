@@ -3301,7 +3301,6 @@
     <button class="btn primary" id="vbQuizChecked">Quiz checked verbs →</button>
     <button class="btn" id="vbCheckAll">Check all</button>
     <button class="btn" id="vbClearChecks">Clear</button>
-    <span id="vbChkCount" style="margin-left:8px;color:var(--ink2);font-size:.85rem"></span>
   </div>
   <div class="tip" style="font-size:.85rem">Tick the verbs you want to drill, then <b>Quiz checked verbs</b> — the fill-in quiz above loads just those, so you can work in small chunks.</div>
   <div class="note" style="overflow-x:auto"><table>
@@ -3737,8 +3736,8 @@ const decks = {
   "L8 · Adjectives & extras": [
     ["ookii","big"],["chiisai","small"],["hiroi","spacious"],["semai","narrow / small"],["shizuka","quiet"],["nigiyaka","lively"],["urusai","noisy"],["benri","convenient"],["kirei","pretty / clean"],["yasashii","kind / easy"],["daiji","important"],["taisetsu","precious"],["michi","road"],["tango","vocabulary"]
   ],
-  "L9 · Verbs (bank highlights)": [
-    ["noru","to ride / get on"],["oriru","to get off"],["norikaeru","to transfer / change trains"],["harau","to pay"],["mitsukeru","to find"],["motsu","to hold / carry / have"],["kariru","to borrow / rent"],["kasu","to lend"],["tetsudau","to help"],["narabu","to line up"],["tsuzukeru","to continue"],["ganbaru","to do one's best"],["kuraberu","to compare"],["azukeru","to check (luggage)"],["hareru","to clear up (weather)"]
+  "L9 · Verb bank (plain forms)": [
+    ["taberu","to eat"], ["nomu","to drink"], ["miru","to see / watch / look"], ["yomu","to read"], ["kiku","to listen / ask"], ["kaku","to write"], ["hanasu","to speak / talk"], ["kau","to buy"], ["neru","to sleep / go to bed"], ["okiru","to wake up / get up"], ["yasumu","to rest / take a day off"], ["tsukau","to use"], ["tsukuru","to make"], ["arau","to wash"], ["akeru","to open"], ["shimeru","to close"], ["kiru","to wear clothes"], ["nugu","to take off clothes / shoes"], ["oboeru","to remember / memorize"], ["wasureru","to forget"], ["iku","to go"], ["kuru","to come"], ["kaeru","to return / go home"], ["aruku","to walk"], ["hashiru","to run"], ["oyogu","to swim"], ["noru","to ride / get on"], ["oriru","to get off"], ["norikaeru","to transfer / change trains"], ["tsuku","to arrive"], ["deru","to leave / exit"], ["hairu","to enter"], ["modoru","to return / go back"], ["dekakeru","to go out"], ["magaru","to turn"], ["wataru","to cross"], ["ugoku","to move"], ["tomaru","to stop / stay overnight"], ["okureru","to be late / be delayed"], ["mayou","to get lost / be unsure"], ["tanomu","to order / request"], ["harau","to pay"], ["erabu","to choose"], ["kimeru","to decide"], ["yoyakusuru","to make a reservation"], ["sagasu","to look for"], ["mitsukeru","to find"], ["nakusu","to lose"], ["otosu","to drop / lose by dropping"], ["toru","to take"], ["motsu","to hold / carry / have"], ["ireru","to put in"], ["dasu","to take out / serve"], ["nokosu","to leave (food) unfinished"], ["iru","to need"], ["au","to meet"], ["yobu","to call / call over"], ["iu","to say"], ["kotaeru","to answer"], ["tsutaeru","to tell / communicate"], ["miseru","to show"], ["tetsudau","to help"], ["morau","to receive / get"], ["ageru","to give"], ["kariru","to borrow / rent"], ["kasu","to lend"], ["shiru","to know"], ["wakaru","to understand"], ["omou","to think"], ["warau","to laugh"], ["suru","to do"], ["setsumeisuru","to explain"], ["dekiru","can / be able to"], ["hajimeru","to start something"], ["owaru","to finish / end"], ["suwaru","to sit"], ["tateru","to stand something up"], ["tatsu","to stand"], ["narabu","to line up"], ["naraberu","to arrange / line up"], ["oku","to put / place"], ["toridasu","to take something out"], ["katazukeru","to tidy up / put away"], ["suteru","to throw away"], ["hirou","to pick up"], ["yaku","to grill / bake"], ["kiru","to cut"], ["mazeru","to mix"], ["sosogu","to pour"], ["samasu","to cool down"], ["atatameru","to warm / heat"], ["azukeru","to check (luggage)"], ["uketoru","to receive / pick up"], ["kaesu","to return (a thing)"], ["hakobu","to carry / transport"], ["tomeru","to stop / park"], ["mukau","to head toward"], ["tsureru","to bring (a person)"], ["tazuneru","to ask / inquire"], ["oshieru","to teach / tell"], ["renrakusuru","to contact"], ["kakuninsuru","to check / confirm"], ["shoukaisuru","to introduce"], ["kanjiru","to feel"], ["tanoshimu","to enjoy"], ["tsuzukeru","to continue"], ["nareru","to get used to"], ["ganbaru","to do one's best"], ["renshuusuru","to practice"], ["kuraberu","to compare"], ["naosu","to fix / correct"]
   ],
   "L9 · Vocab & grammar words": [
     ["origami","origami (paper folding)"],["pengin","penguin"],["kyoumi","interest"],["hou","side / the … one (~no hou ga)"],["docchimo","both / neither"],["toki","when"],["nagame","view"],["keshiki","scenery / view"],["nigate","not good with"],["basho","place"],["nimotsu","luggage"],["kagi","key"],["nanko","how many? (small items)"],["chinamini","by the way"],["atode","later"],["matane","see you again"],["sugu","soon / right away"],["kedo","but / though"],["moshi","if"]
@@ -3766,7 +3765,7 @@ const L6_CATS=["L6 · New verbs (dictionary)","L6 · Suru-verbs (Group 3)","L6 �
 const HW6_CATS=["HW6 · NAI-form drill (30 verbs)"];
 const L7_CATS=["L7 · New verbs (dictionary)","L7 · Suru-verbs (Group 3)","L7 · Te-form (start here)","L7 · Everyday nouns","L7 · Adverbs & connectors"];
 const L8_CATS=["L8 · Weather & climate","L8 · Restaurant nouns","L8 · Restaurant verbs","L8 · More verbs","L8 · Counting people","L8 · Want to (tai-form)","L8 · Adjectives & extras"];
-const L9_CATS=["L9 · Verbs (bank highlights)","L9 · Vocab & grammar words"];
+const L9_CATS=["L9 · Verb bank (plain forms)","L9 · Vocab & grammar words"];
 const L10_CATS=["L10 · Progressive & want-to","L10 · New vocab"];
 function catsForLesson(les){
   return les==='trial'?TRIAL_CATS.slice()
@@ -6841,14 +6840,15 @@ const VQBANK=[{"en": "to eat", "masu": "tabemasu", "dict": "taberu", "nai": "tab
   document.getElementById('vqReset').onclick=()=>{ order=LIST.map((_,i)=>i); pos=0; done=0; got=0; load(); };
   inp('te').addEventListener('keydown',e=>{ if(e.key==='Enter') check(); });
   const chks=()=>Array.prototype.slice.call(document.querySelectorAll('.vbchk'));
-  const cnt=document.getElementById('vbChkCount');
-  function updCount(){ if(cnt){ cnt.textContent=chks().filter(c=>c.checked).length+' checked'; } }
-  chks().forEach(c=>c.addEventListener('change',updCount));
+  let lastIdx=null;
+  chks().forEach((c,idx)=>{ c.addEventListener('click',e=>{
+    if(e.shiftKey && lastIdx!==null){ const a=Math.min(lastIdx,idx), b=Math.max(lastIdx,idx), v=c.checked, all=chks(); for(let k=a;k<=b;k++) all[k].checked=v; }
+    lastIdx=idx;
+  }); });
   const _all=document.getElementById('vbCheckAll'), _clr=document.getElementById('vbClearChecks'), _qz=document.getElementById('vbQuizChecked');
-  if(_all) _all.onclick=()=>{ chks().forEach(c=>c.checked=true); updCount(); };
-  if(_clr) _clr.onclick=()=>{ chks().forEach(c=>c.checked=false); updCount(); };
+  if(_all) _all.onclick=()=>{ chks().forEach(c=>c.checked=true); };
+  if(_clr) _clr.onclick=()=>{ chks().forEach(c=>c.checked=false); };
   if(_qz) _qz.onclick=()=>{ const arr=chks().filter(c=>c.checked).map(c=>VQBANK[+c.dataset.i]); if(!arr.length){ alert('Tick at least one verb in the Complete Verb Bank below.'); return; } LIST=arr; order=LIST.map((_,i)=>i); pos=0; done=0; got=0; load(); card.scrollIntoView({behavior:'smooth',block:'center'}); };
-  updCount();
   load();
 })();
 
