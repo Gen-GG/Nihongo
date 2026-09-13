@@ -2043,6 +2043,7 @@
       <option value="l8">Set: Lesson 8 (0903)</option>
       <option value="l9">Set: Lesson 9 (0907)</option>
       <option value="l10">Set: Lesson 10 (0910)</option>
+      <option value="vb9">Set: Verb bank — plain forms only (111)</option>
       <option value="hw1">Set: Homework 1</option>
       <option value="hw2">Set: Homework 2</option>
       <option value="hw3">Set: Homework 3</option>
@@ -3288,6 +3289,7 @@
     <div style="margin-top:10px">
       <button class="btn primary" id="vqCheck">Check ✓</button>
       <button class="btn" id="vqClear">Clear ↺</button>
+      <button class="btn" id="vqBack">← Back</button>
       <button class="btn" id="vqNext">Next →</button>
       <button class="btn" id="vqShuf">🔀 Shuffle</button>
       <button class="btn" id="vqReset">⏮ Reset</button>
@@ -3779,6 +3781,7 @@ function catsForLesson(les){
     : les==='l8'?L8_CATS.slice()
     : les==='l9'?L9_CATS.slice()
     : les==='l10'?L10_CATS.slice()
+    : les==='vb9'?["L9 · Verb bank (plain forms)"]
     : les==='hw1'?HW1_CATS.slice()
     : les==='hw2'?HW2_CATS.slice()
     : les==='hw3'?HW3_CATS.slice()
@@ -4282,8 +4285,8 @@ function makeQuiz(){
         : mode==='type-kana' ? 'Type the romaji (how it sounds) for:' : 'Type the romaji for:';
       // any word matching the prompt counts — checked across ALL lessons (tomodachi/tomodachitachi, nande/naze…)
       const matches = (mode==='type-kana'||listen)
-        ? fullVocab.filter(c=>(KANA[(c[0]||'').toLowerCase()]||'')===kana)
-        : fullVocab.filter(c=>normMeaning(c[1])===normMeaning(q[1]));
+        ? pool.filter(c=>(KANA[(c[0]||'').toLowerCase()]||'')===kana)
+        : pool.filter(c=>normMeaning(c[1])===normMeaning(q[1]));
       const answers=new Set(matches.map(c=>norm(c[0])));
       const altHint = matches.length>1 ? ` <span style="color:var(--muted);font-weight:500;font-size:.85rem">(${matches.length} words fit — any is correct)</span>` : '';
       div.innerHTML=`<div class="prompt">${qi+1}. ${label} <b>${promptTxt}</b>${altHint}</div>`;
@@ -4295,7 +4298,7 @@ function makeQuiz(){
         const ok = !!v && answers.has(norm(v)); inp.disabled=true; inp.classList.add(ok?'ok':'bad');
         const allAns = matches.map(c=>c[0]).join(' / ');
         const mHint = listen ? ` — <i>${q[1]}</i>` : '';
-        fb.innerHTML = ok ? ('✓ correct'+mHint) : `✗ answer: <b>${allAns}</b>${kana?` &nbsp;<span style="color:#9a9ab0">${kana}</span>`:''}${mHint}`;
+        fb.innerHTML = ok ? ('✓ correct'+mHint) : `✗ answer: <b>${allAns}</b>${(mode==='type-kana'&&kana)?` &nbsp;<span style="color:#9a9ab0">${kana}</span>`:''}${mHint}`;
         fb.className='qfb '+(ok?'ok':'bad'); if(ok) quizState.correct++; else quizState.missed.push([q[0],q[1]]); maybeScore();
       };
       inp.addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault(); grade(false);
@@ -6836,6 +6839,7 @@ const VQBANK=[{"en": "to eat", "masu": "tabemasu", "dict": "taberu", "nai": "tab
   document.getElementById('vqCheck').onclick=check;
   document.getElementById('vqClear').onclick=load;
   document.getElementById('vqNext').onclick=()=>{ pos=(pos+1)%order.length; load(); };
+  document.getElementById('vqBack').onclick=()=>{ pos=(pos-1+order.length)%order.length; load(); };
   document.getElementById('vqShuf').onclick=()=>{ for(let i=order.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[order[i],order[j]]=[order[j],order[i]];} pos=0; load(); };
   document.getElementById('vqReset').onclick=()=>{ order=LIST.map((_,i)=>i); pos=0; done=0; got=0; load(); };
   inp('te').addEventListener('keydown',e=>{ if(e.key==='Enter') check(); });
