@@ -401,7 +401,7 @@
       <label style="font-weight:600;color:var(--ink2)">New items / day:
         <select id="studyNew" class="quiz-input" style="width:auto;display:inline-block;padding:4px 8px">
           <option value="0">0</option><option value="5">5</option>
-          <option value="8" selected>8</option><option value="10">10</option><option value="15">15</option>
+          <option value="8">8</option><option value="10">10</option><option value="12" selected>12</option><option value="15">15</option><option value="20">20</option><option value="25">25</option>
         </select>
       </label>
       <label style="font-weight:600;color:var(--ink2)">Focus:
@@ -9721,6 +9721,26 @@ const PG13=[
       for(const it of reads){ if(jfirstQ.length>=P.counts.jfirst) break; const q=qReadComprehension(it, rpool); if(take(q)){ q.prio=470; jfirstQ.push(q); } }
     }
 
+    // ---- VARIETY backfill: keep sessions fresh day-to-day -------------------------------------
+    // The buckets above are built from what's DUE/weak — a small set that repeats each day. Top the
+    // session up to the requested size with a freshly-shuffled slice of everything you've been TAUGHT
+    // (rotating through the whole introduced pool, not just today's due items). Low priority, so it
+    // never pushes real reviews down the queue; a fresh shuffle each session means new faces daily.
+    const varietyQ=[];
+    { const have=[reviewQ,prodQ,listenQ,newQ,contrastQ,oralQ,jfirstQ].reduce((n,b)=>n+b.length,0);
+      const need=size-have;
+      if(need>0){
+        const introVocab=shuffle(P.vpool.filter(w=>isIntroduced(Mastery.vocabId(w.romaji))));
+        for(const w of introVocab){ if(varietyQ.length>=need) break;
+          const id=Mastery.vocabId(w.romaji);
+          const q = (Mastery.getMastery(id,'recall')<0.4) ? qVocabRecognition(w,'review',P.vpool) : qVocabRecall(w,'review');
+          if(q && take(q)){ q.prio=300; varietyQ.push(q); } }
+        if(varietyQ.length<need){ const vShuf=shuffle(P.vp.slice());
+          for(const v of vShuf){ if(varietyQ.length>=need) break; const q=qConjugation(v,'review'); if(q && take(q)){ q.prio=290; varietyQ.push(q); } } }
+        if(varietyQ.length<need){ const sShuf=shuffle(P.spool.slice());
+          for(const s of sShuf){ if(varietyQ.length>=need) break; const q=qSentence(s,'production'); if(q && take(q)){ q.prio=280; varietyQ.push(q); } } }
+      }
+    }
     // order the review bucket by its full priority (overdue + mistakes + weakness) so the most
     // urgent — including recurring recent mistakes — surface first within the bucket
     reviewQ.sort((x,y)=>(y.prio||0)-(x.prio||0));
@@ -9729,7 +9749,7 @@ const PG13=[
     // run when that alternative is within TOL of the top — never demote a high-priority item
     // (overdue/mistake/weak) just to alternate. Same-category runs are allowed for top items.
     const TOL=150;
-    const buckets=[reviewQ, prodQ, listenQ, newQ, contrastQ, oralQ, jfirstQ].filter(b=>b.length);
+    const buckets=[reviewQ, prodQ, listenQ, newQ, contrastQ, oralQ, jfirstQ, varietyQ].filter(b=>b.length);
     const queue=[]; const idx=buckets.map(()=>0);
     let remaining=buckets.reduce((n,b)=>n+b.length,0);
     let lastCat=null;
