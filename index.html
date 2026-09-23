@@ -393,6 +393,9 @@
           <option value="15">15 questions</option>
           <option value="20" selected>20 questions</option>
           <option value="30">30 questions</option>
+          <option value="40">40 questions</option>
+          <option value="50">50 questions</option>
+          <option value="75">75 questions</option>
         </select>
       </label>
       <label style="font-weight:600;color:var(--ink2)">New items / day:
@@ -401,7 +404,26 @@
           <option value="8" selected>8</option><option value="10">10</option><option value="15">15</option>
         </select>
       </label>
+      <label style="font-weight:600;color:var(--ink2)">Focus:
+        <select id="studyFocus" class="quiz-input" style="width:auto;display:inline-block;padding:4px 8px">
+          <option value="all" selected>All lessons (mixed)</option>
+          <option value="l1">Lesson 1 only</option>
+          <option value="l2">Lesson 2 only</option>
+          <option value="l3">Lesson 3 only</option>
+          <option value="l4">Lesson 4 only</option>
+          <option value="l5">Lesson 5 only</option>
+          <option value="l6">Lesson 6 only</option>
+          <option value="l7">Lesson 7 only</option>
+          <option value="l8">Lesson 8 only</option>
+          <option value="l9">Lesson 9 only</option>
+          <option value="l10">Lesson 10 only</option>
+          <option value="l11">Lesson 11 only</option>
+          <option value="l12">Lesson 12 only</option>
+          <option value="l13">Lesson 13 only</option>
+        </select>
+      </label>
     </div>
+    <div class="hint" id="studyFocusHint" style="margin:2px 0 8px;display:none">Focus mode drills just that lesson's new grammar &amp; vocab — great for the first day or two. Switch back to <b>All lessons</b> to lock it in with mixed review.</div>
     <button class="btn primary" id="studyStart" style="font-size:1.05rem;padding:10px 24px;margin-top:6px">Start Study →</button>
   </div>
 
@@ -423,7 +445,8 @@
   <div id="studyDone" style="display:none">
     <h3>Session complete</h3>
     <div id="studySummary" class="note" style="max-width:520px"></div>
-    <button class="btn primary" id="studyAgain" style="margin-top:14px">Back to Today</button>
+    <button class="btn primary" id="studyMore" style="margin-top:14px">Keep going →</button>
+    <button class="btn" id="studyAgain" style="margin-top:14px">Back to Today</button>
   </div>
 </section>
 
@@ -9275,6 +9298,31 @@ const PG13=[
   const esc = s => (s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 
   // ---------- content pools (by reference; nothing duplicated) ----------
+  // ---------- FOCUS MODE: optionally scope a session to one lesson's new grammar + vocab ----------
+  // "all" = the normal mixed/interleaved session. A lesson id restricts every pool (and the review
+  // bucket) to just that lesson's content — useful for the first day or two of a fresh lesson.
+  let focusLes='all';
+  let _focusCache={les:null,vs:null,ss:null};
+  function focusSets(){
+    const cur = (typeof focusLes==='string' && focusLes && focusLes!=='all') ? focusLes : 'all';
+    if(_focusCache.les!==cur){
+      let vs=null, ss=null;
+      if(cur!=='all'){
+        vs=new Set();
+        (catsForLesson(cur)||[]).forEach(c=>(decks[c]||[]).forEach(p=>{ const r=(p[0]||'').toLowerCase().trim(); if(r) vs.add(r); }));
+        ss=new Set();
+        (window.GRAMMAR||[]).forEach(g=>{ if((g.les||'').toLowerCase()===cur && g.en) ss.add(Mastery.sentenceId(g.en)); });
+        if(vs.size===0 && ss.size===0){ vs=null; ss=null; }   // unknown/empty lesson → behave like "all" (never nuke the session)
+      }
+      _focusCache={les:cur,vs,ss};
+    }
+    return _focusCache;
+  }
+  function inFocus(itemId){ const f=focusSets(); if(!f.vs) return true;   // "all" → everything passes
+    if(itemId[0]==='v') return f.vs.has(itemId.slice(2));                 // vocab + conjugation share v:<romaji>
+    if(itemId[0]==='s') return f.ss.has(itemId);                          // sentence ids
+    return true;                                                          // grammar / unknown → don't block
+  }
   function vocabPool(){
     const seen={}, out=[];
     Object.keys(decks).filter(k=>!/^Fake HW3/.test(k)).forEach(k=>decks[k].forEach(p=>{
@@ -9282,7 +9330,7 @@ const PG13=[
       if(!r||/\s/.test(r)||r.length<2||!en||!KANA[r]) return;
       if(seen[r]) return; seen[r]=1; out.push({romaji:r, en, kana:KANA[r]});
     }));
-    return out;
+    const f=focusSets(); return f.vs ? out.filter(w=>f.vs.has(w.romaji)) : out;
   }
   const FORM_LABEL={masu:'polite (~masu)',mashita:'past (~mashita)',masen:'negative (~masen)',nai:'plain negative (~nai)',te:'te-form (~te)'};
   const FALLBACK_FORMS=[{key:'masu',idx:2},{key:'mashita',idx:3},{key:'masen',idx:4},{key:'nai',idx:5}];
@@ -9292,13 +9340,15 @@ const PG13=[
     const forms = (window.Curriculum ? Curriculum.eligibleForms(v[0]) : FALLBACK_FORMS);
     return forms.filter(f => v[f.idx]);   // only forms the course table actually defines for this verb
   }
-  function verbPool(){ return (window.VCONJ||[]).filter(v => v[0] && eligibleForms(v).length); }
+  function verbPool(){ const f=focusSets();
+    return (window.VCONJ||[]).filter(v => v[0] && eligibleForms(v).length && (!f.vs || f.vs.has((v[0]||'').toLowerCase()))); }
   // Sentence-production pool now comes from the Sentences model, CURRICULUM-GATED (Step 8): only
   // sentences whose grammar + lesson are active/taught can enter adaptive Study Today.
   function sentencePool(){
-    if(window.Sentences) return Sentences.eligibleItems();
-    return (window.GRAMMAR||[]).filter(g=>g.ja&&g.en&&/\s/.test(g.ja.trim())&&!/^\(/.test(g.en))
-      .map(g=>({ id: Mastery.sentenceId(g.en), en:g.en, ja:g.ja, pat:g.pat, alt:[] }));
+    let items = window.Sentences ? Sentences.eligibleItems()
+      : (window.GRAMMAR||[]).filter(g=>g.ja&&g.en&&/\s/.test(g.ja.trim())&&!/^\(/.test(g.en))
+          .map(g=>({ id: Mastery.sentenceId(g.en), en:g.en, ja:g.ja, pat:g.pat, alt:[] }));
+    const f=focusSets(); return f.ss ? items.filter(it=>f.ss.has(it.id)) : items;
   }
 
   // ---------- question builders (each returns a renderable+gradable spec) ----------
@@ -9551,9 +9601,9 @@ const PG13=[
     const vById={}; vpool.forEach(w=>vById[Mastery.vocabId(w.romaji)]=w);
     const vconjById={}; vp.forEach(v=>vconjById[Mastery.vocabId(v[0])]=v);
     const sById={}; spool.forEach(s=>sById[s.id]=s);
-    const due=Mastery.getDueItems({now});
+    const due=Mastery.getDueItems({now}).filter(d=>inFocus(d.itemId));
     const dueSet=new Set(due.map(d=>d.itemId+'|'+d.skill));
-    const weak=Mastery.getWeakest({}).filter(w=>w.record.totalAttempts>0 && w.record.masteryScore<0.6 && !dueSet.has(w.itemId+'|'+w.skill));
+    const weak=Mastery.getWeakest({}).filter(w=>w.record.totalAttempts>0 && w.record.masteryScore<0.6 && !dueSet.has(w.itemId+'|'+w.skill) && inFocus(w.itemId));
     // new vocab = words never recalled AND taught by an ACTIVE lesson (curriculum-gated)
     const newVocab=vpool.filter(w=>{ const id=Mastery.vocabId(w.romaji); const it=Mastery.getItem(id);
       const unseen = !it || !it.skills.recall;
@@ -9708,6 +9758,8 @@ const PG13=[
     c.newUsed=(c.newUsed||0)+(n||1); saveCfg(c); }
   function refreshLanding(){
     const c=cfg(); if(c.len) $('studyLen').value=c.len; if(c.neu!=null) $('studyNew').value=c.neu;
+    if($('studyFocus') && $('studyFocus').value) focusLes=$('studyFocus').value;
+    if($('studyFocusHint')) $('studyFocusHint').style.display = (focusLes==='all') ? 'none' : '';
     const size=+$('studyLen').value, newLim=+$('studyNew').value;
     const P=plan(size,newLim);
     const row=(label,n)=>'<tr><td style="padding:3px 14px 3px 0">'+label+'</td><td style="font-weight:700;text-align:right">'+n+'</td></tr>';
@@ -9724,6 +9776,7 @@ const PG13=[
   // ---------- session runner ----------
   let sess=null;
   function start(){
+    if($('studyFocus') && $('studyFocus').value) focusLes=$('studyFocus').value;
     const size=+$('studyLen').value, newLim=+$('studyNew').value;
     const c=cfg(); c.len=$('studyLen').value; c.neu=$('studyNew').value; saveCfg(c);   // merge — keep daily new counter
     const built=buildSession(size,newLim);
@@ -10050,6 +10103,10 @@ const PG13=[
   $('studyNext').onclick=next;
   $('studyQuit').onclick=finish;
   $('studyAgain').onclick=()=>{ $('studyDone').style.display='none'; $('studyRun').style.display='none'; $('studyLanding').style.display=''; refreshLanding(); };
+  if($('studyMore')) $('studyMore').onclick=start;   // "Keep going" — build a fresh session immediately (new due/weak/new items)
+  if($('studyFocus')) $('studyFocus').onchange=()=>{ focusLes=$('studyFocus').value; refreshLanding(); };
+  if($('studyLen')) $('studyLen').addEventListener('change',refreshLanding);
+  if($('studyNew')) $('studyNew').addEventListener('change',refreshLanding);
   $('studyInput').addEventListener('keydown',e=>{ if(e.key==='Enter'){ if($('studyNext').style.display==='none') check(); else next(); } });
   const navBtn=document.querySelector('nav button[data-tab="study"]'); if(navBtn) navBtn.addEventListener('click', refreshLanding);
   refreshLanding();
