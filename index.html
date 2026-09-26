@@ -4301,6 +4301,9 @@
       <span id="pg13Prog" style="margin-left:8px;color:var(--ink2);font-size:.85rem"></span>
     </div>
   </div>
+  <h3 style="margin-top:30px">Practice quiz — answer each question yourself</h3>
+  <div class="tip">The <b>question</b> is shown, with the <b>English of a good answer</b> under it. Type the Japanese in <b>romaji</b>, then <b>Check</b>. Every answer stays within the grammar this homework practices, and there are extra answers to try. Spacing/hyphens don't matter and <b>wo</b>/<b>o</b> both work; a mismatch shows a model to compare, never a red "wrong."</div>
+  <div class="note" id="hwq13Box" style="min-height:110px"></div>
   </div><!-- /hw for l13 -->
 
   <div class="lesson-block" data-lesson="l14">
@@ -4442,6 +4445,9 @@
       <span id="pg14Prog" style="margin-left:8px;color:var(--ink2);font-size:.85rem"></span>
     </div>
   </div>
+  <h3 style="margin-top:30px">Practice quiz — answer each question yourself</h3>
+  <div class="tip">The <b>question</b> is shown, with the <b>English of a good answer</b> under it. Type the Japanese in <b>romaji</b>, then <b>Check</b>. Every answer stays within the grammar this homework practices (feelings, adjective past, <span class="cw">kara</span>, <span class="cw">kedo</span>, <span class="cw">toki</span>, potential), with extra answers to try. A mismatch shows a model to compare, never a red "wrong."</div>
+  <div class="note" id="hwq14Box" style="min-height:110px"></div>
   </div><!-- /hw for l14 -->
 
 </section>
@@ -9774,6 +9780,80 @@ const PG14=[
   draw();
 })();
 
+/* ---- Homework practice quiz: shows the QUESTION + English of a good answer; you type the Japanese ---- */
+function hwPracticeQuiz(boxId, items){
+  const box=document.getElementById(boxId); if(!box || !items || !items.length) return;
+  box.innerHTML =
+    '<div id="'+boxId+'_q" style="color:var(--ink2);font-size:.95rem;line-height:1.6"></div>'+
+    '<div id="'+boxId+'_en" style="font-size:1.12rem;font-weight:700;margin:8px 0 10px"></div>'+
+    '<input id="'+boxId+'_in" class="quiz-input" autocorrect="off" autocapitalize="off" autocomplete="off" spellcheck="false" style="max-width:520px" placeholder="type the Japanese in romaji…">'+
+    '<div id="'+boxId+'_fb" style="margin-top:10px;min-height:22px;font-weight:600"></div>'+
+    '<div style="margin-top:8px">'+
+      '<button class="btn primary" id="'+boxId+'_check">Check</button> '+
+      '<button class="btn" id="'+boxId+'_show">Show answer</button> '+
+      '<button class="btn" id="'+boxId+'_back">← Back</button> '+
+      '<button class="btn" id="'+boxId+'_next">Next →</button> '+
+      '<span id="'+boxId+'_prog" style="margin-left:8px;color:var(--ink2);font-size:.85rem"></span>'+
+    '</div>';
+  const g=s=>document.getElementById(boxId+'_'+s);
+  const esc=s=>String(s==null?'':s).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+  let pos=0, recorded=false;
+  const norm=s=>{ let x=(s||'').toLowerCase().replace(/[.,!?、。]/g,'').replace(/-/g,'').replace(/\s+/g,'').replace(/wo/g,'o');
+    x=x.replace(/^watashi(wa|mo)/,'').replace(/^boku(wa|mo)/,''); x=x.replace(/dannasan/g,'otto'); return x; };
+  const touch=(window.matchMedia&&window.matchMedia('(pointer: coarse)').matches)||('ontouchstart' in window);
+  function draw(){ const it=items[pos];
+    g('q').innerHTML = it.q ? ('<span style="color:var(--accent);font-weight:700">Q:</span> '+annotate(it.q)+(it.qEn?' <span style="color:var(--ink2)">— '+esc(it.qEn)+'</span>':'')) : '';
+    g('en').textContent='Answer in Japanese:  '+it.en; g('in').value=''; g('fb').innerHTML=''; recorded=false;
+    g('prog').textContent=(pos+1)+' / '+items.length; if(!touch) g('in').focus(); }
+  function ok(it,v){ const n=norm(v); return n===norm(it.ja)||(it.alt||[]).some(a=>norm(a)===n); }
+  function credit(it){ if(window.Mastery){ const id=Mastery.sentenceId(it.en); Mastery.recordCorrect(id,'sentenceProduction',{itemType:'sentence'}); } }
+  function check(){ const it=items[pos]; if(!g('in').value.trim()) return; const c=ok(it,g('in').value);
+    if(c){ if(!recorded){recorded=true;credit(it);} g('fb').innerHTML='<span style="color:var(--good)">✓ Correct!</span> &nbsp; '+annotate(it.ja); speakSentence(it.ja); }
+    else { g('fb').innerHTML='<div style="color:var(--ink2)">Many phrasings work — compare with this model answer:</div><div style="margin-top:4px">'+annotate(it.ja)+'</div><div style="margin-top:6px"><button class="btn" type="button" id="'+boxId+'_mine" style="padding:4px 12px">Mine’s right too</button></div>';
+      speakSentence(it.ja); const mb=document.getElementById(boxId+'_mine'); if(mb) mb.onclick=()=>{ if(!recorded){recorded=true;credit(it);} mb.disabled=true; mb.textContent='✓ counted'; }; } }
+  function show(){ const it=items[pos]; g('fb').innerHTML='<span style="color:var(--ink2)">Answer:</span> '+annotate(it.ja); speakSentence(it.ja); }
+  g('check').onclick=check; g('show').onclick=show;
+  g('next').onclick=()=>{ pos=(pos+1)%items.length; draw(); };
+  g('back').onclick=()=>{ pos=(pos-1+items.length)%items.length; draw(); };
+  g('in').addEventListener('keydown',e=>{ if(e.key==='Enter') check(); });
+  draw();
+}
+const HWQ13=[
+  {q:'Nihon de sushi wo tabeta koto ga arimasu ka?', qEn:'Have you eaten sushi in Japan?', en:"Yes, I have. I've eaten natto too.", ja:'Hai, tabeta koto ga arimasu. Natto mo tabeta koto ga arimasu.'},
+  {q:'Nihon de sushi wo tabeta koto ga arimasu ka?', qEn:'Have you eaten sushi in Japan?', en:'After going to Japan, I want to eat more.', ja:'Nihon ni itte kara, motto tabete mitai desu.'},
+  {q:'Nihon de sushi wo tabeta koto ga arimasu ka?', qEn:'Have you eaten sushi in Japan?', en:'Next time I want to try sea grapes.', ja:'Tsugi wa umibudou wo tabete mitai desu.'},
+  {q:'Nihon de sushi wo tabeta koto ga arimasu ka?', qEn:'Have you eaten sushi in Japan?', en:"I've never eaten natto.", ja:'Natto wo tabeta koto ga arimasen.'},
+  {q:'Nihon no okashi wo tabeta koto ga arimasu ka?', qEn:'Have you eaten Japanese snacks?', en:"Yes, I've eaten Japanese snacks.", ja:'Hai, nihon no okashi wo tabeta koto ga arimasu.'},
+  {q:'Nihon no okashi wo tabeta koto ga arimasu ka?', qEn:'Have you eaten Japanese snacks?', en:'Sweet snacks are tasty, but they were a little too sweet.', ja:'Amai okashi wa oishii kedo, chotto amasugita desu.'},
+  {q:'Nihon no okashi wo tabeta koto ga arimasu ka?', qEn:'Have you eaten Japanese snacks?', en:'I like salty snacks too, but I ate too much.', ja:'Shoppai okashi mo suki dakedo, tabesugita.'},
+  {q:'Nihon ni itte borudaringu wo shita koto ga arimasu ka?', qEn:'Have you gone bouldering in Japan?', en:"Not yet. But I've done it in Canada.", ja:'Mada desu. Demo kanada de shita koto ga arimasu.'},
+  {q:'Nihon ni itte borudaringu wo shita koto ga arimasu ka?', qEn:'Have you gone bouldering in Japan?', en:"How was it? It was fun! I've done it many times.", ja:'Doudatta? Tanoshikatta! Nan kai mo shita koto ga arimasu.'},
+  {q:'Shinkansen ni notta koto ga arimasu ka?', qEn:'Have you ridden the bullet train?', en:"No, I've never ridden it.", ja:'Iie, notta koto ga arimasen.'},
+  {q:'Shinkansen ni notta koto ga arimasu ka?', qEn:'Have you ridden the bullet train?', en:'I want to ride it someday.', ja:'Itsuka noritai desu.'},
+  {q:'Shinkansen ni notta koto ga arimasu ka?', qEn:'Have you ridden the bullet train?', en:'From where to where did you ride?', ja:'Doko kara doko made norimashita ka?'},
+  {q:'Okashi wo tsukuru koto ga suki desu ka?', qEn:'Do you like making sweets?', en:'Because I like sweet things, I make them often.', ja:'Amai mono ga suki dakara, yoku tsukurimasu.'},
+  {q:'Okashi wo tsukuru koto ga suki desu ka?', qEn:'Do you like making sweets?', en:'Since I have time, someday I want to try making yuzu cake.', ja:'Jikan ga aru node, itsuka yuzu keeki wo tsukutte mitai desu.'},
+  {q:'Okashi wo tsukuru koto ga suki desu ka?', qEn:'Do you like making sweets?', en:'I want to make them better.', ja:'Motto jouzu ni tsukuritai desu.'}
+];
+const HWQ14=[
+  {q:'Nihon no sushi wo tabeta koto ga arimasu ka?', qEn:'Have you eaten sushi in Japan?', en:"Yes, I have. I've eaten natto too.", ja:'Hai, tabeta koto ga arimasu. Natto mo tabeta koto ga arimasu.'},
+  {q:'Nihon no sushi wo tabeta koto ga arimasu ka?', qEn:'Have you eaten sushi in Japan?', en:"Honestly, I've never eaten natto.", ja:'Jitsuwa, natto wo tabeta koto ga arimasen.'},
+  {q:'Nihon no okashi wo tabeta koto ga arimasu ka?', qEn:'Have you eaten Japanese snacks?', en:'I ate too much and got full.', ja:'Takusan tabesugite, onaka ippai ni narimashita.'},
+  {q:'Nihon no okashi wo tabeta koto ga arimasu ka?', qEn:'Have you eaten Japanese snacks?', en:'I ate too much, so my stomach hurts.', ja:'Ippai tabesugita kara, onaka ga itai desu.'},
+  {q:'Nihon ni itte borudaringu wo shita koto ga arimasu ka?', qEn:'Have you gone bouldering in Japan?', en:'I did it in Yakushima with my husband and a friend.', ja:'Yakushima de dannasan to tomodachi to shimashita.'},
+  {q:'Nihon ni itte borudaringu wo shita koto ga arimasu ka?', qEn:'Have you gone bouldering in Japan?', en:"I've done it a few times. It's fun every time.", ja:'Suukai shimashita. Maikai tanoshii desu.'},
+  {q:'Shinkansen ni notta koto ga arimasu ka?', qEn:'Have you ridden the bullet train?', en:'Yes, I rode from Tokyo to Kyoto.', ja:'Hai, Tokyo kara Kyoto made norimashita.'},
+  {q:'Shinkansen ni notta koto ga arimasu ka?', qEn:'Have you ridden the bullet train?', en:"I've never bought an ekiben.", ja:'Ekiben wo katta koto ga nai desu.'},
+  {q:'Shinkansen ni notta koto ga arimasu ka?', qEn:'Have you ridden the bullet train?', en:'Next time I go to Japan, I want to try an ekiben.', ja:'Tsugi nihon ni itta toki, ekiben wo tabete mitai desu.'},
+  {q:'Kyou wa dou deshita ka?', qEn:'How was today?', en:"Today was hectic, so I'm tired.", ja:'Kyou wa batabata datta kara, tsukareta.', alt:['Kyou wa batabata datta kara, tsukaremashita.']},
+  {q:'Naze ureshikatta desu ka?', qEn:'Why were you happy?', en:'I was happy because I met my friend.', ja:'Tomodachi ni atta kara, ureshikatta desu.'},
+  {q:'Ryokou wa dou deshita ka?', qEn:'How was the trip?', en:'It was hard at first, but it was fun.', ja:'Hajime wa taihen datta kedo, tanoshikatta desu.'},
+  {q:'Nani ga dekimasu ka?', qEn:'What can you do?', en:'I can cook.', ja:'Ryouri ga dekimasu.'},
+  {q:'Nani ga dekimasu ka?', qEn:'What can you do?', en:'I can read Japanese.', ja:'Nihongo ga yomeru.', alt:['Nihongo ga yomemasu.']}
+];
+hwPracticeQuiz('hwq13Box', HWQ13);
+hwPracticeQuiz('hwq14Box', HWQ14);
+
 /* ============================================================================
    STUDY TODAY — adaptive mixed session built from the Mastery/SRS system.
    Reads content from global decks (vocab), window.VCONJ (verbs), window.GRAMMAR
@@ -10129,10 +10209,13 @@ const PG14=[
   }
 
   // ---------- BUILD: turn the plan into an interleaved question queue ----------
+  // items shown earlier in THIS sitting (across "Keep going" sessions) — excluded from the next build so
+  // pressing Continue never re-serves what you just did. Reset on a fresh Start or Back to Today.
+  let studyRunSeen = new Set();
   function buildSession(size, newLimit){
     const P=plan(size,newLimit);
     const used=new Set();
-    const take=(q)=>{ if(!q)return false; const key=q.itemId+'|'+q.skill; if(used.has(key))return false; used.add(key); return true; };
+    const take=(q)=>{ if(!q)return false; const key=q.itemId+'|'+q.skill; if(used.has(key)||studyRunSeen.has(key))return false; used.add(key); return true; };
     const DAY=86400000;
     // priority: overdue/mistake/weak REVIEW ranks highest; other categories sit lower so review leads.
     function reviewPrio(rec){ const r=rec.record||{};
@@ -10267,7 +10350,9 @@ const PG14=[
     if(c.newDate!==t){ c.newDate=t; c.newUsed=0; }
     c.newUsed=(c.newUsed||0)+(n||1); saveCfg(c); }
   function refreshLanding(){
-    const c=cfg(); if(c.len) $('studyLen').value=c.len; if(c.neu!=null) $('studyNew').value=c.neu;
+    // NOTE: do NOT reset the dropdowns from saved cfg here — this runs on every change, so
+    // restoring saved values would snap the user's new pick straight back. Saved prefs are
+    // applied once at init (see restoreStudyPrefs below). Here we only read current values.
     if($('studyFocus') && $('studyFocus').value) focusLes=$('studyFocus').value;
     if($('studyFocusHint')) $('studyFocusHint').style.display = (focusLes==='all') ? 'none' : '';
     const size=+$('studyLen').value, newLim=+$('studyNew').value;
@@ -10289,7 +10374,9 @@ const PG14=[
     if($('studyFocus') && $('studyFocus').value) focusLes=$('studyFocus').value;
     const size=+$('studyLen').value, newLim=+$('studyNew').value;
     const c=cfg(); c.len=$('studyLen').value; c.neu=$('studyNew').value; saveCfg(c);   // merge — keep daily new counter
-    const built=buildSession(size,newLim);
+    let built=buildSession(size,newLim);
+    if(!built.queue.length && studyRunSeen.size){ studyRunSeen=new Set(); built=buildSession(size,newLim); }
+    if(built.queue.length) built.queue.forEach(q=>studyRunSeen.add(q.itemId+'|'+q.skill));
     if(!built.queue.length){ $('studyCounts').innerHTML='<div class="hint">Nothing to study yet — try a few flashcards or a quiz first, then come back.</div>'; return; }
     Mastery.startSession();
     sess={ queue:built.queue, pos:0, extra:[], answeredKeys:new Set(),
@@ -10351,7 +10438,9 @@ const PG14=[
         row.appendChild(ti); row.appendChild(go); opt.appendChild(row); ti.focus();
       };
       opt.appendChild(typeBtn);
-      const oc = q.promptType==='ja-text' ? 'Understand the Japanese, then answer.'
+      const oc = (q.skill==='responsiveProduction' && q.openEnded!==false)
+                   ? 'Answer in Japanese — <b>there\'s no single right answer</b>, so just say something true for you. Tap <b>Show meaning</b> if the question isn\'t clear.'
+                 : q.promptType==='ja-text' ? 'Understand the Japanese, then answer.'
                                           : 'Say your answer aloud.';
       const micLine = speechInputSupported()
         ? ' Tap <b>Speak &amp; check</b> to have it transcribed and checked, or <b>Type instead</b>.'
@@ -10457,12 +10546,16 @@ const PG14=[
       const mr=_cleanRoma(q.model.ja);             // model as romaji
       const tk=_cleanKana(t), tr=_cleanRoma(t);
       if(!tk && !tr) return false;
-      // kana: exact, substring either way, or a small edit distance (recognition drops/adds a kana)
-      if(mk && tk && (tk===mk || tk.indexOf(mk)>=0 || mk.indexOf(tk)>=0)) return true;
-      if(mk && tk && mk.length>=2 && _lev(tk,mk) <= Math.max(1, Math.floor(mk.length*0.25))) return true;
-      // romaji: exact / substring (rarely the engine returns romaji)
-      if(mr && tr && (tr===mr || tr.indexOf(mr)>=0 || mr.indexOf(tr)>=0)) return true;
-      if(mr && tr && mr.length>=3 && _lev(tr,mr) <= Math.max(1, Math.floor(mr.length*0.2))) return true;
+      // A match must be the WHOLE answer, close to the WHOLE model — never a mere substring
+      // (a short wrong answer used to slip through because it appeared inside the long model).
+      // Lengths must be comparable, then allow only a small edit distance (recognition/typos drop or
+      // swap a kana or two). This keeps genuine near-misses passing while rejecting wrong answers.
+      const close=(a,b)=>{ if(!a||!b) return false; if(a===b) return true;
+        const lo=Math.min(a.length,b.length), hi=Math.max(a.length,b.length);
+        if(hi<2 || lo < hi*0.75) return false;             // too short, or lengths too far apart → not a match
+        return _lev(a,b) <= Math.max(1, Math.floor(hi*0.15)); };
+      if(close(tk,mk)) return true;   // kana comparison (primary)
+      if(close(tr,mr)) return true;   // romaji comparison (engine occasionally returns romaji)
       return false;
     }catch(e){ return false; } }
   // mic result: transcribe what was said, commit the oral attempt, reveal the model, and check CONTENT.
@@ -10608,17 +10701,23 @@ const PG14=[
   buildSession=function(size,newLim){ const r=_origBuild(size,newLim); planCache=r.plan; return r; };
 
   // ---------- wire up ----------
-  $('studyStart').onclick=start;
+  // fresh "Start" begins a new sitting → forget what was shown so review can lead again
+  $('studyStart').onclick=()=>{ studyRunSeen=new Set(); start(); };
   $('studyCheck').onclick=check;
   $('studyNext').onclick=next;
   $('studyQuit').onclick=finish;
-  $('studyAgain').onclick=()=>{ $('studyDone').style.display='none'; $('studyRun').style.display='none'; $('studyLanding').style.display=''; refreshLanding(); };
+  $('studyAgain').onclick=()=>{ studyRunSeen=new Set(); $('studyDone').style.display='none'; $('studyRun').style.display='none'; $('studyLanding').style.display=''; refreshLanding(); };
   if($('studyMore')) $('studyMore').onclick=start;   // "Keep going" — build a fresh session immediately (new due/weak/new items)
   if($('studyFocus')) $('studyFocus').onchange=()=>{ focusLes=$('studyFocus').value; refreshLanding(); };
   if($('studyLen')) $('studyLen').addEventListener('change',refreshLanding);
   if($('studyNew')) $('studyNew').addEventListener('change',refreshLanding);
   $('studyInput').addEventListener('keydown',e=>{ if(e.key==='Enter'){ if($('studyNext').style.display==='none') check(); else next(); } });
   const navBtn=document.querySelector('nav button[data-tab="study"]'); if(navBtn) navBtn.addEventListener('click', refreshLanding);
+  // apply saved length / new-item preferences ONCE at startup (clamped to an available option)
+  (function restoreStudyPrefs(){ const c=cfg();
+    const setIfOption=(sel,val)=>{ if(val==null) return; const s=$(sel); if(!s) return;
+      if([...s.options].some(o=>o.value===String(val))) s.value=String(val); };
+    setIfOption('studyLen', c.len); setIfOption('studyNew', c.neu); })();
   refreshLanding();
   // conjugation-mode probe for tests: build the adaptive question for a dict verb + form, report its mode/skill
   function conjProbe(dictRomaji, key){ const v=(window.VCONJ||[]).find(r=>(r[0]||'').toLowerCase()===dictRomaji.toLowerCase()); if(!v) return null;
