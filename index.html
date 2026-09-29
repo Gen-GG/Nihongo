@@ -307,6 +307,19 @@
   body.dark nav{background:rgba(20,29,25,.72)}
   body.dark .note,body.dark .q{background:linear-gradient(180deg,rgba(30,40,35,.85),rgba(24,33,29,.76))}
   body.dark .qa{background:rgba(24,33,29,.8)}
+  /* Homework 13/14 worked-answer tables: stack Japanese over English so long sentences stay readable */
+  #homework .lesson-block[data-lesson="l13"] .note table,
+  #homework .lesson-block[data-lesson="l14"] .note table{width:100%}
+  #homework .lesson-block[data-lesson="l13"] .note tr,
+  #homework .lesson-block[data-lesson="l14"] .note tr{display:block;padding:10px 0;border-bottom:1px solid var(--line)}
+  #homework .lesson-block[data-lesson="l13"] .note tr:last-child,
+  #homework .lesson-block[data-lesson="l14"] .note tr:last-child{border-bottom:none}
+  #homework .lesson-block[data-lesson="l13"] .note td,
+  #homework .lesson-block[data-lesson="l14"] .note td{display:block;width:auto;padding:0}
+  #homework .lesson-block[data-lesson="l13"] .note td.jp,
+  #homework .lesson-block[data-lesson="l14"] .note td.jp{font-size:1.05rem;line-height:1.8;margin-bottom:5px}
+  #homework .lesson-block[data-lesson="l13"] .note td:not(.jp),
+  #homework .lesson-block[data-lesson="l14"] .note td:not(.jp){color:var(--ink2);font-size:.9rem;padding-left:2px}
 </style>
 </head>
 <body>
@@ -2220,7 +2233,35 @@
     <div id="gramQuickRef"></div>
   </details>
 
-  <h3>Pick the particle</h3>
+  <h3 style="margin-top:6px">Grammar flashcards — memorize the rules</h3>
+  <div class="tip">The front shows the <b>pattern</b>. Tap the card (or <b>Flip</b>) to reveal <b>when to use it</b>, <b>how to form it</b>, and an example you can hear. Filter by lesson and shuffle. This is the set to drill until each rule is automatic.</div>
+  <div class="fc-bar">
+    <label style="font-weight:600;color:var(--ink2)">Lesson: <select id="gfcLes" class="quiz-input" style="width:auto;display:inline-block;padding:4px 8px"></select></label>
+    <button class="btn" id="gfcShuffle">Shuffle</button>
+  </div>
+  <div id="gfcCard" class="note" style="min-height:150px;cursor:pointer;display:flex;flex-direction:column;justify-content:center"></div>
+  <div style="margin-top:8px">
+    <button class="btn" id="gfcPrev">← Back</button>
+    <button class="btn primary" id="gfcFlip">Flip</button>
+    <button class="btn" id="gfcNext">Next →</button>
+    <span id="gfcProg" style="margin-left:8px;color:var(--ink2);font-size:.85rem"></span>
+  </div>
+
+  <h3 style="margin-top:28px">Grammar quiz — when &amp; how to use each rule</h3>
+  <div class="tip">Two ways to test yourself: <b>When</b> — read a situation and pick the right pattern; <b>How</b> — see a pattern and pick how it's formed. Instant feedback with the rule and an example. Filter by lesson.</div>
+  <div class="fc-bar">
+    <label style="font-weight:600;color:var(--ink2)">Mode: <select id="gqzMode" class="quiz-input" style="width:auto;display:inline-block;padding:4px 8px">
+      <option value="mix" selected>Mixed</option>
+      <option value="when">When — situation → pattern</option>
+      <option value="how">How — pattern → rule</option>
+    </select></label>
+    <label style="font-weight:600;color:var(--ink2)">Lesson: <select id="gqzLes" class="quiz-input" style="width:auto;display:inline-block;padding:4px 8px"></select></label>
+    <button class="btn" id="gqzNew">New question</button>
+    <span id="gqzScore" style="margin-left:8px;color:var(--ink2);font-size:.85rem"></span>
+  </div>
+  <div id="gqzBox" class="note" style="min-height:150px"></div>
+
+  <h3 style="margin-top:28px">Pick the particle</h3>
   <div class="tip">Read the everyday sentence, look at the <b>verb at the end</b>, and tap the particle for each blank. These sentences are <b>polite (–<span class="cw">masu</span> / <span class="cw">desu</span>)</b> — the safe way to talk to anyone. Instant feedback + why + hear it.</div>
   <div id="pdrill" class="note"></div>
 
@@ -4417,7 +4458,25 @@
     <table>
       <tr><td class="jp"><span class="cw">suru</span> → <span class="cw">dekiru</span></td><td>can do</td><td class="jp"><span class="cw">kuru</span> → <span class="cw">korareru</span></td><td>can come</td></tr>
     </table>
-    <div style="font-size:.85rem;margin-top:6px;color:var(--ink2)"><b>Cannot (negative):</b> polite <span class="cw">masu</span> → <span class="cw">masen</span> (<span class="cw">taberaremasen</span> = can't eat); casual <span class="cw">ru</span> → <span class="cw">nai</span> (<span class="cw">taberarenai</span>). Past able: <span class="cw">dekimashita</span> / <span class="cw">taberareta</span>.</div>
+    <div style="font-size:.85rem;margin-top:6px;color:var(--ink2)"><b>Cannot (negative):</b> polite <span class="cw">masu</span> → <span class="cw">masen</span>; casual <span class="cw">ru</span> → <span class="cw">nai</span>. Past able: <span class="cw">dekimashita</span> / <span class="cw">taberareta</span>.</div>
+  </div>
+
+  <div class="note" style="margin-bottom:12px">
+    <div style="font-weight:700;margin-bottom:6px">The exercise — all 10 verbs: can (potential) → can't (casual) → can't (polite)</div>
+    <table>
+      <tr><td class="jp" style="font-weight:600">dictionary</td><td style="font-weight:600">can (potential)</td><td style="font-weight:600">can't (casual)</td><td style="font-weight:600">can't (polite)</td></tr>
+      <tr><td class="jp"><span class="cw">taberu</span></td><td class="jp"><span class="cw">taberareru</span></td><td class="jp"><span class="cw">taberarenai</span></td><td class="jp"><span class="cw">taberaremasen</span></td></tr>
+      <tr><td class="jp"><span class="cw">nomu</span></td><td class="jp"><span class="cw">nomeru</span></td><td class="jp"><span class="cw">nomenai</span></td><td class="jp"><span class="cw">nomemasen</span></td></tr>
+      <tr><td class="jp"><span class="cw">iku</span></td><td class="jp"><span class="cw">ikeru</span></td><td class="jp"><span class="cw">ikenai</span></td><td class="jp"><span class="cw">ikemasen</span></td></tr>
+      <tr><td class="jp"><span class="cw">kau</span></td><td class="jp"><span class="cw">kaeru</span></td><td class="jp"><span class="cw">kaenai</span></td><td class="jp"><span class="cw">kaemasen</span></td></tr>
+      <tr><td class="jp"><span class="cw">miru</span></td><td class="jp"><span class="cw">mirareru</span></td><td class="jp"><span class="cw">mirarenai</span></td><td class="jp"><span class="cw">miraremasen</span></td></tr>
+      <tr><td class="jp"><span class="cw">hanasu</span></td><td class="jp"><span class="cw">hanaseru</span></td><td class="jp"><span class="cw">hanasenai</span></td><td class="jp"><span class="cw">hanasemasen</span></td></tr>
+      <tr><td class="jp"><span class="cw">yomu</span></td><td class="jp"><span class="cw">yomeru</span></td><td class="jp"><span class="cw">yomenai</span></td><td class="jp"><span class="cw">yomemasen</span></td></tr>
+      <tr><td class="jp"><span class="cw">oyogu</span></td><td class="jp"><span class="cw">oyogeru</span></td><td class="jp"><span class="cw">oyogenai</span></td><td class="jp"><span class="cw">oyogemasen</span></td></tr>
+      <tr><td class="jp"><span class="cw">suru</span></td><td class="jp"><span class="cw">dekiru</span></td><td class="jp"><span class="cw">dekinai</span></td><td class="jp"><span class="cw">dekimasen</span></td></tr>
+      <tr><td class="jp"><span class="cw">kuru</span></td><td class="jp"><span class="cw">korareru</span></td><td class="jp"><span class="cw">korarenai</span></td><td class="jp"><span class="cw">koraremasen</span></td></tr>
+    </table>
+    <div style="font-size:.85rem;margin-top:6px;color:var(--ink2)">e.g. <span class="cw">Nihongo</span> <span class="cw">ga</span> <span class="cw">yomeru</span>. (I can read Japanese.) · <span class="cw">Kanji</span> <span class="cw">ga</span> <span class="cw">yomenai</span>. (I can't read kanji.) · <span class="cw">Ashita</span> <span class="cw">wa</span> <span class="cw">koraremasen</span>. (I can't come tomorrow.)</div>
   </div>
 
   <div class="note" style="margin-bottom:12px">
@@ -4426,7 +4485,7 @@
       <tr><td class="jp"><span class="cw">Fuan</span> <span class="cw">dattara</span>, <span class="cw">teninsan</span> <span class="cw">ni</span> <span class="cw">kiita</span> <span class="cw">hou</span> <span class="cw">ga</span> <span class="cw">ii</span> <span class="cw">desu</span>.</td><td>If you're anxious, you should ask the staff.</td></tr>
       <tr><td class="jp"><span class="cw">tanoshii</span> → <span class="cw">tanoshikatta</span> → <span class="cw">tanoshikattara</span></td><td>fun → was fun → if it's fun</td></tr>
       <tr><td class="jp"><span class="cw">Nihon</span> <span class="cw">ni</span> <span class="cw">itta</span> <span class="cw">toki</span> <span class="cw">ni</span>, <span class="cw">borudaringu</span> <span class="cw">wo</span> <span class="cw">shita</span> <span class="cw">koto</span> <span class="cw">ga</span> <span class="cw">arimasu</span>.</td><td>When I went to Japan, I went bouldering.</td></tr>
-      <tr><td class="jp"><span class="cw">Gakusei</span> <span class="cw">no</span> <span class="cw">toki</span> <span class="cw">ni</span> ...</td><td>When I was a student ...</td></tr>
+      <tr><td class="jp"><span class="cw">Gakusei</span> <span class="cw">no</span> <span class="cw">toki</span> <span class="cw">ni</span>, <span class="cw">nihon</span> <span class="cw">ni</span> <span class="cw">itta</span> <span class="cw">koto</span> <span class="cw">ga</span> <span class="cw">arimasu</span>.</td><td>When I was a student, I went to Japan.</td></tr>
     </table>
   </div>
 
@@ -6047,7 +6106,7 @@ const KANA={
   sabishii:"さびしい", sabishikatta:"さびしかった", hazukashii:"はずかしい", hazukashikatta:"はずかしかった", fuan:"ふあん", shinpai:"しんぱい", tsukareta:"つかれた", gakushuu:"がくしゅう", hajime:"はじめ", yuki:"ゆき", furu:"ふる", furimasu:"ふります", futta:"ふった", bentou:"べんとう", obentou:"おべんとう", ekiben:"えきべん", atama:"あたま", itai:"いたい", itakatta:"いたかった", onaji:"おなじ", yakiniku:"やきにく", sukiyaki:"すきやき", yakigashi:"やきがし", jitsuwa:"じつは", bacchiri:"ばっちり", tara:"たら", teninsan:"てんいんさん", yakushima:"やくしま", suukai:"すうかい", maikai:"まいかい",
   ureshikatta:"うれしかった", kanashikatta:"かなしかった", muzukashikatta:"むずかしかった",
   atta:"あった", kiita:"きいた", wakatta:"わかった", wakaranakatta:"わからなかった", awanakatta:"あわなかった", tabenakatta:"たべなかった", nomanakatta:"のまなかった",
-  tabereru:"たべれる", taberareru:"たべられる", mireru:"みれる", mirareru:"みられる", nereru:"ねれる", nerareru:"ねられる", okireru:"おきれる", okirareru:"おきられる", akereru:"あけれる", akerareru:"あけられる", wasurereru:"わすれれる", wasurerareru:"わすれられる", nomeru:"のめる", ikeru:"いける", hanaseru:"はなせる", yomeru:"よめる", kikeru:"きける", arukeru:"あるける", oyogeru:"およげる", materu:"まてる", korareru:"こられる", amasugimashita:"あますぎました", tabesugimashita:"たべすぎました", tsukurisugimasu:"つくりすぎます", dattara:"だったら", tanoshikattara:"たのしかったら", taberaremasen:"たべられません", taberarenai:"たべられない", taberareta:"たべられた", yomemasu:"よめます"
+  tabereru:"たべれる", taberareru:"たべられる", mireru:"みれる", mirareru:"みられる", nereru:"ねれる", nerareru:"ねられる", okireru:"おきれる", okirareru:"おきられる", akereru:"あけれる", akerareru:"あけられる", wasurereru:"わすれれる", wasurerareru:"わすれられる", nomeru:"のめる", ikeru:"いける", hanaseru:"はなせる", yomeru:"よめる", kikeru:"きける", arukeru:"あるける", oyogeru:"およげる", materu:"まてる", korareru:"こられる", nomenai:"のめない", nomemasen:"のめません", ikenai:"いけない", kaenai:"かえない", kaemasen:"かえません", mirarenai:"みられない", miraremasen:"みられません", hanasenai:"はなせない", hanasemasen:"はなせません", yomenai:"よめない", yomemasen:"よめません", oyogenai:"およげない", oyogemasen:"およげません", korarenai:"こられない", koraremasen:"こられません", amasugimashita:"あますぎました", tabesugimashita:"たべすぎました", tsukurisugimasu:"つくりすぎます", dattara:"だったら", tanoshikattara:"たのしかったら", taberaremasen:"たべられません", taberarenai:"たべられない", taberareta:"たべられた", yomemasu:"よめます"
 };
 
 /* ================= CUMULATIVE TEST (Lessons 1–12) ================= */
@@ -6753,7 +6812,7 @@ const GL={
   sabishii:"lonely (i-adj)", sabishikatta:"was lonely (i-adj past)", hazukashii:"embarrassed (i-adj)", hazukashikatta:"was embarrassed (i-adj past)", fuan:"nervous / anxious (na-adj)", shinpai:"worry / worried (na-adj)", tsukareta:"tired (casual past of tsukareru)", gakushuu:"learning / study", hajime:"at first / the beginning (hajime wa = at first)", yuki:"snow (yuki ga furu = to snow)", furu:"to fall (rain / snow)", furimasu:"falls / rains (polite)", futta:"fell / rained (casual past)", bentou:"boxed lunch", obentou:"boxed lunch (polite)", ekiben:"station bento (train lunchbox)", atama:"head (atama ga itai = headache)", itai:"painful / it hurts (i-adj)", itakatta:"hurt (i-adj past)", onaji:"same", yakiniku:"yakiniku (Japanese BBQ)", sukiyaki:"sukiyaki (beef hot pot)", yakigashi:"baked sweets / baked goods", jitsuwa:"honestly / to be honest", bacchiri:"perfectly / nailed it", tara:"if / when (conditional ending)", teninsan:"shop clerk / staff member", yakushima:"Yakushima (island in Japan)", suukai:"a few times", maikai:"every time",
   ureshikatta:"was happy (i-adj past)", kanashikatta:"was sad (i-adj past)", muzukashikatta:"was difficult (i-adj past)",
   atta:"met (casual past of au)", kiita:"asked / listened (casual past of kiku)", wakatta:"understood (casual past of wakaru)", wakaranakatta:"didn't understand (plain past negative)", awanakatta:"didn't meet (plain past negative)", tabenakatta:"didn't eat (plain past negative)", nomanakatta:"didn't drink (plain past negative)",
-  tabereru:"can eat (potential, colloquial)", taberareru:"can eat (potential)", mireru:"can see / watch (colloquial)", mirareru:"can see / watch (potential)", nereru:"can sleep (colloquial)", nerareru:"can sleep (potential)", okireru:"can wake up (colloquial)", okirareru:"can wake up (potential)", akereru:"can open (colloquial)", akerareru:"can open (potential)", wasurereru:"can forget (colloquial)", wasurerareru:"can forget (potential)", nomeru:"can drink (potential)", ikeru:"can go (potential)", hanaseru:"can speak (potential)", yomeru:"can read (potential)", kikeru:"can hear / can ask (potential)", arukeru:"can walk (potential)", oyogeru:"can swim (potential)", materu:"can wait (potential)", korareru:"can come (potential of kuru)", amasugimashita:"was too sweet (polite past)", tabesugimashita:"ate too much (polite past)", tsukurisugimasu:"make too much (polite)", dattara:"if / when it is (conditional of da)", tanoshikattara:"if it's fun (conditional)", taberaremasen:"can't eat (potential, polite negative)", taberarenai:"can't eat (potential, casual negative)", taberareta:"was able to eat (potential past)", yomemasu:"can read (potential, polite)"
+  tabereru:"can eat (potential, colloquial)", taberareru:"can eat (potential)", mireru:"can see / watch (colloquial)", mirareru:"can see / watch (potential)", nereru:"can sleep (colloquial)", nerareru:"can sleep (potential)", okireru:"can wake up (colloquial)", okirareru:"can wake up (potential)", akereru:"can open (colloquial)", akerareru:"can open (potential)", wasurereru:"can forget (colloquial)", wasurerareru:"can forget (potential)", nomeru:"can drink (potential)", ikeru:"can go (potential)", hanaseru:"can speak (potential)", yomeru:"can read (potential)", kikeru:"can hear / can ask (potential)", arukeru:"can walk (potential)", oyogeru:"can swim (potential)", materu:"can wait (potential)", korareru:"can come (potential of kuru)", nomenai:"can't drink (potential negative)", nomemasen:"can't drink (potential, polite negative)", ikenai:"can't go (potential negative)", kaenai:"can't buy (potential negative)", kaemasen:"can't buy (potential, polite negative)", mirarenai:"can't see / watch (potential negative)", miraremasen:"can't see / watch (potential, polite negative)", hanasenai:"can't speak (potential negative)", hanasemasen:"can't speak (potential, polite negative)", yomenai:"can't read (potential negative)", yomemasen:"can't read (potential, polite negative)", oyogenai:"can't swim (potential negative)", oyogemasen:"can't swim (potential, polite negative)", korarenai:"can't come (potential negative)", koraremasen:"can't come (potential, polite negative)", amasugimashita:"was too sweet (polite past)", tabesugimashita:"ate too much (polite past)", tsukurisugimasu:"make too much (polite)", dattara:"if / when it is (conditional of da)", tanoshikattara:"if it's fun (conditional)", taberaremasen:"can't eat (potential, polite negative)", taberarenai:"can't eat (potential, casual negative)", taberareta:"was able to eat (potential past)", yomemasu:"can read (potential, polite)"
 };
 function annotate(str){
   const hadNew=/class="newtag"/.test(str);
@@ -6855,7 +6914,12 @@ function playSpeech(text,rate,pitch){
   try{ s.resume(); }catch(e){}   // in case a previous call left the engine paused
   try{ s.cancel(); }catch(e){}   // stop anything currently playing or stuck in the queue
   const u=new SpeechSynthesisUtterance(text);
-  u.lang='ja-JP'; u.rate=rate||speakRate; u.pitch=pitch||speakPitch;
+  u.lang='ja-JP'; u.rate=rate||speakRate;
+  let _p=pitch||speakPitch;
+  // ふ (fu) and the geminate っ (small tsu, e.g. futta) render harsh/scratchy at high "cuteness" pitch —
+  // ease the pitch down for words that contain them so they sound smoother.
+  if(/[ふフっッ]/.test(text||'') && _p>1.12) _p=1.12;
+  u.pitch=_p;
   // Re-resolve the voice by NAME each time — a cached voice object can go stale after the
   // engine resets, and speaking with a stale voice fails silently.
   let v=chosenVoice;
@@ -9801,9 +9865,14 @@ function hwPracticeQuiz(boxId, items){
   const norm=s=>{ let x=(s||'').toLowerCase().replace(/[.,!?、。]/g,'').replace(/-/g,'').replace(/\s+/g,'').replace(/wo/g,'o');
     x=x.replace(/^watashi(wa|mo)/,'').replace(/^boku(wa|mo)/,''); x=x.replace(/dannasan/g,'otto'); return x; };
   const touch=(window.matchMedia&&window.matchMedia('(pointer: coarse)').matches)||('ontouchstart' in window);
+  const lab=t=>'<div style="color:var(--ink2);font-size:.72rem;text-transform:uppercase;letter-spacing:.06em;font-weight:700">'+t+'</div>';
   function draw(){ const it=items[pos];
-    g('q').innerHTML = it.q ? ('<span style="color:var(--accent);font-weight:700">Q:</span> '+annotate(it.q)+(it.qEn?' <span style="color:var(--ink2)">— '+esc(it.qEn)+'</span>':'')) : '';
-    g('en').textContent='Answer in Japanese:  '+it.en; g('in').value=''; g('fb').innerHTML=''; recorded=false;
+    g('q').innerHTML = it.q ? (lab('Question')
+        + '<div style="font-size:1.2rem;font-weight:700;line-height:1.6;margin:3px 0 2px">'+annotate(it.q)+'</div>'
+        + (it.qEn?'<div style="color:var(--ink2);font-size:.85rem">'+esc(it.qEn)+'</div>':'')) : '';
+    g('en').innerHTML = lab('Say this answer in Japanese').replace('font-size:.72rem','font-size:.72rem;margin-top:12px')
+        + '<div style="font-size:1.12rem;font-weight:700;margin-top:2px">'+esc(it.en)+'</div>';
+    g('in').value=''; g('fb').innerHTML=''; recorded=false;
     g('prog').textContent=(pos+1)+' / '+items.length; if(!touch) g('in').focus(); }
   function ok(it,v){ const n=norm(v); return n===norm(it.ja)||(it.alt||[]).some(a=>norm(a)===n); }
   function credit(it){ if(window.Mastery){ const id=Mastery.sentenceId(it.en); Mastery.recordCorrect(id,'sentenceProduction',{itemType:'sentence'}); } }
@@ -9853,6 +9922,99 @@ const HWQ14=[
 ];
 hwPracticeQuiz('hwq13Box', HWQ13);
 hwPracticeQuiz('hwq14Box', HWQ14);
+
+/* ---- GRAMMAR STUDY: flashcards + a when/how quiz over every grammar rule ---- */
+(function GrammarStudy(){
+  const G = window.GRAMMAR || [];
+  if(!G.length || !document.getElementById('gfcCard')) return;
+  const esc=s=>String(s==null?'':s).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+  const order=['L1','L2','L3','L4','L5','L6','L7','L8','L9','L10','L11','L12','L13','L14'];
+  const li = l => { const i=order.indexOf(l); return i<0?99:i; };
+  // one entry per unique pattern (first rule + all its examples), in lesson order
+  const byPat={};
+  G.forEach(g=>{ if(!byPat[g.pat]) byPat[g.pat]={pat:g.pat, les:g.les, rule:g.rule, ex:[]}; if(g.ja&&g.en) byPat[g.pat].ex.push({ja:g.ja,en:g.en}); });
+  const ALL=Object.values(byPat).sort((a,b)=> li(a.les)-li(b.les));
+  const nameOf = p => p.split(/\s[—–-]\s/)[0].trim();
+  const meaningOf = p => { const m=p.split(/\s[—–-]\s/); return m.length>1 ? m.slice(1).join(' - ').trim() : p; };
+  const lessons=[...new Set(ALL.map(x=>x.les))].sort((a,b)=>li(a)-li(b));
+  const lesOpts = '<option value="all">All lessons ('+ALL.length+')</option>'+lessons.map(l=>'<option value="'+l+'">Lesson '+l.slice(1)+'</option>').join('');
+  const gfcLes=document.getElementById('gfcLes'), gqzLes=document.getElementById('gqzLes');
+  gfcLes.innerHTML=lesOpts; gqzLes.innerHTML=lesOpts;
+  function shuffleArr(a){ for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];} return a; }
+  const sample=(arr,n,not)=> shuffleArr(arr.filter(x=>x!==not)).slice(0,n);
+
+  // ----- flashcards -----
+  let deck=ALL.slice(), pos=0, flipped=false;
+  const card=document.getElementById('gfcCard');
+  function drawCard(){ const it=deck[pos]; if(!it){ card.innerHTML=''; return; }
+    document.getElementById('gfcProg').textContent=(pos+1)+' / '+deck.length+' · Lesson '+it.les.slice(1);
+    if(!flipped){
+      card.innerHTML='<div style="color:var(--ink2);font-size:.72rem;text-transform:uppercase;letter-spacing:.06em">Pattern</div>'
+        +'<div style="font-size:1.5rem;font-weight:700;margin-top:6px">'+esc(nameOf(it.pat))+'</div>'
+        +'<div style="color:var(--ink2);margin-top:12px;font-size:.85rem">tap to reveal when &amp; how</div>';
+    } else { const ex=it.ex[0];
+      card.innerHTML='<div style="text-align:left;max-width:620px;margin:0 auto">'
+        +'<div style="font-weight:700;font-size:1.05rem;margin-bottom:8px">'+esc(nameOf(it.pat))+'</div>'
+        +'<div style="margin-bottom:6px"><span style="color:var(--accent);font-weight:700">When:</span> '+esc(meaningOf(it.pat))+'</div>'
+        +'<div style="margin-bottom:6px"><span style="color:var(--accent);font-weight:700">How:</span> '+esc(it.rule)+'</div>'
+        +(ex?'<div style="margin-top:8px"><span style="color:var(--accent);font-weight:700">e.g.</span> '+annotate(ex.ja)+' <span style="color:var(--ink2)">— '+esc(ex.en)+'</span> <button class="btn" type="button" id="gfcHear" style="padding:2px 10px;font-size:.8rem">Hear</button></div>':'')
+        +'</div>';
+      const hb=document.getElementById('gfcHear'); if(hb) hb.onclick=(e)=>{ e.stopPropagation(); try{speakSentence(ex.ja);}catch(_){} };
+    }
+  }
+  function filterDeck(sel){ deck = sel==='all'?ALL.slice():ALL.filter(x=>x.les===sel); if(!deck.length) deck=ALL.slice(); pos=0; flipped=false; drawCard(); }
+  card.onclick=()=>{ flipped=!flipped; drawCard(); };
+  document.getElementById('gfcFlip').onclick=()=>{ flipped=!flipped; drawCard(); };
+  document.getElementById('gfcNext').onclick=()=>{ pos=(pos+1)%deck.length; flipped=false; drawCard(); };
+  document.getElementById('gfcPrev').onclick=()=>{ pos=(pos-1+deck.length)%deck.length; flipped=false; drawCard(); };
+  document.getElementById('gfcShuffle').onclick=()=>{ shuffleArr(deck); pos=0; flipped=false; drawCard(); };
+  gfcLes.onchange=()=>filterDeck(gfcLes.value);
+  filterDeck('all');
+
+  // ----- quiz (when → pattern, or how → rule) -----
+  const gqzMode=document.getElementById('gqzMode');
+  let qz={right:0,total:0};
+  function qzPool(){ const s=gqzLes.value; return s==='all'?ALL:ALL.filter(x=>x.les===s); }
+  function renderOpts(opts, correct, it, ex){
+    const wrap=document.getElementById('gqzOpts'); let done=false;
+    opts.forEach(o=>{ const b=document.createElement('button'); b.className='opt'; b.textContent=o;
+      b.onclick=()=>{ if(done) return; done=true; qz.total++;
+        const fb=document.getElementById('gqzFb');
+        if(o===correct){ b.classList.add('correct'); qz.right++; fb.innerHTML='<span style="color:var(--good)">✓ Correct</span>'; }
+        else { b.classList.add('wrong'); Array.from(wrap.children).forEach(x=>{ if(x.textContent===correct) x.classList.add('correct'); }); fb.innerHTML='<span style="color:#c0392b">✗</span> <span style="color:var(--ink2)">Answer:</span> <b>'+esc(correct)+'</b>'; }
+        fb.innerHTML+='<div style="margin-top:6px;font-size:.9rem"><b>'+esc(nameOf(it.pat))+'</b> — '+esc(meaningOf(it.pat))+'<br><span style="color:var(--ink2)">How:</span> '+esc(it.rule)+(ex?'<br><span style="color:var(--ink2)">e.g.</span> '+annotate(ex.ja)+' — '+esc(ex.en):'')+'</div>';
+        if(ex) try{ speakSentence(ex.ja); }catch(_){}
+        Array.from(wrap.children).forEach(x=>x.disabled=true);
+        document.getElementById('gqzScore').textContent=qz.right+' / '+qz.total;
+      };
+      wrap.appendChild(b);
+    });
+  }
+  function newQ(){
+    const pool=qzPool(); const box=document.getElementById('gqzBox');
+    if(pool.length<2){ box.innerHTML='<div class="hint">Not enough patterns in this lesson — pick another.</div>'; return; }
+    let mode=gqzMode.value; if(mode==='mix') mode=Math.random()<0.5?'when':'how';
+    const it=pool[Math.floor(Math.random()*pool.length)]; const ex=it.ex[0];
+    if(mode==='when'){
+      const opts=shuffleArr([nameOf(it.pat), ...sample(ALL.map(x=>nameOf(x.pat)), 3, nameOf(it.pat))]);
+      box.innerHTML='<div style="color:var(--ink2);font-size:.72rem;text-transform:uppercase;letter-spacing:.06em">When — which pattern?</div>'
+        +'<div style="font-size:1.1rem;font-weight:700;margin:6px 0 4px">You want to say: “'+esc(ex?ex.en:meaningOf(it.pat))+'”</div>'
+        +'<div style="color:var(--ink2);font-size:.85rem;margin-bottom:10px">Which grammar pattern do you use?</div>'
+        +'<div id="gqzOpts" style="display:grid;gap:8px;max-width:560px"></div><div id="gqzFb" style="margin-top:10px;min-height:22px;font-weight:600"></div>';
+      renderOpts(opts, nameOf(it.pat), it, ex);
+    } else {
+      const opts=shuffleArr([it.rule, ...sample(ALL.map(x=>x.rule), 3, it.rule)]);
+      box.innerHTML='<div style="color:var(--ink2);font-size:.72rem;text-transform:uppercase;letter-spacing:.06em">How — the rule</div>'
+        +'<div style="font-size:1.15rem;font-weight:700;margin:6px 0 4px">'+esc(nameOf(it.pat))+'</div>'
+        +'<div style="color:var(--ink2);font-size:.85rem;margin-bottom:10px">How is it formed?</div>'
+        +'<div id="gqzOpts" style="display:grid;gap:8px;max-width:600px"></div><div id="gqzFb" style="margin-top:10px;min-height:22px;font-weight:600"></div>';
+      renderOpts(opts, it.rule, it, ex);
+    }
+  }
+  document.getElementById('gqzNew').onclick=newQ;
+  gqzMode.onchange=newQ; gqzLes.onchange=newQ;
+  newQ();
+})();
 
 /* ============================================================================
    STUDY TODAY — adaptive mixed session built from the Mastery/SRS system.
