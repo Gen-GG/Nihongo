@@ -8609,6 +8609,20 @@ function recognizeJapaneseOnce(onResult, onErr){
     el.innerHTML=wrapped+tail.replace(/[<>&]/g,c=>({'<':'&lt;','>':'&gt;','&':'&amp;'}[c]));
   });
 })();
+/* Upgrade every hand-written .cw token into a fully annotated .gl word (grey furigana + meaning
+   tooltip + click-to-hear), so EVERY Japanese word in the notes/homework/grammar behaves the same
+   and is clickable. If a token isn't in the dictionary, annotate returns it unchanged — then we keep
+   the .cw span so it still plays audio via the global handler. */
+(function upgradeClickableWords(){
+  try{
+    document.querySelectorAll('.cw').forEach(sp=>{
+      if(sp.children.length) return;                       // already structured
+      const t=(sp.textContent||'').trim(); if(!t) return;
+      const html=annotate(t);
+      if(/<span/.test(html)) sp.outerHTML=html;            // annotate produced a real word → upgrade
+    });
+  }catch(e){}
+})();
 /* Hover highlight driven by JS (some preview environments don't apply CSS :hover) */
 document.addEventListener('mouseover',function(e){
   const el=e.target.closest('.cw'); if(!el) return;
