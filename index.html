@@ -8715,6 +8715,32 @@ function renderAllNotes(){
   SECTIONS.forEach(([key,title])=>{
     if(key==="verb"){
       html+=`<h3>${title} <span style="color:var(--ink2);font-weight:400">(${VERBS.length})</span></h3>`;
+      // ---- master conjugation reference: every verb form taught through Lesson 16 ----
+      const CF=[
+        ["Dictionary (plain)","taberu","nomu"],
+        ["Polite — ~masu","tabemasu","nomimasu"],
+        ["Polite negative — ~masen","tabemasen","nomimasen"],
+        ["Polite past — ~mashita","tabemashita","nomimashita"],
+        ["Polite past neg — ~masen deshita","tabemasen deshita","nomimasen deshita"],
+        ["Plain negative — ~nai","tabenai","nomanai"],
+        ["Plain past — ~ta","tabeta","nonda"],
+        ["Plain past neg — ~nakatta","tabenakatta","nomanakatta"],
+        ["te-form (requests / joining / ~te imasu)","tabete","nonde"],
+        ["Want to — ~tai","tabetai","nomitai"],
+        ["Potential — can","taberareru","nomeru"],
+        ["Potential negative — can't","taberarenai","nomenai"],
+        ["Volitional — let's (plain)","tabeyou","nomou"],
+        ["Volitional — let's (polite)","tabemashou","nomimashou"],
+        ["Conditional — ~tara (if / when)","tabetara","nondara"],
+        ["List — ~tari (do things like)","tabetari","nondari"],
+        ["Too much — ~sugiru","tabesugiru","nomisugiru"]
+      ];
+      html+=`<div style="border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin:8px 0 16px;background:var(--card)">`;
+      html+=`<div style="font-weight:700;margin-bottom:8px;color:var(--accent)">All verb conjugations (through Lesson 16) — Group 2 <span style="color:#1560c0">taberu</span> · Group 1 <span style="color:#1560c0">nomu</span></div>`;
+      html+=CF.map(r=>`<div style="display:grid;grid-template-columns:minmax(150px,1.2fr) 1fr 1fr;gap:8px;align-items:baseline;padding:3px 0;border-top:1px solid var(--line)"><span style="color:var(--ink2);font-size:.82em">${r[0]}</span><span style="color:#1560c0;font-weight:600">${annotate(r[1])}</span><span style="color:#1560c0;font-weight:600">${annotate(r[2])}</span></div>`).join("");
+      html+=`<div style="margin-top:9px;font-size:.84em;color:var(--ink2)"><b>Irregulars:</b> suru → ${annotate("shimasu")} / ${annotate("shite")} / ${annotate("shita")} / ${annotate("shinai")} / ${annotate("dekiru")} (can) / ${annotate("shiyou")} (let's). &nbsp; kuru → ${annotate("kimasu")} / ${annotate("kite")} / ${annotate("kita")} / ${annotate("konai")} / ${annotate("koreru")} / ${annotate("koyou")}. &nbsp; iku → ${annotate("ikimasu")} / ${annotate("itte")} / ${annotate("itta")} (special te/ta).</div>`;
+      html+=`<div style="margin-top:6px;font-size:.84em;color:var(--ink2)"><b>Adjectives:</b> i-adj ${annotate("takai")} → ${annotate("takakunai")} / ${annotate("takakatta")} / ${annotate("takakunakatta")} / ${annotate("takakute")} / ${annotate("takasou")} (looks) / ${annotate("takasugi")} (too). &nbsp; na-adj ${annotate("kirei")} → ${annotate("kirei")} ja nai / ${annotate("kirei")} ${annotate("datta")} / ${annotate("kirei")} de / ${annotate("kirei")} ni ${annotate("naru")}.</div>`;
+      html+=`</div>`;
       html+=`<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin:8px 0 18px">`;
       VERBS.forEach(f=>{
         const lines=f.forms.map(fm=>`<div style="display:flex;gap:8px;align-items:baseline;margin:2px 0"><span style="min-width:62px;color:var(--ink2);font-size:.78em">${fm[1]}</span><span style="color:#1560c0;font-weight:600">${annotate(fm[0])}</span></div>`).join("");
