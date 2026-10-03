@@ -6760,6 +6760,7 @@ const KANA={
       return '<div class="note sl-q" data-i="'+i+'" style="margin-bottom:12px">'+
         '<div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">'+
           '<button class="btn primary sl-play" type="button" data-ja="'+slEsc(safe)+'" style="padding:6px 14px">▶ Play</button>'+
+          '<button class="btn sl-slow" type="button" data-ja="'+slEsc(safe)+'" style="padding:6px 12px;font-size:.85rem">🐢 Slow</button>'+
           '<span style="color:var(--ink2);font-size:.85rem">Sentence '+(i+1)+' of '+total+'</span></div>'+
         '<div class="sl-opts" style="display:grid;gap:8px;max-width:600px">'+
           opts.map(o=>'<button class="btn sl-opt" type="button" data-correct="'+(o===q.en?'1':'0')+'" style="text-align:left;justify-content:flex-start;padding:9px 13px;line-height:1.5">'+slEsc(o)+'</button>').join('')+
@@ -6771,7 +6772,8 @@ const KANA={
     const scoreEl=document.getElementById('slScore');
     const updScore=()=>{ scoreEl.textContent='Score: '+got+' / '+answered+(answered>=total?'  ✓ done':''); };
     updScore();
-    box.querySelectorAll('.sl-play').forEach(b=>{ b.onclick=()=>{ try{ speakSentence(b.dataset.ja); }catch(e){} }; });
+    box.querySelectorAll('.sl-play').forEach(b=>{ b.onclick=()=>{ try{ speakSentenceClear(b.dataset.ja); }catch(e){} }; });
+    box.querySelectorAll('.sl-slow').forEach(b=>{ b.onclick=()=>{ try{ speakSentence(b.dataset.ja, 0.6, 1.0); }catch(e){} }; });
     box.querySelectorAll('.sl-q').forEach((qEl,i)=>{
       const q=picks[i];
       // autoplay the first sentence so it starts immediately
@@ -6791,7 +6793,7 @@ const KANA={
       });
     });
     // play sentence 1 after a short beat
-    const first=box.querySelector('.sl-play'); if(first) setTimeout(()=>{ try{ speakSentence(first.dataset.ja); }catch(e){} }, 250);
+    const first=box.querySelector('.sl-play'); if(first) setTimeout(()=>{ try{ speakSentenceClear(first.dataset.ja); }catch(e){} }, 250);
   }
   const _slNew=document.getElementById('slNew'); if(_slNew) _slNew.onclick=makeSentListen;
   const _slScope=document.getElementById('slScope'); if(_slScope) _slScope.onchange=makeSentListen;
@@ -9104,14 +9106,17 @@ function romajiToKana(r){
   }
   return out;
 }
-function speakSentence(romaji){
+function speakSentence(romaji, rate, pitch){
   const kana=romaji.split(/\s+/).map(t=>{
     const key=t.toLowerCase().replace(/[^a-zāâīîūûēêōô]/g,'');
     if(!key) return '';
     return KANA[key]||romajiToKana(key);
   }).join('');
-  playSpeech(sayable(kana));
+  playSpeech(sayable(kana), rate, pitch);
 }
+// Clear, natural delivery for full-sentence LISTENING (lower pitch + a touch slower) so it's
+// easy to understand — the cute high pitch blurs longer sentences.
+function speakSentenceClear(romaji){ speakSentence(romaji, 0.82, 1.0); }
 /* ---------- SPEECH INPUT (optional mic → Japanese transcript) ----------
    Web Speech API (Chrome desktop + Android Chrome). NOT a pronunciation grader:
    it only transcribes what you said so the CONTENT can be checked. iOS Safari
