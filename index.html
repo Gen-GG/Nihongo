@@ -6738,23 +6738,41 @@ const KANA={
       if(/^\(/.test(g.en)) return;                   // skip "(plain) …" fragment glosses
       if(scope!=='all' && g.les!==scope) return;
       const key=g.en.toLowerCase().trim(); if(seen.has(key)) return; seen.add(key);
-      out.push({ ja:g.ja, en:g.en });
+      out.push({ ja:g.ja, en:g.en, pat:g.pat||'', les:g.les||'' });
     });
     return out;
   }
   function slShuffle(a){ a=a.slice(); for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
+  const _slStop=new Set(['i','you','we','it','is','are','a','an','the','to','of','in','on','at','and','but','so','my','me','do','does','did','will','be','that','this','for','with','have','has','not','no','yes','they','he','she']);
+  const _slWords=s=>(s||'').toLowerCase().replace(/[.,!?'"]/g,'').split(/\s+/).filter(w=>w&&!_slStop.has(w));
+  // HARD distractors: rank other sentences by similarity to the target (same grammar pattern, overlapping
+  // content words, similar length) so the options can't be told apart by topic — you must parse the audio.
+  function slDistractors(target, pool, n){
+    const tw=new Set(_slWords(target.en)); const tLen=(target.en||'').split(/\s+/).length;
+    const scored=pool.filter(c=>c.en.toLowerCase()!==target.en.toLowerCase()).map(c=>{
+      let s=0; const cw=_slWords(c.en);
+      if(c.pat && c.pat===target.pat) s+=4;                       // same grammar family (near-minimal pair)
+      let ov=0; cw.forEach(w=>{ if(tw.has(w)) ov++; }); s+=ov*2;   // shared content words
+      if(Math.abs((c.en.split(/\s+/).length)-tLen)<=2) s+=1;      // similar length
+      return {en:c.en, s, r:Math.random()};
+    });
+    // keep only options that share SOMETHING (score>0) when possible, best first, small random tiebreak
+    scored.sort((a,b)=> b.s-a.s || a.r-b.r);
+    const strong=scored.filter(x=>x.s>0);
+    const chosen=(strong.length>=n?strong:scored).slice(0, Math.max(n*2,6));
+    return slShuffle(chosen).slice(0,n).map(x=>x.en);
+  }
   function makeSentListen(){
     const box=document.getElementById('slBox'); if(!box) return;
     const scope=(document.getElementById('slScope')||{}).value||'all';
     const want=parseInt((document.getElementById('slLen')||{}).value||'10',10);
     const pool=slPool(scope);
-    const globalEn=slPool('all').map(p=>p.en);   // distractors can come from any lesson, so small sets still work
-    if(!pool.length || globalEn.length<4){ box.innerHTML='<div class="hint">Not enough sentences in this set yet — try <b>All lessons</b>.</div>'; return; }
+    const globalPool=slPool('all');   // distractors can come from any lesson, so small sets still work
+    if(!pool.length || globalPool.length<4){ box.innerHTML='<div class="hint">Not enough sentences in this set yet — try <b>All lessons</b>.</div>'; return; }
     const picks=slShuffle(pool).slice(0, Math.min(want, pool.length));
-    const allEn=globalEn;
     let answered=0, got=0; const total=picks.length;
     box.innerHTML='<div id="slScore" style="font-weight:700;margin-bottom:10px"></div>'+picks.map((q,i)=>{
-      const distract=slShuffle(allEn.filter(e=>e.toLowerCase()!==q.en.toLowerCase())).slice(0,3);
+      const distract=slDistractors(q, globalPool, 3);
       const opts=slShuffle([q.en, ...distract]);
       const safe=q.ja.replace(/'/g,'');
       return '<div class="note sl-q" data-i="'+i+'" style="margin-bottom:12px">'+
