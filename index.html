@@ -457,6 +457,10 @@
     </div>
     <div class="hint" id="studyFocusHint" style="margin:2px 0 8px;display:none">Focus mode drills just that lesson's new grammar &amp; vocab — great for the first day or two. Switch back to <b>All lessons</b> to lock it in with mixed review.</div>
     <button class="btn primary" id="studyStart" style="font-size:1.05rem;padding:10px 24px;margin-top:6px">Start Study →</button>
+    <div style="margin-top:18px;padding-top:12px;border-top:1px solid var(--line)">
+      <button class="btn" id="studyReset" style="font-size:.85rem;color:var(--ink2)">↺ Reset all Study Today progress</button>
+      <div class="hint" style="margin-top:4px">Wipes your mastery scores, review schedule (SRS) and the Mistake Bank, giving a clean slate. Your lessons, notes and settings stay. Can't be undone.</div>
+    </div>
   </div>
 
   <div id="studyRun" style="display:none">
@@ -8567,12 +8571,80 @@ function renderAllNotes(){
     advb:"totemo meccha takusan dekirudake isshoni taihen hayaku osoku chikaku".split(" "),
     greet:["konbanwa","konnichiwa","ohayou","oyasumi","hajimemashite","yoroshiku","onegaishimasu","hai","un","uun","sou","eeto","sumimasen","irasshaimase","douzo","genki"]
   };
+  // Words that belong in a section but were never in an ORD list → assign a home here so nothing dumps into "Other".
+  const EXTRA={
+      // numbers / clock times / counters / durations
+      ichiji:"num",niji:"num",sanji:"num",goji:"num",rokuji:"num",shichiji:"num",hachiji:"num",kuji:"num",juuji:"num",juuichiji:"num",juuniji:"num",
+      gokai:"num",rokkai:"num",nanakai:"num",hakkai:"num",kyuukai:"num",jukkai:"num",nikai:"num",sankai:"num",suukai:"num",
+      ichijikan:"num",ichinichi:"num",nikagetsu:"num",kan:"num",hi:"num",nichi:"num",tsuki:"num",tsugi:"num",ko:"num",
+      asatte:"num",ototoi:"num",tanjyoubi:"num",
+      // frequency / time adverbs
+      mai:"freq",maiasa:"freq",maiban:"freq",maikai:"freq",ima:"freq",mada:"freq",mousugu:"freq",sugu:"freq",itsumodoori:"freq",
+      // question words
+      doushite:"q",nangatsu:"q",nanyoubi:"q",nanko:"q",
+      // connectors / sequence
+      konoato:"conn",atode:"conn",mata:"conn",dakedo:"conn",kedo:"conn",node:"conn",soretomo:"conn",dake:"conn",
+      // adverbs / mimetics / degree
+      chotto:"advb",motto:"advb",sukoshi:"advb",sukoshimo:"advb",tokuni:"advb",guuzen:"advb",jitsuwa:"advb",chinamini:"advb",
+      gussuri:"advb",batabata:"advb",kirakira:"advb",pikapika:"advb",pekopeko:"advb",attoiuma:"advb",ooi:"advb",onaji:"advb",
+      hou:"advb",chuu:"advb",tsumori:"advb",toki:"advb",tsuzuki:"advb",nagame:"advb",mitame:"advb",
+      // i-adjectives
+      amai:"iadj",karai:"iadj",kusai:"iadj",shoppai:"iadj",hazukashii:"iadj",kanashii:"iadj",sabishii:"iadj",tsurai:"iadj",
+      // na-adjectives
+      fuan:"naadj",hima:"naadj",hitsuyou:"naadj",shinpai:"naadj",shinpuru:"naadj",tekitou:"naadj",amatou:"naadj",karatou:"naadj",
+      // food & drink
+      budou:"food",umibudou:"food",ichigo:"food",saamon:"food",natto:"food",keeki:"food",dezaato:"food",dinaa:"food",okashi:"food",
+      amaimono:"food",koohii:"food",raamen:"food",ekiben:"food",shokuzai:"food",omizu:"food",pattai:"food",
+      // places & transport
+      byouin:"place",chikatetsu:"place",kicchin:"place",toshokan:"place",tokoro:"place",basho:"place",onsen:"place",oku:"place",
+      ue:"place",keshiki:"place",kanada:"place",kyouto:"place",tokyo:"place",
+      // people
+      gakusei:"people",sensei:"people",kanjya:"people",teninsan:"people",otto:"people",kodomo:"people",jibun:"people",
+      kaiin:"people",onamae:"people",oshigoto:"people",
+      // body & health
+      ha:"body",kaminoke:"body",onaka:"body",tsume:"body",byouki:"body",chiryou:"body",kenkou:"body",ofuro:"body",shawaa:"body",
+      // clothes & belongings / objects
+      jaketto:"wear",kagi:"wear",kippu:"wear",kuupon:"wear",nimotsu:"wear",pasupooto:"wear",purezento:"wear",nichiyouhin:"wear",
+      // home & objects
+      gamen:"home",ki:"home",taiyou:"home",umi:"home",
+      // study / work / activities
+      renshuu:"studywork",resson:"studywork",setsumei:"studywork",shitsumon:"studywork",shoukai:"studywork",kakunin:"studywork",
+      renraku:"studywork",kyoumi:"studywork",sentaku:"studywork",ruutin:"studywork",kyuukei:"studywork",
+      douga:"act",rokkukuraimingu:"act",origami:"act",odekake:"act",unten:"act",
+      // greetings / set polite phrases
+      iie:"greet",matane:"greet",otsukaresama:"greet",onegai:"greet",omachi:"greet",shoushou:"greet",tabako:"home",
+      // grammar connectors
+      nai:"part",na:"part",ja:"part",hanashi:"studywork",kekkon:"people",nigate:"naadj",shiawase:"people",
+      bukka:"studywork",manseki:"dining",kinenseki:"dining",menyuu:"dining",chuukurai:"advb",asagata:"people",ippai:"advb",
+      // remaining singletons → existing homes (no new categories)
+      docchimo:"advb",hajimete:"advb",janai:"part",kireina:"naadj",kitanai:"iadj",konshuumatsu:"num",kudasai:"greet",
+      nihon:"place",pengin:"animal",sukina:"like",tanoshimi:"advb",umaku:"advb",wanchan:"animal",yakigashi:"food",
+      yakushima:"place",yoji:"num",yonkai:"num",yorugata:"people",yotei:"advb",you:"advb",yudetamago:"food",
+      yukkuri:"advb",yuzu:"food",zutto:"advb"
+  };
   const catOf={}, ordIndex={};
   Object.keys(ORD).forEach(cat=>{ ORD[cat].forEach((w,i)=>{ catOf[w]=cat; ordIndex[cat+"|"+w]=i; }); });
+  Object.keys(EXTRA).forEach(w=>{ if(!catOf[w]) catOf[w]=EXTRA[w]; });
   const COP=new Set(["da","desu","deshita","suru"]);
+  // Inflected forms (te / potential / volitional / ~tara / ~tari / ~tai / casual-past / adjective forms)
+  // get their OWN labelled sections instead of dumping into "Other".
+  function inflCat(r,m){
+    if(/-stem/.test(m)) return "vstem";
+    if(/\(te-form\)/.test(m)) return "vte";
+    if(/potential/.test(m)||/^(can |can't |couldn't |be able)/.test(m)||/(reru|rareru|renai|rarenai)$/.test(r)) return "vpot";
+    if(/volitional/.test(m)||/^let's /.test(m)) return "vvol";
+    if(/\(~tari\)|doing things like/.test(m)||/tari$/.test(r)) return "vtari";
+    if(/tara of|conditional/.test(m)||/^if /.test(m)||/(tara|kattara|dattara)$/.test(r)) return "vcond";
+    if(/want to/.test(m)||/tai$/.test(r)) return "vtai";
+    if(/\(plain neg\)/.test(m)||/^don't /.test(m)) return "vneg";
+    if(/casual past|plain past|i-adj past|past neg|^was /.test(m)||/(katta|kunai|kunakatta)$/.test(r)) return "vpast";
+    if(/i-adj joining|adverb form|~sou|i-adj \+ sou|^looks |too \w|~sugi|\(too /.test(m)||/(sou|sugi)$/.test(r)) return "adjf";
+    return null;
+  }
   function classify(r,m){
     if(catOf[r]) return catOf[r];
     if(COP.has(r)||/^to /.test(m)||/\((plain|polite|polite past|casual)\)$/.test(m)||/(masu|mashita|masen)$/.test(r)||/^(went|ate|drank|bought|wrote|read|studied|listened|watched|did|started)\b/.test(m)) return "verb";
+    const ic=inflCat(r,m); if(ic) return ic;
     return "other";
   }
   const SECTIONS=[
@@ -8581,6 +8653,16 @@ function renderAllNotes(){
     ["conn","Connectors & sequence words (before / after / and / because)"],
     ["part","Particles"],["q","Question words"],
     ["dem","This / that / here / there"],["verb","Verbs"],
+    ["vte","Verb te-forms (requests · joining · ~te imasu)"],
+    ["vneg","Plain negatives (~nai)"],
+    ["vpast","Casual past (~ta) & “was…”"],
+    ["vpot","Potential — can / can’t"],
+    ["vtai","Want to (~tai)"],
+    ["vvol","Volitional — let’s (~you / ~mashou)"],
+    ["vcond","Conditional — if / when (~tara)"],
+    ["vtari","~tari — do things like"],
+    ["vstem","Verb stems (mi / tabe + ni iku)"],
+    ["adjf","Adjective forms — past · negative · ~kute · ~sou · ~sugi"],
     ["iadj","i-adjectives (end in -i)"],["naadj","na-adjectives (need な)"],["like","Likes & dislikes"],
     ["food","Food & drink"],["act","Activities, hobbies & media"],
     ["place","Places"],["dining","At a restaurant"],
@@ -10895,13 +10977,16 @@ hwPracticeQuiz('hwq16Box', HWQ16);
   // responsive production: native JAPANESE-SCRIPT question shown first (romaji + English are optional hints).
   function qRespond(it){ const rel=scriptReliable(it.jaPrompt);
     const shown = rel ? '<div class="pj" style="font-size:1.4rem;font-weight:600;line-height:1.7;margin-top:6px">'+esc(kanaText(it.jaPrompt))+'</div>' : ' <b>'+annotate(it.jaPrompt)+'</b>';
-    return { cat:'jfirst', itemId:it.id, itemType:'interaction', skill:'responsiveProduction', mode:'oral',
+    return { cat:'jfirst', itemId:it.id, itemType:'interaction', skill:'responsiveProduction', mode:'respond2',
     promptType:'ja-text', responseType:'ja-text-response', openEnded:(it.openEnded!==false),
-    hintReading: rel?annotate(it.jaPrompt):null, hintMeaning:it.promptMeaning,
-    kind:'Respond · answer in Japanese', prompt:'Answer this in Japanese:'+shown,
+    hintMeaning:it.promptMeaning,
+    kind:'Read & respond · two steps', prompt:'Step 1 — read this question:'+shown,
+    promptJa: it.jaPrompt, promptKana: rel?kanaText(it.jaPrompt):null, promptEn: it.promptMeaning,
     ruleNote: it.note ? '<div style="margin-top:5px;color:var(--ink2);font-size:.88rem">'+esc(it.note)+'</div>' : '',
     model:{ ja:it.model.ja, romaji:it.model.ja, kana:null, en:it.model.en, audio:it.audio },
+    accepted: it.accepted||[],
     verifySkill:'responsiveProduction',
+    readingOk:(v)=>{ const n=norm(v); return n===norm(it.jaPrompt) || n===norm((it.jaPrompt||'').replace(/\bwa\b/g,'ha')); },
     verify:(v)=>{ const n=norm(v); if(n===norm(it.model.ja)) return {ok:true}; if((it.accepted||[]).some(a=>norm(a)===n)) return {ok:true};
       const r=window.Sentences?Sentences.grade({ja:it.model.ja,en:it.model.en,alt:it.accepted||[]}, v):null; return { ok: r?(r.outcome==='correct'||r.outcome==='acceptable'):false }; },
     say:it.jaPrompt, reveal:()=>annotate(it.model.ja)+' — '+esc(it.model.en) }; }
@@ -11279,6 +11364,48 @@ hwPracticeQuiz('hwq16Box', HWQ16);
       if(q.autoplay) try{ speakSentence(q.say); }catch(e){}
       return;
     }
+    if(q.mode==='respond2'){
+      // TWO-PART TYPED RESPOND (no microphone): A) read the Japanese question & type it back in romaji,
+      // then B) given the English of a good answer, type the Japanese answer. Open-ended → never records a
+      // mistake; only credits a success, so it can't pollute the Mistake Bank.
+      inp.style.display='none'; $('studyCheck').style.display='none'; opt.style.display='grid'; opt.innerHTML='';
+      const touch=(window.matchMedia&&window.matchMedia('(pointer: coarse)').matches)||('ontouchstart' in window);
+      const wrap=document.createElement('div'); wrap.style.cssText='grid-column:1/-1;display:flex;flex-direction:column;gap:8px';
+      const aRow=document.createElement('div'); aRow.style.cssText='display:flex;gap:8px;flex-wrap:wrap;align-items:center';
+      const aIn=document.createElement('input'); aIn.className='quiz-input'; aIn.placeholder='type what it says, in romaji'; aIn.setAttribute('autocorrect','off'); aIn.setAttribute('autocapitalize','off'); aIn.autocomplete='off'; aIn.spellcheck=false; aIn.style.maxWidth='360px';
+      const aGo=document.createElement('button'); aGo.className='btn primary'; aGo.type='button'; aGo.style.cssText='padding:8px 14px'; aGo.textContent='Check reading';
+      const aShow=document.createElement('button'); aShow.className='btn'; aShow.type='button'; aShow.style.cssText='padding:6px 12px;font-size:.85rem'; aShow.textContent='Show reading';
+      aRow.append(aIn,aGo,aShow);
+      const aFb=document.createElement('div'); aFb.style.cssText='min-height:20px;font-weight:600';
+      const bWrap=document.createElement('div'); bWrap.style.cssText='display:none;flex-direction:column;gap:8px;border-top:1px solid var(--line);padding-top:10px';
+      wrap.append(aRow,aFb,bWrap); opt.appendChild(wrap);
+      if(!touch) aIn.focus();
+      function openB(){ if(bWrap.dataset.open) return; bWrap.dataset.open='1'; bWrap.innerHTML='';
+        const lbl=document.createElement('div'); lbl.innerHTML='<b>Step 2 — now answer it.</b> Type this in Japanese (romaji):<div style="font-size:1.05rem;font-weight:700;margin-top:4px">“'+esc(q.model.en)+'”</div>';
+        const bRow=document.createElement('div'); bRow.style.cssText='display:flex;gap:8px;flex-wrap:wrap;align-items:center';
+        const bIn=document.createElement('input'); bIn.className='quiz-input'; bIn.placeholder='type the Japanese answer in romaji'; bIn.setAttribute('autocorrect','off'); bIn.setAttribute('autocapitalize','off'); bIn.autocomplete='off'; bIn.spellcheck=false; bIn.style.maxWidth='420px';
+        const bGo=document.createElement('button'); bGo.className='btn primary'; bGo.type='button'; bGo.style.cssText='padding:8px 14px'; bGo.textContent='Check';
+        bRow.append(bIn,bGo);
+        const bFb=document.createElement('div'); bFb.style.cssText='min-height:20px;font-weight:600';
+        bWrap.append(lbl,bRow,bFb); bWrap.style.display='flex'; if(!touch) bIn.focus();
+        const submit=()=>{ if(answeredThis) return; const v=bIn.value; if(!v.trim()) return; const res=q.verify(v);
+          if(res.ok){ recordAnswer(true); bFb.innerHTML='<span style="color:var(--good)">✓ Correct!</span><div style="margin-top:4px">'+q.reveal()+'</div>'; }
+          else { bFb.innerHTML='<div style="color:var(--ink2)">Compare with a model answer — many phrasings work:</div><div style="margin-top:4px">'+q.reveal()+'</div><div style="margin-top:6px"><button class="btn" type="button" id="r2Mine" style="padding:4px 12px">Mine means the same ✓</button></div>';
+            const mb=document.getElementById('r2Mine'); if(mb) mb.onclick=()=>{ if(!answeredThis){ recordAnswer(true); } mb.disabled=true; mb.textContent='✓ counted'; }; }
+          try{ if(q.model&&q.model.ja) speakSentence(q.model.ja); }catch(e){}
+          bGo.disabled=true; $('studyNext').style.display=''; };
+        bGo.onclick=submit; bIn.addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault(); submit(); } });
+      }
+      const revealReading=()=>{ aFb.innerHTML='<span style="color:var(--ink2)">Reading: <b>'+esc(q.promptJa)+'</b>'+(q.promptEn?' — '+esc(q.promptEn):'')+'</span>'; try{ speakSentence(q.say); }catch(e){} aGo.disabled=true; aIn.disabled=true; openB(); };
+      const checkA=()=>{ const v=aIn.value; if(!v.trim() && !aShow.disabled){ revealReading(); return; }
+        const ok=q.readingOk(v); aFb.innerHTML= ok ? '<span style="color:var(--good)">✓ Nice reading!</span> <span style="color:var(--ink2)">'+(q.promptEn?esc(q.promptEn):'')+'</span>'
+          : '<span style="color:var(--ink2)">Close — it reads: <b>'+esc(q.promptJa)+'</b>'+(q.promptEn?' — '+esc(q.promptEn):'')+'</span>';
+        try{ speakSentence(q.say); }catch(e){} aGo.disabled=true; aIn.disabled=true; openB(); };
+      aGo.onclick=checkA; aShow.onclick=revealReading;
+      aIn.addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault(); checkA(); } });
+      $('studyFb').innerHTML='<span class="hint">Step 1: read the Japanese above and type what it says in romaji. Step 2: you’ll see the English of a good answer — type it back in Japanese.</span>'+(q.ruleNote||'');
+      return;
+    }
     if(q.mode==='oral'){
       // ORAL PRODUCTION — the Japanese is HIDDEN until the learner commits. Self-assess only; the audio
       // model + optional typed verification come AFTER, so this is retrieval, not reading aloud.
@@ -11572,6 +11699,11 @@ hwPracticeQuiz('hwq16Box', HWQ16);
   // ---------- wire up ----------
   // fresh "Start" begins a new sitting → forget what was shown so review can lead again
   $('studyStart').onclick=()=>{ studyRunSeen=new Set(); start(); };
+  if($('studyReset')) $('studyReset').onclick=()=>{
+    if(!confirm('Reset ALL Study Today progress?\n\nThis wipes your mastery scores, the review schedule (SRS) and the whole Mistake Bank, for a clean slate. Your lessons, notes and settings are kept. This cannot be undone.')) return;
+    try{ localStorage.removeItem('jp_learn_v1'); localStorage.removeItem('jp_mistakes_v1'); }catch(e){}
+    location.reload();
+  };
   $('studyCheck').onclick=check;
   $('studyNext').onclick=next;
   $('studyQuit').onclick=finish;
