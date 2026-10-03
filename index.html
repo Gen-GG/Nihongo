@@ -11005,14 +11005,37 @@ hwPracticeQuiz('hwq16Box', HWQ16);
   function shortFormLabel(key){ const l=(window.Forms&&Forms.meta(key))?Forms.meta(key).label:(FORM_LABEL[key]||key);
     return l.replace(/\s*\([^)]*\)\s*/g,'').trim() || l; }
   function formSuffix(key){ const l=(window.Forms&&Forms.meta(key))?Forms.meta(key).label:''; const m=l.match(/\(([^)]*)\)/); return m?m[1]:''; }
+  // ---- plain-English conjugated meaning so the prompt reads "didn't do", not "polite past negative" ----
+  const _IRR_PAST={do:'did',go:'went',eat:'ate',drink:'drank',come:'came',see:'saw',read:'read',write:'wrote',
+    buy:'bought',make:'made',meet:'met',take:'took',teach:'taught',speak:'spoke',sleep:'slept',give:'gave',
+    wear:'wore',ride:'rode',pay:'paid',find:'found',lose:'lost',hold:'held',lend:'lent',stand:'stood',swim:'swam',
+    run:'ran',cut:'cut',become:'became',understand:'understood',get:'got',wake:'woke',put:'put',say:'said',
+    leave:'left',bring:'brought',forget:'forgot','ride':'rode',sit:'sat',win:'won',send:'sent',spend:'spent',build:'built'};
+  function _baseVerb(en){ let s=(en||'').split('/')[0].trim().replace(/\s*\([^)]*\)\s*/g,''); s=s.replace(/^to\s+/,'').replace(/^be\s+able\s+to\s+/,'can '); return s.trim(); }
+  function _pastOf(base){ const parts=base.split(' '); const w=parts[0]; const rest=base.slice(w.length);
+    let p; if(_IRR_PAST[w]) p=_IRR_PAST[w]; else if(/e$/.test(w)) p=w+'d'; else if(/[^aeiou]y$/.test(w)) p=w.slice(0,-1)+'ied'; else p=w+'ed';
+    return p+rest; }
+  function englishForm(en, key){ const base=_baseVerb(en); const mt=(window.Forms&&Forms.meta(key))||{};
+    if(key==='tai') return 'want to '+base;
+    if(key==='te') return base+' (and then…)';
+    const past=mt.tense==='past', neg=mt.polarity==='neg';
+    if(neg && past)  return "didn't "+base;
+    if(neg && !past) return "don't "+base;
+    if(!neg && past) return _pastOf(base);
+    return base; }
+  // the small orange tag: just the register (what the learner needs to pick), no grammar jargon
+  function registerTag(key){ const mt=(window.Forms&&Forms.meta(key))||{};
+    if(key==='te') return 'te-form'; if(mt.kind==='construction') return 'want-to';
+    return mt.register==='polite' ? 'polite' : mt.register==='plain' ? 'casual' : 'form'; }
   function qConjDirect(v, key, cat){ const ans=window.Forms?Forms.formString(v[0],key):null; if(!ans) return null;
     const sl=shortFormLabel(key), sfx=formSuffix(key);
     return { cat, itemId:Mastery.vocabId(v[0]), itemType:'vocab', skill:conjSkill(key), conj:{dict:v[0],key,mode:'direct'},
       kind:'Conjugation · form', mode:'type', accept:[ans], say:ans, reveal:()=>annotate(ans),
-      // clean two-line prompt: the target form NAME, then the meaning. Dictionary form and the exact
-      // "~masu" suffix are tucked into the hint so the question tests you instead of giving it away.
-      prompt:'<div style="font-size:.72rem;text-transform:uppercase;letter-spacing:.06em;color:var(--accent);font-weight:700">'+esc(sl)+' form</div>'+
-             '<div style="font-size:1.35rem;font-weight:600;margin-top:6px">'+esc(v[1])+'</div>',
+      // Plain-English prompt: the small orange tag is just the REGISTER (polite / casual); the big line is
+      // the conjugated meaning in everyday English ("didn't do"), so there's no grammar jargon to decode.
+      // Dictionary form + the exact "~masu" suffix stay in the hint so the question still tests you.
+      prompt:'<div style="font-size:.72rem;text-transform:uppercase;letter-spacing:.06em;color:var(--accent);font-weight:700">'+esc(registerTag(key))+'</div>'+
+             '<div style="font-size:1.35rem;font-weight:600;margin-top:6px">'+esc(englishForm(v[1],key))+'</div>',
       hintReading: annotate(v[0])+(sfx?' <span style="color:var(--ink2)">('+esc(sfx)+')</span>':''), hintReadingLabel:'Show dictionary form' }; }
   function qConjContext(v, key, sent, cat){ const ans=window.Forms?Forms.formString(v[0],key):null; if(!ans||!sent) return null;
     const cue=window.Forms?Forms.registerCue(key):''; const sl=shortFormLabel(key);
@@ -11020,7 +11043,7 @@ hwPracticeQuiz('hwq16Box', HWQ16);
       kind:'Conjugation · from meaning', mode:'type', accept:[ans], say:ans, reveal:()=>annotate(ans),
       // English context + the target form; the dictionary verb is a hint so you retrieve it yourself.
       prompt:'<div style="font-size:1.2rem;font-weight:600">'+esc(cue)+esc(sent.en)+'</div>'+
-             '<div style="font-size:.85rem;color:var(--ink2);margin-top:6px">Give the <b>'+esc(sl)+'</b> form of the verb</div>',
+             '<div style="font-size:.85rem;color:var(--ink2);margin-top:6px">Answer in <b>'+esc(registerTag(key))+'</b> Japanese (match the English above)</div>',
       hintReading: annotate(v[0]), hintReadingLabel:'Show dictionary form' }; }
   function qConjAdaptive(v, cat, forceKey){ const keys=eligibleFormKeys(v); if(!keys.length) return null;
     const key = (forceKey && keys.indexOf(forceKey)>=0) ? forceKey : keys[Math.floor(Math.random()*keys.length)];
