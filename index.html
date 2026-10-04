@@ -8746,7 +8746,62 @@ function renderAllNotes(){
       docchimo:"advb",hajimete:"advb",janai:"part",kireina:"naadj",kitanai:"iadj",konshuumatsu:"num",kudasai:"greet",
       nihon:"place",pengin:"animal",sukina:"like",tanoshimi:"advb",umaku:"advb",wanchan:"animal",yakigashi:"food",
       yakushima:"place",yoji:"num",yonkai:"num",yorugata:"people",yotei:"advb",you:"advb",yudetamago:"food",
-      yukkuri:"advb",yuzu:"food",zutto:"advb"
+      yukkuri:"advb",yuzu:"food",zutto:"advb",
+      // full sweep — every remaining dictionary word into an existing home
+      akai:"iadj",hoshii:"iadj",sugoi:"iadj",
+      muryou:"naadj",
+      america:"place",italia:"place",beruvyuu:"place",shibuya:"place",sukuwanisshu:"place",ba:"place",hashi:"place",
+      kado:"place",kaisha:"place",kyoushitsu:"place",machi:"place",kuruma:"place",chekkuin:"place",
+      arigatou:"greet",tadaima:"greet",maa:"greet",nee:"greet",orei:"greet",kangaesasete:"greet",yasumasete:"greet",sasete:"greet",
+      atama:"body",kao:"body",koe:"body",nodo:"body",
+      bangohan:"food",bentou:"food",maccha:"food",kudamono:"food",nomimono:"food",sashimi:"food",sukiyaki:"food",
+      yakiniku:"food",nabe:"food",
+      ankeeto:"studywork",gakushuu:"studywork",happyou:"studywork",junbi:"studywork",machigae:"studywork",
+      noote:"studywork",kyoukasho:"studywork",pen:"studywork",puran:"studywork",sanka:"studywork",shiryou:"studywork",
+      keiyoushi:"studywork",ukemi:"studywork",zangyou:"studywork",
+      apuri:"home",chizu:"home",gomi:"home",gomibako:"home",jueriibokkusu:"home",kago:"home",
+      okane:"home",sofa:"home",tana:"home",tsukue:"home",wasuremono:"home",shizukasa:"home",
+      kaban:"wear",chiketto:"wear",saifu:"wear",saizu:"wear",pajama:"wear",
+      kaikei:"dining",ryoushuusho:"dining",osara:"dining",sara:"dining",koppu:"dining",shokki:"dining",
+      doraibu:"act",ibento:"act",kuraimingu:"act",rokku:"act",shoppingu:"act",hora:"act",
+      haha:"people",ojiichan:"people",genna:"people",jen:"people",jin:"people",minna:"people",nanijin:"q",
+      okyakusama:"people",sama:"people",suttafu:"people",anohito:"people",begetarian:"people",furansugo:"people",
+      jishin:"people",kibun:"people",kimochi:"people",
+      yuki:"weather",
+      dareto:"q",dochira:"q",ikura:"q",nansai:"q",
+      dato:"part",dewa:"conn",jaa:"conn",saigo:"conn",yori:"advb",
+      bacchiri:"advb",hajime:"advb",hobo:"advb",issho:"advb",ma:"advb",maamaa:"advb",massugu:"advb",
+      hazu:"advb",shou:"advb",tekitouni:"advb",toku:"advb",zenbu:"advb",
+      hayakuni:"freq",hayame:"freq",hayameni:"freq",ichido:"freq",mou:"freq",osokuni:"freq",konban:"num",saisho:"advb",
+      futatsu:"num",futsukakan:"num",juppun:"num",sai:"num",sanjikan:"num",tooka:"num",tanjoubi:"num",
+      gogatsu:"num",hachigatsu:"num",ichigatsu:"num",nigatsu:"num",sangatsu:"num",shigatsu:"num",
+      rokugatsu:"num",shichigatsu:"num",kugatsu:"num",juugatsu:"num",juuichigatsu:"num",juunigatsu:"num",
+      // inflected forms → their form sections
+      kawaita:"vpast",suita:"vpast",tsukete:"vte",yatteiru:"vte",yatteru:"vte",
+      ureshiku:"adjf",yasukute:"adjf",yokute:"adjf",
+      // ---- final sweep: deck/flashcard inflected forms whose short meanings slipped past the rules ----
+      // potential / passive / causative-passive (can / can't / was made to …)
+      taberemasu:"vpot",nomemasu:"vpot",yomemasu:"vpot",hanasemasu:"vpot",ikemasu:"vpot",koremasu:"vpot",
+      taberaremasu:"vpot",taberaremashita:"vpot",taberemasen:"vpot",taberemashita:"vpot",nomemasen:"vpot",
+      nomemashita:"vpot",kaemasen:"vpot",miraremasen:"vpot",hanasemasen:"vpot",hanasemashita:"vpot",
+      yomemasen:"vpot",yomemashita:"vpot",oyogemasu:"vpot",oyogemasen:"vpot",oyogemashita:"vpot",
+      koraremasen:"vpot",koremasen:"vpot",koremashita:"vpot",ikemasen:"vpot",ikemashita:"vpot",
+      miremasu:"vpot",miremasen:"vpot",miremashita:"vpot",moraemasu:"vpot",
+      tabesaseraremashita:"vpot",kakaseraremashita:"vpot",saseraremashita:"vpot",utawaseraremashita:"vpot",homeraremashita:"vpot",
+      // casual past (~ta)
+      tsukareta:"vpast",tsukaremashita:"vpast",nonda:"vpast",itta:"vpast",mita:"vpast",katta:"vpast",shita:"vpast",yonda:"vpast",
+      // volitional / tari / tara
+      ikimashou:"vvol",tabemashou:"vvol",nondari:"vtari",asondari:"vtari",yondari:"vtari",nondara:"vcond",
+      // ~sugiru (do/eat/etc. too much)
+      sugiru:"adjf",tabesugiru:"adjf",nomisugiru:"adjf",tsukaisugiru:"adjf",misugiru:"adjf",nesugiru:"adjf",
+      tabesugita:"adjf",amasugimashita:"adjf",tabesugimashita:"adjf",tsukurisugimasu:"adjf",nomisugimashita:"adjf",
+      // this/that-way demonstratives & polite people words
+      kochira:"dem",sochira:"dem",achira:"dem",anokata:"people",tantou:"people",
+      // set polite phrases
+      yoroshiku:"greet",onegaishimasu:"greet",iya:"greet",gozaimasu:"greet",
+      // remaining dictionary verbs & misc → semantic homes
+      obentou:"food",moshi:"conn",furu:"weather",suku:"body",tsukareru:"body",ryourisuru:"act",chuumonsuru:"dining",
+      doudatta:"q",yaru:"act",taberaremasen:"vpot"
   };
   const catOf={}, ordIndex={};
   Object.keys(ORD).forEach(cat=>{ ORD[cat].forEach((w,i)=>{ catOf[w]=cat; ordIndex[cat+"|"+w]=i; }); });
@@ -8987,7 +9042,7 @@ function renderAllNotes(){
       if(w && KANA[w] && GL[w] && !(w in words) && !claimed[w]) words[w]=GL[w]; });
   });
   const groups={};
-  Object.keys(words).forEach(r=>{ if(claimed[r]) return; const c=classify(r,words[r]); (groups[c]=groups[c]||[]).push([r,words[r]]); });
+  Object.keys(words).forEach(r=>{ if(claimed[r]) return; if(/\s/.test(r)) return; /* multi-word phrases live in Set phrases, not the vocab grid */ const c=classify(r,words[r]); (groups[c]=groups[c]||[]).push([r,words[r]]); });
   (groups.num=groups.num||[]).push(["ni","2"],["nijuu","20"]);   // 二 = 2 (collides with the particle) and 二十 = 20 — add explicitly
   (groups.iadj=groups.iadj||[]).push(["atarashii","new"]);          // pair for furui (old)
   // Safety net: the Verbs section renders only from VERBS cards, so any word classified "verb"
