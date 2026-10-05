@@ -2858,6 +2858,64 @@
 <section id="phrases">
   <h2>Phrases</h2>
 
+  <div class="fc-bar" style="margin-bottom:12px">
+    <label style="font-weight:600;color:var(--ink2)">Mode:
+      <select id="phraseMode" class="quiz-input" style="width:auto;display:inline-block;padding:4px 8px">
+        <option value="reference">Phrase reference</option>
+        <option value="convo">Conversation practice</option>
+      </select>
+    </label>
+  </div>
+
+  <!-- ===== Conversation Practice ===== -->
+  <div id="convoWrap" style="display:none">
+    <div class="tip">Texting-style back-and-forth. Read (or <b>▶ hear</b>) each line, then type a natural reply in romaji. Many phrasings are accepted — dropped が/を/は are fine. This trains <b>situation → Japanese</b>, not translating word-by-word.</div>
+    <div id="convoStart">
+      <div class="fc-bar">
+        <label style="font-weight:600;color:var(--ink2)">Topic:
+          <select id="convoCat" class="quiz-input" style="width:auto;display:inline-block;padding:4px 8px">
+            <option value="mixed" selected>Random / Mixed</option>
+            <option value="everyday">Everyday</option>
+            <option value="home">Home</option>
+            <option value="food">Food</option>
+            <option value="plans">Plans</option>
+            <option value="friends">Friends</option>
+            <option value="travel">Travel</option>
+            <option value="restaurant">Restaurant</option>
+            <option value="shopping">Shopping</option>
+            <option value="bouldering">Bouldering</option>
+          </select>
+        </label>
+        <label style="font-weight:600;color:var(--ink2)">Level:
+          <select id="convoLevel" class="quiz-input" style="width:auto;display:inline-block;padding:4px 8px">
+            <option value="beginner">Beginner — English shown</option>
+            <option value="normal" selected>Normal — English on tap</option>
+            <option value="challenge">Challenge — Japanese only</option>
+          </select>
+        </label>
+        <button class="btn primary" id="convoBegin">Start conversation →</button>
+      </div>
+    </div>
+    <div id="convoRun" style="display:none">
+      <div id="convoTitle" style="font-weight:700;color:var(--accent);margin:6px 0"></div>
+      <div class="chat" id="convoChat"></div>
+      <div id="convoInputRow" style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+        <input id="convoInput" class="quiz-input" autocorrect="off" autocapitalize="off" autocomplete="off" spellcheck="false" style="max-width:420px" placeholder="type your reply in romaji…">
+        <button class="btn primary" id="convoSend">Reply</button>
+        <button class="btn" id="convoHint" style="font-size:.85rem">Show hint</button>
+        <button class="btn" id="convoQuit" style="font-size:.85rem;color:var(--ink2);margin-left:auto">End</button>
+      </div>
+      <div id="convoFb" style="margin-top:10px;min-height:20px;font-weight:600"></div>
+    </div>
+    <div id="convoDone" style="display:none">
+      <h3 style="margin-bottom:6px">Conversation complete</h3>
+      <div id="convoRecap" class="note" style="max-width:560px"></div>
+      <div style="margin-top:14px"><button class="btn primary" id="convoAgain">New conversation →</button> <button class="btn" id="convoRetry">Retry this one ↺</button></div>
+    </div>
+  </div>
+
+  <!-- ===== Phrase reference (existing static content) ===== -->
+  <div id="phraseReference">
   <div class="lesson-block" data-lesson="trial">
     <h3 style="color:var(--accent)">Trial lesson · 0803</h3>
     <div class="note" id="phraseBox"></div>
@@ -3147,6 +3205,7 @@
   <h4 style="margin-top:28px">② Casual — making plans with a close friend (plain form throughout)</h4>
   <div class="chat" id="chatConvoCasual"></div>
   </div><!-- /convos -->
+  </div><!-- /phraseReference -->
 </section>
 
 <!-- ============ KANA ============ -->
@@ -6589,7 +6648,7 @@ const KANA={
   tabetari:"たべたり", nondari:"のんだり", shitari:"したり", mitari:"みたり", kattari:"かったり", hanashitari:"はなしたり", kitari:"きたり", ittari:"いったり", netari:"ねたり", asondari:"あそんだり", attari:"あったり", iretari:"いれたり", yondari:"よんだり",
   futtara:"ふったら", suitara:"すいたら", tsuitara:"ついたら", mitsuketara:"みつけたら", nakattara:"なかったら", takasugitara:"たかすぎたら", kaettara:"かえったら",
   tsumori:"つもり", dewa:"では", chuu:"ちゅう", hayame:"はやめ", hayameni:"はやめに", suku:"すく", pekopeko:"ぺこぺこ",
-  tanjyoubi:"たんじょうび", tsuki:"つき", konshuumatsu:"こんしゅうまつ", byouin:"びょういん", tsume:"つめ", byouki:"びょうき", manseki:"まんせき", ha:"は", chiryou:"ちりょう", chuukurai:"ちゅうくらい", zutto:"ずっと", noboreru:"のぼれる", noboremasu:"のぼれます", noborenakatta:"のぼれなかった", noborenai:"のぼれない", nobottari:"のぼったり", saisho:"さいしょ", haittari:"はいったり", ja:"じゃ", jaa:"じゃあ", konban:"こんばん", nee:"ねえ", doushita:"どうした", taberarenakatta:"たべられなかった", kusasugita:"くさすぎた", yasukattara:"やすかったら", takakunakatta:"たかくなかった", takakute:"たかくて", takasou:"たかそう", datta:"だった", doushite:"どうして", soretomo:"それとも", amatou:"あまとう", karatou:"からとう", asagata:"あさがた", yorugata:"よるがた", chekkuin:"チェックイン", haikingu:"ハイキング", aisukuriimu:"アイスクリーム", buritto:"ブリト", kyoto:"きょうと", migaku:"みがく", yameru:"やめる"
+  tanjyoubi:"たんじょうび", tsuki:"つき", konshuumatsu:"こんしゅうまつ", byouin:"びょういん", tsume:"つめ", byouki:"びょうき", manseki:"まんせき", ha:"は", chiryou:"ちりょう", chuukurai:"ちゅうくらい", zutto:"ずっと", noboreru:"のぼれる", noboremasu:"のぼれます", noborenakatta:"のぼれなかった", noborenai:"のぼれない", nobottari:"のぼったり", saisho:"さいしょ", haittari:"はいったり", ja:"じゃ", jaa:"じゃあ", konban:"こんばん", nee:"ねえ", doushita:"どうした", hontou:"ほんとう", okaeri:"おかえり", osusume:"おすすめ", hoka:"ほか", nobotta:"のぼった", hairitai:"はいりたい", itterasshai:"いってらっしゃい", kashikomarimashita:"かしこまりました", taberarenakatta:"たべられなかった", kusasugita:"くさすぎた", yasukattara:"やすかったら", takakunakatta:"たかくなかった", takakute:"たかくて", takasou:"たかそう", datta:"だった", doushite:"どうして", soretomo:"それとも", amatou:"あまとう", karatou:"からとう", asagata:"あさがた", yorugata:"よるがた", chekkuin:"チェックイン", haikingu:"ハイキング", aisukuriimu:"アイスクリーム", buritto:"ブリト", kyoto:"きょうと", migaku:"みがく", yameru:"やめる"
 };
 
 /* ================= CUMULATIVE TEST (Lessons 1–12) ================= */
@@ -7398,7 +7457,7 @@ const GL={
   tabetari:"doing things like eat (~tari)", nondari:"doing things like drink (~tari)", shitari:"doing things like do (~tari)", mitari:"doing things like watch (~tari)", kattari:"doing things like buy (~tari)", hanashitari:"doing things like talk (~tari)", kitari:"doing things like come (~tari)", ittari:"doing things like go (~tari)", netari:"doing things like sleep (~tari)", asondari:"doing things like hang out (~tari)", attari:"doing things like meet (~tari)", iretari:"doing things like brew / make (~tari)", yondari:"doing things like read (~tari)",
   futtara:"if it rains (tara of furu)", suitara:"when I get hungry (onaka ga suitara)", tsuitara:"when I arrive (tara of tsuku)", mitsuketara:"if I find (tara of mitsukeru)", nakattara:"if there isn't / if I don't have (tara)", takasugitara:"if it's too expensive", kaettara:"when I go home (tara of kaeru)",
   tsumori:"intend to / going to (suru tsumori desu)", dewa:"in ~'s case / as for (de wa)", chuu:"~chuu = during / in the middle of", hayame:"earlier than usual", hayameni:"earlier than usual (hayameni + verb)", suku:"to become empty (onaka ga suku = get hungry)", pekopeko:"starving (onaka ga pekopeko)",
-  tanjyoubi:"birthday", tsuki:"month / moon", konshuumatsu:"this weekend", byouin:"hospital / clinic", tsume:"nail / claw (tsume wo kiru)", byouki:"sickness / illness", manseki:"fully booked / full house", ha:"tooth / teeth", chiryou:"treatment", chuukurai:"medium / average-sized", zutto:"for a long time / the whole time", noboreru:"can climb (potential of noboru)", noboremasu:"can climb (polite)", noborenakatta:"couldn't climb (casual past)", noborenai:"can't climb (casual potential neg)", nobottari:"~tari: climb (among other things)", saisho:"at first / the beginning", haittari:"~tari: go in / enter (among other things)", ja:"well / (ja nai = isn't, casual)", jaa:"well then / so", konban:"tonight / this evening", nee:"hey / say (casual opener)", doushita:"what's up? / what happened? (casual)", taberarenakatta:"couldn't eat (potential past neg)", kusasugita:"was too smelly (sugi + past)", yasukattara:"if it's cheap (yasui + tara)", takakunakatta:"wasn't expensive (i-adj past neg)", takakute:"expensive and… (i-adj joining)", takasou:"looks expensive (i-adj + sou)", datta:"was (plain past of desu)", doushite:"why", soretomo:"or", amatou:"sweet tooth (likes sweets)", karatou:"likes spicy food", asagata:"morning person", yorugata:"night person", chekkuin:"check-in", haikingu:"hiking", aisukuriimu:"ice cream", buritto:"burrito", kyoto:"Kyoto", migaku:"to brush / polish (ha wo migaku = brush teeth)", yameru:"to quit / stop"
+  tanjyoubi:"birthday", tsuki:"month / moon", konshuumatsu:"this weekend", byouin:"hospital / clinic", tsume:"nail / claw (tsume wo kiru)", byouki:"sickness / illness", manseki:"fully booked / full house", ha:"tooth / teeth", chiryou:"treatment", chuukurai:"medium / average-sized", zutto:"for a long time / the whole time", noboreru:"can climb (potential of noboru)", noboremasu:"can climb (polite)", noborenakatta:"couldn't climb (casual past)", noborenai:"can't climb (casual potential neg)", nobottari:"~tari: climb (among other things)", saisho:"at first / the beginning", haittari:"~tari: go in / enter (among other things)", ja:"well / (ja nai = isn't, casual)", jaa:"well then / so", konban:"tonight / this evening", nee:"hey / say (casual opener)", doushita:"what's up? / what happened? (casual)", hontou:"really? / true", okaeri:"welcome back", osusume:"recommendation", hoka:"other / else (hoka ni = anything else)", nobotta:"climbed (casual past of noboru)", hairitai:"want to go in / enter", itterasshai:"see you / have a good one (said to someone leaving)", kashikomarimashita:"certainly (very polite 'understood')", taberarenakatta:"couldn't eat (potential past neg)", kusasugita:"was too smelly (sugi + past)", yasukattara:"if it's cheap (yasui + tara)", takakunakatta:"wasn't expensive (i-adj past neg)", takakute:"expensive and… (i-adj joining)", takasou:"looks expensive (i-adj + sou)", datta:"was (plain past of desu)", doushite:"why", soretomo:"or", amatou:"sweet tooth (likes sweets)", karatou:"likes spicy food", asagata:"morning person", yorugata:"night person", chekkuin:"check-in", haikingu:"hiking", aisukuriimu:"ice cream", buritto:"burrito", kyoto:"Kyoto", migaku:"to brush / polish (ha wo migaku = brush teeth)", yameru:"to quit / stop"
 };
 function annotate(str){
   const hadNew=/class="newtag"/.test(str);
@@ -8698,6 +8757,213 @@ renderConvo([
     "<b>soko ni shiyou</b> = let's make it there; casual <b>tanoshimi!</b> (drops desu)."]
 ],'chatConvoCasual','Yuki');
 
+/* ============================================================================
+   CONVERSATION PRACTICE — typed back-and-forth retrieval (Talk / Phrases tab).
+   Reuses Sentences.grade (forgiving), speakSentenceClear (audio), annotate
+   (romaji + furigana) and the Mistake Bank. No new learning state, no paid API.
+   Data: each convo is an alternating script of app-lines and user-replies; a
+   user reply carries a model answer + accepted alternatives, graded leniently.
+   ============================================================================ */
+const CONVOS=[
+  { id:'food-day', cat:'food', title:'What did you eat?', turns:[
+    {app:'Kyou nani tabeta?', en:'What did you eat today?'},
+    {user:'say you ate sushi', ja:'Sushi tabeta.', alt:['Sushi o tabeta.','Kyou sushi o tabeta.']},
+    {app:'Oishikatta?', en:'Was it good?'},
+    {user:'say yes, it was good', ja:'Un, oishikatta.', alt:['Oishikatta.','Un, oishikatta yo.']},
+    {app:'Mata tabetai?', en:'Do you want to eat it again?'},
+    {user:'say yes, you want to eat it again', ja:'Un, mata tabetai.', alt:['Mata tabetai.','Un, mata tabetai ne.']},
+    {app:'Ii ne!', en:'Nice!'} ]},
+  { id:'day-how', cat:'everyday', title:'How was your day?', turns:[
+    {app:'Kyou dou datta?', en:'How was your day?'},
+    {user:'say it was fun', ja:'Tanoshikatta.', alt:['Un, tanoshikatta.','Tanoshikatta yo.']},
+    {app:'Nani shita?', en:'What did you do?'},
+    {user:'say you went bouldering', ja:'Borudaringu ni itta.', alt:['Borudaringu shita.','Jimu ni itta.']},
+    {app:'Tsukareta?', en:'Are you tired?'},
+    {user:'say yes, a little tired', ja:'Un, chotto tsukareta.', alt:['Chotto tsukareta.','Un, tsukareta.']},
+    {app:'Otsukaresama!', en:'Good work!'} ]},
+  { id:'coffee', cat:'everyday', title:'Coffee?', turns:[
+    {app:'Koohii nomu?', en:'Want to drink some coffee?'},
+    {user:'say yes, let’s drink', ja:'Un, nomou.', alt:['Nomou.','Un, nomitai.']},
+    {app:'Doko de nomu?', en:'Where shall we drink?'},
+    {user:'say let’s drink at a cafe', ja:'Kafe de nomou.', alt:['Kafe de.','Kafe ni ikou.']},
+    {app:'Ii ne, ikou!', en:'Nice, let’s go!'} ]},
+  { id:'plans-weekend', cat:'plans', title:'Weekend plans', turns:[
+    {app:'Konshuumatsu nani suru?', en:'What are you doing this weekend?'},
+    {user:'say you’re going bouldering', ja:'Borudaringu ni iku.', alt:['Borudaringu suru.','Jimu ni iku.']},
+    {app:'Dare to iku?', en:'Who are you going with?'},
+    {user:'say with a friend', ja:'Tomodachi to iku.', alt:['Tomodachi to.','Tomodachi to issho ni iku.']},
+    {app:'Nanji ni iku?', en:'What time are you going?'},
+    {user:'say at ten', ja:'Juu-ji ni iku.', alt:['Juu-ji ni.','Juuji ni iku.']},
+    {app:'Tanoshimi da ne!', en:'Looking forward to it!'} ]},
+  { id:'shopping-super', cat:'shopping', title:'Grocery shopping', turns:[
+    {app:'Suupaa ni iku?', en:'Are you going to the supermarket?'},
+    {user:'say yes, you’re going now', ja:'Un, ima iku.', alt:['Ima iku.','Un, iku yo.']},
+    {app:'Nani kau?', en:'What will you buy?'},
+    {user:'say ingredients for dinner', ja:'Bangohan no shokuzai o kau.', alt:['Shokuzai o kau.','Bangohan no shokuzai kau.']},
+    {app:'Wakatta, itterasshai!', en:'Got it, see you!'} ]},
+  { id:'weather', cat:'everyday', title:'Weather', turns:[
+    {app:'Kyou samui ne.', en:'It’s cold today, huh.'},
+    {user:'agree — yeah, it’s cold', ja:'Un, samui.', alt:['Samui ne.','Sou da ne.']},
+    {app:'Ashita wa dou?', en:'What about tomorrow?'},
+    {user:'say it’ll get warm', ja:'Atatakaku naru.', alt:['Atatakaku naru to omou.','Atatakakunaru.']},
+    {app:'Yokatta!', en:'Good!'} ]},
+  { id:'home', cat:'home', title:'Getting home', turns:[
+    {app:'Tadaima.', en:'I’m home.'},
+    {user:'welcome them back', ja:'Okaeri.', alt:['Okaeri nasai.']},
+    {app:'Onaka suita?', en:'Are you hungry?'},
+    {user:'say yes, you’re hungry', ja:'Un, onaka suita.', alt:['Onaka suita.','Un, peko peko.']},
+    {app:'Nani tabetai?', en:'What do you want to eat?'},
+    {user:'say you want ramen', ja:'Raamen tabetai.', alt:['Raamen ga ii.','Raamen.']},
+    {app:'Jaa, tsukurou!', en:'Then let’s make it!'} ]},
+  { id:'restaurant', cat:'restaurant', title:'At a restaurant (polite)', turns:[
+    {app:'Nanmei-sama desu ka?', en:'How many people?'},
+    {user:'say two people (polite)', ja:'Futari desu.', alt:['Futari.','Ni-nin desu.']},
+    {app:'Kinen-seki demo ii desu ka?', en:'Is a non-smoking seat okay?'},
+    {user:'say yes, that’s fine (polite)', ja:'Hai, daijoubu desu.', alt:['Daijoubu desu.','Hai.']},
+    {app:'Nani ni shimasu ka?', en:'What will you have?'},
+    {user:'say you’ll have ramen (polite)', ja:'Raamen ni shimasu.', alt:['Raamen o kudasai.','Raamen onegaishimasu.']},
+    {app:'Nomimono wa?', en:'And to drink?'},
+    {user:'ask for water (polite)', ja:'Mizu o kudasai.', alt:['Mizu onegaishimasu.','Ocha o kudasai.']},
+    {app:'Kashikomarimashita.', en:'Certainly.'} ]},
+  { id:'travel-japan', cat:'travel', title:'Travel in Japan', turns:[
+    {app:'Nihon de nani shitai?', en:'What do you want to do in Japan?'},
+    {user:'say you want to eat sushi', ja:'Sushi ga tabetai.', alt:['Sushi tabetai.','Sushi o tabetai.']},
+    {app:'Hoka ni wa?', en:'Anything else?'},
+    {user:'say you want to go to an onsen', ja:'Onsen ni ikitai.', alt:['Onsen ni hairitai.','Onsen.']},
+    {app:'Doko ni iku?', en:'Where will you go?'},
+    {user:'say Kyoto', ja:'Kyoto ni iku.', alt:['Kyoto.','Kyouto ni iku.']},
+    {app:'Tanoshimi da ne!', en:'Looking forward to it!'} ]},
+  { id:'bouldering', cat:'bouldering', title:'After bouldering', turns:[
+    {app:'Kyou borudaringu dou datta?', en:'How was bouldering today?'},
+    {user:'say it was hard but fun', ja:'Muzukashikatta kedo, tanoshikatta.', alt:['Tanoshikatta.','Muzukashikatta kedo tanoshikatta.']},
+    {app:'Nan-kai nobotta?', en:'How many times did you climb?'},
+    {user:'say about five times', ja:'Go-kai nobotta.', alt:['Go-kai gurai.','Go-kai.']},
+    {app:'Sugoi! Mata ikou!', en:'Awesome! Let’s go again!'} ]},
+  // ---- a branching conversation: the app’s next line reacts to your choice ----
+  { id:'friends-eat', cat:'friends', title:'What should we eat?', turns:[
+    {app:'Onaka suita? Nani tabetai?', en:'Hungry? What do you want to eat?'},
+    {user:'say what you want to eat (ramen or sushi)', ja:'Raamen tabetai.', alt:['Sushi tabetai.','Raamen ga ii.','Sushi ga ii.'],
+      branches:[{kw:/raamen/, ja:'Ii ne. Karai raamen suki?', en:'Nice. Do you like spicy ramen?'},
+                {kw:/sushi/,  ja:'Ii ne. Doko no sushi ga suki?', en:'Nice. What sushi do you like?'}]},
+    {app:'Ii ne.', en:'Nice.', _branchSlot:true},
+    {user:'answer the question (yes/your pick)', ja:'Un, suki.', alt:['Suki.','Amari suki ja nai.','Un, daisuki.']},
+    {app:'Jaa, ikou!', en:'Then let’s go!'} ]}
+];
+if(typeof window!=='undefined') window.CONVOS=CONVOS;
+
+(function ConversationPractice(){
+  const $=id=>document.getElementById(id);
+  if(!$('convoWrap')) return;
+  const esc=s=>String(s==null?'':s).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+  let sess=null;
+  function grade(model, input){
+    if(window.Sentences) return Sentences.grade({ja:model.ja, en:model.en, alt:model.alt||[]}, input);
+    const n=(input||'').toLowerCase().replace(/\s|[.,!?]/g,''); const t=(model.ja||'').toLowerCase().replace(/\s|[.,!?]/g,'');
+    return { outcome:n===t?'correct':'incorrect', target:model.ja };
+  }
+  function pick(cat){ const pool=cat==='mixed'?CONVOS:CONVOS.filter(c=>c.cat===cat);
+    const src=pool.length?pool:CONVOS; return src[Math.floor(Math.random()*src.length)]; }
+  function appBubble(line, en, level){
+    const chat=$('convoChat');
+    const b=document.createElement('div'); b.className='bub ask';
+    const showEn = level==='beginner';
+    b.innerHTML='<div class="who">Them</div><div>'+annotate(line)+
+      ' <button class="btn" type="button" style="padding:1px 8px;font-size:.8rem" onclick="speakSentenceClear(\''+String(line).replace(/'/g,'')+'\')">▶</button></div>'+
+      '<div class="en" style="'+(showEn?'':'display:none')+'">'+esc(en||'')+'</div>'+
+      (showEn?'':'<button class="btn" type="button" style="padding:1px 8px;font-size:.78rem;margin-top:3px" onclick="this.previousElementSibling.style.display=\'\';this.style.display=\'none\'">Show meaning</button>');
+    chat.appendChild(b); try{ speakSentenceClear(line); }catch(e){}
+    chat.scrollTop=chat.scrollHeight;
+  }
+  function youBubble(text){ const chat=$('convoChat'); const b=document.createElement('div'); b.className='bub reply';
+    b.innerHTML='<div class="who">You</div><div>'+annotate(text)+'</div>'; chat.appendChild(b); chat.scrollTop=chat.scrollHeight; }
+  function catOfDiag(d){ if(!d) return 'sentenceProduction'; if(d.type==='particle') return 'particle'; if(d.type==='verb-form') return 'conjugation'; return 'sentenceProduction'; }
+  function start(convo){
+    sess={ convo, i:0, level:$('convoLevel').value, stats:{ok:0,total:0, cats:{}}, branchNext:null };
+    $('convoStart').style.display='none'; $('convoDone').style.display='none'; $('convoRun').style.display='';
+    $('convoTitle').textContent=convo.title; $('convoChat').innerHTML=''; $('convoFb').innerHTML='';
+    $('convoInput').value=''; step();
+  }
+  function curUserTurn(){ const t=sess.convo.turns; let i=sess.i;
+    // show all consecutive app lines up to the next user turn
+    while(i<t.length && t[i].app!=null){ let ja=t[i].app, en=t[i].en;
+      if(t[i]._branchSlot && sess.branchNext){ ja=sess.branchNext.ja; en=sess.branchNext.en; sess.branchNext=null; }
+      appBubble(ja, en, sess.level); i++; }
+    sess.i=i;
+    if(i>=t.length){ return null; }       // conversation ended on an app line
+    return t[i];                           // a user turn
+  }
+  function step(){
+    const u=curUserTurn();
+    if(!u){ finish(); return; }
+    // show the cue (what to say) + input
+    $('convoInputRow').style.display='flex';
+    const cue='<span class="hint">Your turn — '+esc(u.user)+'</span>';
+    $('convoFb').innerHTML=cue;
+    $('convoInput').value=''; $('convoInput').disabled=false;
+    const touch=(window.matchMedia&&window.matchMedia('(pointer: coarse)').matches)||('ontouchstart' in window);
+    if(!touch) $('convoInput').focus();
+  }
+  function submit(){
+    if(!sess) return; const t=sess.convo.turns; const u=t[sess.i];
+    if(!u || u.app!=null) return; const val=$('convoInput').value; if(!val.trim()) return;
+    const res=grade(u, val); const ok=res.outcome==='correct'||res.outcome==='acceptable';
+    youBubble(val);
+    sess.stats.total++; const catKey = ok ? null : catOfDiag(res.diagnosis);
+    // record outcome by grammar category for the recap
+    const tag = (u.tag)|| (res.diagnosis&&res.diagnosis.type) || 'response';
+    (sess.stats.cats[tag]=sess.stats.cats[tag]||{ok:0,miss:0});
+    if(ok){ sess.stats.ok++; sess.stats.cats[tag].ok++; }
+    else { sess.stats.cats[tag].miss++; }
+    // feedback
+    let fb;
+    if(res.outcome==='correct'){ fb='<span style="color:var(--good)">✓ Nice.</span>'; }
+    else if(res.outcome==='acceptable'){ fb='<span style="color:var(--good)">✓ Accepted.</span>'+(res.note?' <span style="color:var(--ink2)">'+esc(res.note)+'</span>':'')+
+         ' <span style="color:var(--ink2)">More natural: '+annotate(u.ja)+'</span>'; }
+    else { const msg=(res.diagnosis&&res.diagnosis.msg)?res.diagnosis.msg:'Not quite.';
+      fb='<span style="color:var(--ink2)">Almost — '+esc(msg)+'</span> <span style="color:var(--ink2)">Better: '+annotate(u.ja)+'</span>'+
+         ' <button class="btn" type="button" id="convoMine" style="padding:2px 10px;font-size:.8rem">Mine works too ✓</button>';
+      // log to the Mistake Bank (reuses existing categories)
+      if(window.Mistakes){ try{ Mistakes.record({ key:'convo|'+sess.convo.id+'|'+sess.i, category:catOfDiag(res.diagnosis),
+        concept:'Conversation: '+u.user, prompt:(t[sess.i-1]&&t[sess.i-1].app)||sess.convo.title, userAnswer:val, expectedAnswer:u.ja, source:'conversation' }); }catch(e){} }
+    }
+    $('convoFb').innerHTML=fb;
+    // optional play of the model answer
+    try{ speakSentenceClear(u.ja); }catch(e){}
+    // branch selection from THIS answer
+    if(u.branches){ const b=u.branches.find(x=>x.kw.test(val.toLowerCase())) || u.branches[0]; sess.branchNext=b; }
+    const mb=$('convoMine'); if(mb) mb.onclick=()=>{ sess.stats.ok++; sess.stats.total; if(sess.stats.cats[tag]){sess.stats.cats[tag].miss=Math.max(0,sess.stats.cats[tag].miss-1);sess.stats.cats[tag].ok++;} mb.disabled=true; mb.textContent='✓ counted';
+      if(window.Mistakes){ try{ Mistakes.creditItem && Mistakes.creditItem('convo|'+sess.convo.id+'|'+sess.i,'sentenceProduction'); }catch(e){} } };
+    sess.i++;
+    // advance after a short beat so the learner reads the feedback
+    $('convoInput').disabled=true;
+    setTimeout(()=>{ step(); }, 700);
+  }
+  function finish(){
+    $('convoRun').style.display='none'; $('convoDone').style.display='';
+    const s=sess.stats; const strong=[], review=[];
+    Object.keys(s.cats).forEach(k=>{ const c=s.cats[k]; if(c.miss===0 && c.ok>0) strong.push(k); else if(c.miss>0) review.push(k); });
+    const pct = s.total? Math.round(s.ok/s.total*100):0;
+    // a memorable phrase from the conversation
+    const phrase = (sess.convo.turns.filter(t=>t.user)[0]||{}).ja || '';
+    $('convoRecap').innerHTML='<div style="font-weight:700;margin-bottom:6px">Score: '+s.ok+' / '+s.total+'  ('+pct+'%)</div>'+
+      (strong.length?'<div><b>Strong:</b> '+strong.map(esc).join(', ')+'</div>':'')+
+      (review.length?'<div><b>Review:</b> '+review.map(esc).join(', ')+' <span style="color:var(--ink2)">(added to your Mistake Bank)</span></div>':'<div style="color:var(--good)">No mistakes — clean run!</div>')+
+      (phrase?'<div style="margin-top:8px">Useful phrase: '+annotate(phrase)+'</div>':'');
+  }
+  // wiring
+  const modeSel=$('phraseMode'), ref=$('phraseReference'), wrap=$('convoWrap');
+  function applyMode(){ const convo=modeSel.value==='convo'; wrap.style.display=convo?'':'none'; if(ref) ref.style.display=convo?'none':''; }
+  if(modeSel){ modeSel.onchange=applyMode; applyMode(); }
+  $('convoBegin').onclick=()=>start(pick($('convoCat').value));
+  $('convoSend').onclick=submit;
+  $('convoInput').addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault(); submit(); } });
+  $('convoHint').onclick=()=>{ if(!sess) return; const u=sess.convo.turns[sess.i]; if(u&&u.app==null){ $('convoFb').innerHTML='<span class="hint">Model: </span>'+annotate(u.ja); } };
+  $('convoQuit').onclick=()=>{ if(sess) finish(); };
+  $('convoAgain').onclick=()=>start(pick($('convoCat').value));
+  $('convoRetry').onclick=()=>{ if(sess) start(sess.convo); };
+  if(typeof window!=='undefined') window.__Convo={ CONVOS, grade, pick };
+})();
+
 /* ---------- ALL: master reference — every word sorted by meaning (word-level, not by deck) ---------- */
 function renderAllNotes(){
   const box=document.getElementById('allNotes'); if(!box) return;
@@ -8831,7 +9097,8 @@ function renderAllNotes(){
       // remaining dictionary verbs & misc → semantic homes
       obentou:"food",moshi:"conn",furu:"weather",suku:"body",tsukareru:"body",ryourisuru:"act",chuumonsuru:"dining",
       doudatta:"q",yaru:"act",taberaremasen:"vpot",
-      haikingu:"act",aisukuriimu:"food",buritto:"food",kyoto:"place",migaku:"body",yameru:"studywork"
+      haikingu:"act",aisukuriimu:"food",buritto:"food",kyoto:"place",migaku:"body",yameru:"studywork",
+      hontou:"advb",okaeri:"greet",osusume:"studywork",hoka:"advb",nobotta:"vpast",hairitai:"vtai",itterasshai:"greet",kashikomarimashita:"greet"
   };
   const catOf={}, ordIndex={};
   Object.keys(ORD).forEach(cat=>{ ORD[cat].forEach((w,i)=>{ catOf[w]=cat; ordIndex[cat+"|"+w]=i; }); });
