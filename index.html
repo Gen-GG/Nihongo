@@ -8815,7 +8815,7 @@ const CONVOS=[
     {app:'Nani tabetai?', en:'What do you want to eat?'},
     {user:'say you want ramen', ja:'Raamen tabetai.', alt:['Raamen ga ii.','Raamen.']},
     {app:'Jaa, tsukurou!', en:'Then let’s make it!'} ]},
-  { id:'restaurant', cat:'restaurant', title:'At a restaurant (polite)', turns:[
+  { id:'restaurant', cat:'restaurant', title:'At a restaurant', reg:'polite', turns:[
     {app:'Nanmei-sama desu ka?', en:'How many people?'},
     {user:'say two people (polite)', ja:'Futari desu.', alt:['Futari.','Ni-nin desu.']},
     {app:'Kinen-seki demo ii desu ka?', en:'Is a non-smoking seat okay?'},
@@ -8847,7 +8847,49 @@ const CONVOS=[
                 {kw:/sushi/,  ja:'Ii ne. Doko no sushi ga suki?', en:'Nice. What sushi do you like?'}]},
     {app:'Ii ne.', en:'Nice.', _branchSlot:true},
     {user:'answer the question (yes/your pick)', ja:'Un, suki.', alt:['Suki.','Amari suki ja nai.','Un, daisuki.']},
-    {app:'Jaa, ikou!', en:'Then let’s go!'} ]}
+    {app:'Jaa, ikou!', en:'Then let’s go!'} ]},
+  // ---- POLITE: natural neutral-polite with people you just meet (friendly, relaxed, short) ----
+  { id:'cafe-order', cat:'restaurant', title:'Ordering at a cafe', reg:'polite', turns:[
+    {app:'Irasshaimase.', en:'Welcome / Hi there.'},
+    {user:'order a coffee, politely', ja:'Koohii o kudasai.', alt:['Koohii onegaishimasu.','Hotto koohii o kudasai.'],
+      note:'“~ o kudasai” / “~ onegaishimasu” is the friendly-polite way to order — no need for stiffer forms.'},
+    {app:'Koko de omeshiagari desu ka?', en:'For here? (keigo — just recognize it)'},
+    {user:'say yes, here please', ja:'Hai, koko de.', alt:['Koko de onegaishimasu.','Hai.'],
+      note:'Recognize “omeshiagari” (shop keigo); you only need the short “Hai, koko de.”'},
+    {app:'Kashikomarimashita.', en:'Certainly. (you’ll hear this a lot)'} ]},
+  { id:'gym-chat', cat:'bouldering', title:'Chatting at the climbing gym', reg:'polite', turns:[
+    {app:'Yoku koko ni kimasu ka?', en:'Do you come here often?'},
+    {user:'say sometimes (politely)', ja:'Tokidoki kimasu.', alt:['Tama ni kimasu.','Un, tokidoki.'],
+      note:'“Tokidoki kimasu.” is friendly-polite; “Un, tokidoki.” is what you’d say to a friend.'},
+    {app:'Borudaringu, dono kurai yatteru n desu ka?', en:'How long have you been bouldering?'},
+    {user:'say about a year', ja:'Ichi-nen gurai desu.', alt:['Ichinen kurai desu.','Mada hajimeta bakari desu.']},
+    {app:'Sugoi desu ne!', en:'That’s great!'},
+    {user:'react modestly', ja:'Iie, mada mada desu.', alt:['Arigatou gozaimasu.','Maa maa desu.'],
+      note:'“Mada mada desu” = a natural modest reply to a compliment.'},
+    {app:'Isshoni noborimashou!', en:'Let’s climb together!'} ]},
+  { id:'hotel', cat:'travel', title:'Hotel check-in', reg:'polite', turns:[
+    {app:'Irasshaimase. Go-yoyaku wa arimasu ka?', en:'Welcome. Do you have a reservation?'},
+    {user:'say yes, you have one', ja:'Hai, arimasu.', alt:['Hai.','Yoyaku shimashita.']},
+    {app:'Onamae wo onegaishimasu.', en:'Your name, please.'},
+    {user:'give your name (politely)', ja:'Genna desu.', alt:['Genna to moushimasu.'],
+      note:'“~ desu” is perfectly polite here; “~ to moushimasu” is humble — nice to recognize, not required.'},
+    {app:'Hai, kakunin shimasu. Shoushou omachi kudasai.', en:'Let me check. One moment, please.'} ]},
+  { id:'directions', cat:'travel', title:'Asking directions', reg:'polite', turns:[
+    {app:'Doushita n desu ka? Daijoubu desu ka?', en:'Is something wrong? Are you okay?'},
+    {user:'ask where the station is (politely)', ja:'Eki wa doko desu ka?', alt:['Sumimasen, eki wa doko desu ka?','Eki ni ikitai n desu kedo.'],
+      note:'“Sumimasen, …” at the start softens it; “~ n desu kedo” trails off politely — both very natural.'},
+    {app:'Massugu itte, tsugi no kado wo migi desu yo.', en:'Go straight and turn right at the next corner.'},
+    {user:'thank them', ja:'Arigatou gozaimasu.', alt:['Doumo arigatou gozaimasu.','Tasukarimashita.']},
+    {app:'Ki wo tsukete.', en:'Take care.'} ]},
+  { id:'where-from', cat:'everyday', title:'Someone strikes up a chat', reg:'polite', turns:[
+    {app:'Doko kara kimashita ka?', en:'Where are you from?'},
+    {user:'say you’re from America', ja:'Amerika kara kimashita.', alt:['Amerika desu.','Amerika kara desu.']},
+    {app:'Nihon wa hajimete desu ka?', en:'Is this your first time in Japan?'},
+    {user:'say no, your second time', ja:'Iie, ni-kai-me desu.', alt:['Iie, nido-me desu.','Hai, hajimete desu.']},
+    {app:'Nihongo, jouzu desu ne!', en:'Your Japanese is good!'},
+    {user:'deflect modestly', ja:'Iie, mada mada desu.', alt:['Arigatou gozaimasu.','Iie, sonna koto nai desu.'],
+      note:'Japanese usually deflect compliments — “mada mada desu” or “sonna koto nai desu” sound natural and humble.'},
+    {app:'Sou nan desu ka. Ganbatte kudasai ne!', en:'Oh really. Keep it up!'} ]}
 ];
 if(typeof window!=='undefined') window.CONVOS=CONVOS;
 
@@ -8878,9 +8920,14 @@ if(typeof window!=='undefined') window.CONVOS=CONVOS;
     b.innerHTML='<div class="who">You</div><div>'+annotate(text)+'</div>'; chat.appendChild(b); chat.scrollTop=chat.scrollHeight; }
   function catOfDiag(d){ if(!d) return 'sentenceProduction'; if(d.type==='particle') return 'particle'; if(d.type==='verb-form') return 'conjugation'; return 'sentenceProduction'; }
   function start(convo){
-    sess={ convo, i:0, level:$('convoLevel').value, stats:{ok:0,total:0, cats:{}}, branchNext:null };
+    sess={ convo, i:0, level:$('convoLevel').value, stats:{ok:0,total:0, cats:{}, misses:[]}, branchNext:null };
     $('convoStart').style.display='none'; $('convoDone').style.display='none'; $('convoRun').style.display='';
-    $('convoTitle').textContent=convo.title; $('convoChat').innerHTML=''; $('convoFb').innerHTML='';
+    const reg = convo.reg||'casual';
+    const regLabel = reg==='polite'
+      ? '<span style="color:var(--accent)">Polite</span> <span style="color:var(--ink2);font-size:.85em">— someone you just met; friendly neutral-polite (desu/masu, but relaxed &amp; short)</span>'
+      : '<span style="color:var(--accent)">Casual</span> <span style="color:var(--ink2);font-size:.85em">— a friend or at home; plain form, dropped particles are natural</span>';
+    $('convoTitle').innerHTML=esc(convo.title)+' &nbsp;·&nbsp; '+regLabel;
+    $('convoChat').innerHTML=''; $('convoFb').innerHTML='';
     $('convoInput').value=''; step();
   }
   function curUserTurn(){ const t=sess.convo.turns; let i=sess.i;
@@ -8914,25 +8961,32 @@ if(typeof window!=='undefined') window.CONVOS=CONVOS;
     (sess.stats.cats[tag]=sess.stats.cats[tag]||{ok:0,miss:0});
     if(ok){ sess.stats.ok++; sess.stats.cats[tag].ok++; }
     else { sess.stats.cats[tag].miss++; }
-    // feedback
-    let fb;
-    if(res.outcome==='correct'){ fb='<span style="color:var(--good)">✓ Nice.</span>'; }
-    else if(res.outcome==='acceptable'){ fb='<span style="color:var(--good)">✓ Accepted.</span>'+(res.note?' <span style="color:var(--ink2)">'+esc(res.note)+'</span>':'')+
-         ' <span style="color:var(--ink2)">More natural: '+annotate(u.ja)+'</span>'; }
-    else { const msg=(res.diagnosis&&res.diagnosis.msg)?res.diagnosis.msg:'Not quite.';
-      fb='<span style="color:var(--ink2)">Almost — '+esc(msg)+'</span> <span style="color:var(--ink2)">Better: '+annotate(u.ja)+'</span>'+
-         ' <button class="btn" type="button" id="convoMine" style="padding:2px 10px;font-size:.8rem">Mine works too ✓</button>';
+    // feedback — natural-first: don't "correct" a natural answer; only nudge when it helps
+    let fb; const regNote = u.note ? ' <span style="color:var(--ink2);font-size:.9em">'+esc(u.note)+'</span>' : '';
+    if(res.outcome==='correct'){ fb='<span style="color:var(--good)">✓ Natural.</span>'+regNote; }
+    else if(res.outcome==='acceptable'){
+      // their wording is a valid, natural variant — accept it, don't push "a better version"
+      fb='<span style="color:var(--good)">✓ That works.</span>'+(res.note?' <span style="color:var(--ink2);font-size:.9em">'+esc(res.note)+'</span>':'')+regNote+
+         ' <button class="btn" type="button" id="convoModel" style="padding:1px 9px;font-size:.78rem">see model</button>'; }
+    else { const msg=(res.diagnosis&&res.diagnosis.msg)?res.diagnosis.msg:'Not quite — compare with the natural version.';
+      fb='<span style="color:var(--ink2)">Hmm — '+esc(msg)+'</span> <span style="color:var(--ink2)">Natural: '+annotate(u.ja)+'</span>'+regNote+
+         ' <button class="btn" type="button" id="convoMine" style="padding:2px 10px;font-size:.8rem">Mine’s fine too ✓</button>';
+      // remember this miss so the end-of-conversation recap can show the correct wording
+      sess.stats.misses.push({ ask:(t[sess.i-1]&&t[sess.i-1].app)||'', askEn:(t[sess.i-1]&&t[sess.i-1].en)||'', cue:u.user, yours:val, correct:u.ja, key:'convo|'+sess.convo.id+'|'+sess.i });
       // log to the Mistake Bank (reuses existing categories)
       if(window.Mistakes){ try{ Mistakes.record({ key:'convo|'+sess.convo.id+'|'+sess.i, category:catOfDiag(res.diagnosis),
         concept:'Conversation: '+u.user, prompt:(t[sess.i-1]&&t[sess.i-1].app)||sess.convo.title, userAnswer:val, expectedAnswer:u.ja, source:'conversation' }); }catch(e){} }
     }
     $('convoFb').innerHTML=fb;
+    const smb=$('convoModel'); if(smb) smb.onclick=()=>{ smb.outerHTML='<span style="color:var(--ink2)">model: '+annotate(u.ja)+'</span>'; };
     // optional play of the model answer
     try{ speakSentenceClear(u.ja); }catch(e){}
     // branch selection from THIS answer
     if(u.branches){ const b=u.branches.find(x=>x.kw.test(val.toLowerCase())) || u.branches[0]; sess.branchNext=b; }
-    const mb=$('convoMine'); if(mb) mb.onclick=()=>{ sess.stats.ok++; sess.stats.total; if(sess.stats.cats[tag]){sess.stats.cats[tag].miss=Math.max(0,sess.stats.cats[tag].miss-1);sess.stats.cats[tag].ok++;} mb.disabled=true; mb.textContent='✓ counted';
-      if(window.Mistakes){ try{ Mistakes.creditItem && Mistakes.creditItem('convo|'+sess.convo.id+'|'+sess.i,'sentenceProduction'); }catch(e){} } };
+    const missKey='convo|'+sess.convo.id+'|'+sess.i;
+    const mb=$('convoMine'); if(mb) mb.onclick=()=>{ sess.stats.ok++; if(sess.stats.cats[tag]){sess.stats.cats[tag].miss=Math.max(0,sess.stats.cats[tag].miss-1);sess.stats.cats[tag].ok++;} mb.disabled=true; mb.textContent='✓ counted';
+      sess.stats.misses=sess.stats.misses.filter(m=>m.key!==missKey);   // self-accepted → drop from recap
+      if(window.Mistakes){ try{ Mistakes.creditItem && Mistakes.creditItem(missKey,'sentenceProduction'); }catch(e){} } };
     sess.i++;
     // advance after a short beat so the learner reads the feedback
     $('convoInput').disabled=true;
@@ -8945,10 +8999,23 @@ if(typeof window!=='undefined') window.CONVOS=CONVOS;
     const pct = s.total? Math.round(s.ok/s.total*100):0;
     // a memorable phrase from the conversation
     const phrase = (sess.convo.turns.filter(t=>t.user)[0]||{}).ja || '';
+    // per-miss review: show the question, what you typed, and the correct wording
+    let missHtml='';
+    if(s.misses.length){
+      missHtml='<div style="margin-top:10px"><b>What to fix</b> <span style="color:var(--ink2);font-size:.85em">(also in your Mistake Bank)</span>'+
+        s.misses.map(m=>'<div style="margin-top:7px;padding:7px 9px;border:1px solid var(--line);border-radius:8px">'+
+          (m.ask?'<div style="color:var(--ink2);font-size:.85em">They said: '+annotate(m.ask)+(m.askEn?' — '+esc(m.askEn):'')+'</div>':'')+
+          '<div style="color:var(--ink2);font-size:.85em">You wanted to: '+esc(m.cue)+'</div>'+
+          '<div style="color:#c0392b">You wrote: '+esc(m.yours)+'</div>'+
+          '<div style="color:var(--good)">Correct: '+annotate(m.correct)+
+            ' <button class="btn" type="button" style="padding:1px 8px;font-size:.75rem" onclick="speakSentenceClear(\''+String(m.correct).replace(/'/g,'')+'\')">▶</button></div>'+
+        '</div>').join('')+'</div>';
+    }
     $('convoRecap').innerHTML='<div style="font-weight:700;margin-bottom:6px">Score: '+s.ok+' / '+s.total+'  ('+pct+'%)</div>'+
       (strong.length?'<div><b>Strong:</b> '+strong.map(esc).join(', ')+'</div>':'')+
-      (review.length?'<div><b>Review:</b> '+review.map(esc).join(', ')+' <span style="color:var(--ink2)">(added to your Mistake Bank)</span></div>':'<div style="color:var(--good)">No mistakes — clean run!</div>')+
-      (phrase?'<div style="margin-top:8px">Useful phrase: '+annotate(phrase)+'</div>':'');
+      (s.misses.length?'':'<div style="color:var(--good)">No mistakes — clean run!</div>')+
+      missHtml+
+      (phrase?'<div style="margin-top:10px">Useful phrase: '+annotate(phrase)+'</div>':'');
   }
   // wiring
   const modeSel=$('phraseMode'), ref=$('phraseReference'), wrap=$('convoWrap');
