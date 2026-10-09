@@ -11851,8 +11851,12 @@ hwPracticeQuiz('hwq18Box', HWQ18);
   // (full review) bypasses it.
   const PROG_THRESH=0.5;   // a grammar item counts as "learned" at this sentenceProduction mastery
   const PROG_CLEAR=0.7;    // a lesson is "cleared" when this fraction of its grammar items are learned
-  let _progOn=true, _unlocked=null;
+  let _progOn=true, _unlocked=null, _lesById=null;
   function progressionOn(){ return focusLes==='all'; }
+  function buildLesById(){ _lesById={};
+    (window.GRAMMAR||[]).forEach(g=>{ const l=(g.les||'').toLowerCase(); if(!l) return;
+      if(g.en){ const sid=Mastery.sentenceId(g.en); if(!(sid in _lesById)) _lesById[sid]=l; }
+      const gid=Mastery.grammarId(g.pat); if(!(gid in _lesById)) _lesById[gid]=l; }); }
   function grammarLessonOrder(){
     const has=new Set((window.GRAMMAR||[]).map(g=>(g.les||'').toLowerCase()).filter(Boolean));
     const ord=(window.Curriculum&&Curriculum.ORDER)?Curriculum.ORDER:ORDER;
@@ -11866,14 +11870,30 @@ hwPracticeQuiz('hwq18Box', HWQ18);
     return good/ids.size >= PROG_CLEAR; }
   function refreshFrontier(){ _progOn=progressionOn();
     if(!_progOn){ _unlocked=null; return; }
+    if(!_lesById) buildLesById();
     const gl=grammarLessonOrder(); _unlocked=new Set();
     for(const l of gl){ _unlocked.add(l); if(!lessonCleared(l)) break; }   // open up to (and including) the first un-cleared lesson
+  }
+  // REVIEW gate: a due/weak GRAMMAR, SENTENCE, or CONJUGATION-FORM item from a still-locked lesson is
+  // held back until that lesson unlocks — so hard later-lesson material you tried earlier stops piling on.
+  // Plain VOCABULARY review is always allowed (words are fair game from any lesson).
+  function reviewFrontierOK(itemId, skill){
+    if(!_progOn||!_unlocked) return true;
+    if(itemId[0]==='v'){
+      if(skill && skill.indexOf('conjugation')===0){ const key=(skill.split(':')[1]||'');
+        const FL=(window.Curriculum&&Curriculum.FORM_LESSON)||{}; const fl=(FL[key]||'').toLowerCase();
+        return !fl || _unlocked.has(fl); }
+      return true;   // vocab recall / recognition / listening — ungated
+    }
+    if(itemId[0]==='s'||itemId[0]==='g'){ if(!_lesById) buildLesById(); const l=_lesById[itemId]; return !l || _unlocked.has(l); }
+    return true;     // responsive dialogues etc. — small, leave alone
   }
   // a NEW item from this lesson may be introduced now? (earlier lessons are always in _unlocked, so
   // review of what you've learned always flows; only future/locked lessons are held back)
   function inFrontier(les){ if(!_progOn||!_unlocked) return true; if(!les) return true; return _unlocked.has((les||'').toLowerCase()); }
-  function sentSeen(id){ const it=Mastery.getItem(id); return !!(it&&it.skills&&it.skills.sentenceProduction); }
-  function frontierGateSentence(it){ return inFrontier((it.lesson||'').toLowerCase()) || sentSeen(it.id); }
+  // NEW-material pools are strictly frontier-gated (earlier lessons are always unlocked, so review of
+  // what you've learned still flows via the review bucket; only locked future lessons are held back).
+  function frontierGateSentence(it){ return inFrontier((it.lesson||'').toLowerCase()); }
   function frontierInfo(){ const gl=grammarLessonOrder(); let current=gl[0]||null, cleared=0;
     for(const l of gl){ if(lessonCleared(l)) cleared++; else { current=l; break; } if(l===gl[gl.length-1]) current=l; }
     return { current, cleared, total:gl.length, allClear:cleared>=gl.length }; }
@@ -11890,12 +11910,12 @@ hwPracticeQuiz('hwq18Box', HWQ18);
   const FALLBACK_FORMS=[{key:'masu',idx:2},{key:'mashita',idx:3},{key:'masen',idx:4},{key:'nai',idx:5}];
   // ELIGIBILITY is now curriculum-aware: a verb only appears if the Curriculum says at least one
   // of its forms has been TAUGHT and is active (not "exists in VCONJ" → "is testable").
-  function formPracticed(dict,key){ const it=Mastery.getItem(Mastery.vocabId(dict)); return !!(it&&it.skills&&it.skills['conjugation:'+key]); }
   function eligibleForms(v){
     const forms = (window.Curriculum ? Curriculum.eligibleForms(v[0]) : FALLBACK_FORMS);
     let out = forms.filter(f => v[f.idx]);   // only forms the course table actually defines for this verb
-    // progression: a NEW form only once its lesson is unlocked; forms already practiced stay available for review
-    if(_progOn && _unlocked) out = out.filter(f => !f.lesson || _unlocked.has((f.lesson||'').toLowerCase()) || formPracticed(v[0], f.key));
+    // progression: a conjugation form is only drilled once its lesson is unlocked (review of practiced
+    // forms still returns via the frontier-gated review bucket).
+    if(_progOn && _unlocked) out = out.filter(f => !f.lesson || _unlocked.has((f.lesson||'').toLowerCase()));
     return out;
   }
   function verbPool(){ const f=focusSets();
@@ -12201,9 +12221,9 @@ hwPracticeQuiz('hwq18Box', HWQ18);
     const vById={}; vpool.forEach(w=>vById[Mastery.vocabId(w.romaji)]=w);
     const vconjById={}; vp.forEach(v=>vconjById[Mastery.vocabId(v[0])]=v);
     const sById={}; spool.forEach(s=>sById[s.id]=s);
-    const due=Mastery.getDueItems({now}).filter(d=>inFocus(d.itemId));
+    const due=Mastery.getDueItems({now}).filter(d=>inFocus(d.itemId) && reviewFrontierOK(d.itemId,d.skill));
     const dueSet=new Set(due.map(d=>d.itemId+'|'+d.skill));
-    const weak=Mastery.getWeakest({}).filter(w=>w.record.totalAttempts>0 && w.record.masteryScore<0.6 && !dueSet.has(w.itemId+'|'+w.skill) && inFocus(w.itemId));
+    const weak=Mastery.getWeakest({}).filter(w=>w.record.totalAttempts>0 && w.record.masteryScore<0.6 && !dueSet.has(w.itemId+'|'+w.skill) && inFocus(w.itemId) && reviewFrontierOK(w.itemId,w.skill));
     // new vocab = words never recalled AND taught by an ACTIVE lesson (curriculum-gated)
     const newVocab=vpool.filter(w=>{ const id=Mastery.vocabId(w.romaji); const it=Mastery.getItem(id);
       const unseen = !it || !it.skills.recall;
