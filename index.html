@@ -443,7 +443,8 @@
       </label>
       <label style="font-weight:600;color:var(--ink2)">Focus:
         <select id="studyFocus" class="quiz-input" style="width:auto;display:inline-block;padding:4px 8px">
-          <option value="all" selected>All lessons (mixed)</option>
+          <option value="all" selected>Smart progression (recommended)</option>
+          <option value="allfull">All lessons — full review</option>
           <option value="l1">Lesson 1 only</option>
           <option value="l2">Lesson 2 only</option>
           <option value="l3">Lesson 3 only</option>
@@ -465,7 +466,8 @@
         </select>
       </label>
     </div>
-    <div class="hint" id="studyFocusHint" style="margin:2px 0 8px;display:none">Focus mode drills just that lesson's new grammar &amp; vocab — great for the first day or two. Switch back to <b>All lessons</b> to lock it in with mixed review.</div>
+    <div class="hint" id="studyFocusHint" style="margin:2px 0 8px;display:none">Focus mode drills just that lesson's new grammar &amp; vocab — great for the first day or two. Switch back to <b>Smart progression</b> to lock it in with mixed review.</div>
+    <div class="hint" id="studyProgHint" style="margin:2px 0 8px"><b>Smart progression</b> starts with Lesson 1's grammar &amp; particles and only brings in a new lesson's grammar once you've mastered the earlier ones — so it builds up instead of jumping ahead. Vocabulary is fair game from any lesson. Pick <b>All lessons — full review</b> to practise every grammar point at once.</div>
     <button class="btn primary" id="studyStart" style="font-size:1.05rem;padding:10px 24px;margin-top:6px">Start Study →</button>
     <div style="margin-top:18px;padding-top:12px;border-top:1px solid var(--line)">
       <button class="btn" id="studyReset" style="font-size:.85rem;color:var(--ink2)">↺ Reset all Study Today progress</button>
@@ -11838,6 +11840,43 @@ hwPracticeQuiz('hwq18Box', HWQ18);
     if(itemId[0]==='s') return f.ss.has(itemId);                          // sentence ids
     return true;                                                          // grammar / unknown → don't block
   }
+
+  // ---------- GRAMMAR PROGRESSION (build up through the lessons) ----------
+  // The lessons are meant to be done roughly in order. So NEW grammar / particles / sentence patterns /
+  // conjugation forms are UNLOCKED one lesson at a time: Lesson 1 is open from day one, and the next
+  // lesson opens automatically once the current lesson's grammar is mastered (get it right → move on,
+  // fast if you nail it). VOCABULARY is never gated — words from any lesson are fair game. REVIEW of
+  // anything already studied is never gated either; only brand-new material respects the frontier.
+  // Active only in the default "all" (Smart progression) focus; a single-lesson focus or "allfull"
+  // (full review) bypasses it.
+  const PROG_THRESH=0.5;   // a grammar item counts as "learned" at this sentenceProduction mastery
+  const PROG_CLEAR=0.7;    // a lesson is "cleared" when this fraction of its grammar items are learned
+  let _progOn=true, _unlocked=null;
+  function progressionOn(){ return focusLes==='all'; }
+  function grammarLessonOrder(){
+    const has=new Set((window.GRAMMAR||[]).map(g=>(g.les||'').toLowerCase()).filter(Boolean));
+    const ord=(window.Curriculum&&Curriculum.ORDER)?Curriculum.ORDER:ORDER;
+    return ord.filter(l=>has.has((l||'').toLowerCase()));
+  }
+  function lessonGrammarIds(les){ const ids=new Set();
+    (window.GRAMMAR||[]).forEach(g=>{ if((g.les||'').toLowerCase()===les && g.en) ids.add(Mastery.sentenceId(g.en)); });
+    return ids; }
+  function lessonCleared(les){ const ids=lessonGrammarIds(les); if(!ids.size) return true;
+    let good=0; ids.forEach(id=>{ if(Mastery.getMastery(id,'sentenceProduction')>=PROG_THRESH) good++; });
+    return good/ids.size >= PROG_CLEAR; }
+  function refreshFrontier(){ _progOn=progressionOn();
+    if(!_progOn){ _unlocked=null; return; }
+    const gl=grammarLessonOrder(); _unlocked=new Set();
+    for(const l of gl){ _unlocked.add(l); if(!lessonCleared(l)) break; }   // open up to (and including) the first un-cleared lesson
+  }
+  // a NEW item from this lesson may be introduced now? (earlier lessons are always in _unlocked, so
+  // review of what you've learned always flows; only future/locked lessons are held back)
+  function inFrontier(les){ if(!_progOn||!_unlocked) return true; if(!les) return true; return _unlocked.has((les||'').toLowerCase()); }
+  function sentSeen(id){ const it=Mastery.getItem(id); return !!(it&&it.skills&&it.skills.sentenceProduction); }
+  function frontierGateSentence(it){ return inFrontier((it.lesson||'').toLowerCase()) || sentSeen(it.id); }
+  function frontierInfo(){ const gl=grammarLessonOrder(); let current=gl[0]||null, cleared=0;
+    for(const l of gl){ if(lessonCleared(l)) cleared++; else { current=l; break; } if(l===gl[gl.length-1]) current=l; }
+    return { current, cleared, total:gl.length, allClear:cleared>=gl.length }; }
   function vocabPool(){
     const seen={}, out=[];
     Object.keys(decks).filter(k=>!/^Fake HW3/.test(k)).forEach(k=>decks[k].forEach(p=>{
@@ -11851,9 +11890,13 @@ hwPracticeQuiz('hwq18Box', HWQ18);
   const FALLBACK_FORMS=[{key:'masu',idx:2},{key:'mashita',idx:3},{key:'masen',idx:4},{key:'nai',idx:5}];
   // ELIGIBILITY is now curriculum-aware: a verb only appears if the Curriculum says at least one
   // of its forms has been TAUGHT and is active (not "exists in VCONJ" → "is testable").
+  function formPracticed(dict,key){ const it=Mastery.getItem(Mastery.vocabId(dict)); return !!(it&&it.skills&&it.skills['conjugation:'+key]); }
   function eligibleForms(v){
     const forms = (window.Curriculum ? Curriculum.eligibleForms(v[0]) : FALLBACK_FORMS);
-    return forms.filter(f => v[f.idx]);   // only forms the course table actually defines for this verb
+    let out = forms.filter(f => v[f.idx]);   // only forms the course table actually defines for this verb
+    // progression: a NEW form only once its lesson is unlocked; forms already practiced stay available for review
+    if(_progOn && _unlocked) out = out.filter(f => !f.lesson || _unlocked.has((f.lesson||'').toLowerCase()) || formPracticed(v[0], f.key));
+    return out;
   }
   function verbPool(){ const f=focusSets();
     return (window.VCONJ||[]).filter(v => v[0] && eligibleForms(v).length && (!f.vs || f.vs.has((v[0]||'').toLowerCase()))); }
@@ -12153,6 +12196,7 @@ hwPracticeQuiz('hwq18Box', HWQ18);
   // ---------- PLAN: compute the session composition (calculated, not hardcoded) ----------
   function plan(size, newLimit){
     const now=Date.now();
+    refreshFrontier();   // recompute which lessons' NEW grammar/forms are unlocked (mastery-driven)
     const vpool=vocabPool(), vp=verbPool(), spool=sentencePool();
     const vById={}; vpool.forEach(w=>vById[Mastery.vocabId(w.romaji)]=w);
     const vconjById={}; vp.forEach(v=>vconjById[Mastery.vocabId(v[0])]=v);
@@ -12175,13 +12219,13 @@ hwPracticeQuiz('hwq18Box', HWQ18);
     // oral production — a SMALL share, only when speaking-eligible material exists (introduced vocab
     // and/or eligible sentences); 0 is fine when nothing qualifies.
     const oralWords = vpool.filter(w=> isIntroduced(Mastery.vocabId(w.romaji)));
-    const oralSents = window.Sentences ? Sentences.eligibleItems() : [];
+    const oralSents = (window.Sentences ? Sentences.eligibleItems() : []).filter(frontierGateSentence);
     const oralAvail = oralWords.length + oralSents.length;
     let oral = oralAvail ? Math.min(2, Math.max(1, Math.round(size*0.10))) : 0;
     // Japanese-first language use — reading comprehension + responsive production, a SMALL adaptive share
     // (0 when no comprehensible/eligible material exists)
-    const jfReading = window.Interactions ? Interactions.eligibleReading() : [];
-    const jfDialogues = window.Interactions ? Interactions.eligibleDialogues() : [];
+    const jfReading = (window.Interactions ? Interactions.eligibleReading() : []).filter(it=>inFrontier((it.lesson||'').toLowerCase()));
+    const jfDialogues = (window.Interactions ? Interactions.eligibleDialogues() : []).filter(d=>inFrontier((d.lesson||'').toLowerCase()));
     const jfAvail = jfReading.length + jfDialogues.length;
     let jfirst = jfAvail ? Math.min(2, Math.max(1, Math.round(size*0.12))) : 0;
     // ratio targets (soft)
@@ -12225,14 +12269,14 @@ hwPracticeQuiz('hwq18Box', HWQ18);
       if(window.Mistakes) p += Math.min(Mistakes.itemPriority(it.id,'sentenceProduction')*40, 120);
       return p; }
     const prodQ=[]; const sSorted=shuffle(P.spool.slice()).sort((a,b)=>sentPrio(b)-sentPrio(a));
-    for(const s of sSorted){ if(prodQ.length>=P.counts.production) break; const q=qSentence(s,'production'); if(take(q)){ q.prio=480; prodQ.push(q); } }
+    for(const s of sSorted){ if(prodQ.length>=P.counts.production) break; if(!frontierGateSentence(s)) continue; const q=qSentence(s,'production'); if(take(q)){ q.prio=480; prodQ.push(q); } }
     // listening bucket (Japanese hidden — audio only). Step 11: gated by INTRODUCTION + reliable audio;
     // WEAK-listening items first; word-level plus some sentence-level comprehension where audio is safe.
     const listenQ=[];
     const listenScore = romaji => Mastery.getMastery(Mastery.vocabId(romaji),'listening');
     const wCand = shuffle(P.vpool.filter(w=> window.Listening && Listening.wordReliable(w.romaji) && isIntroduced(Mastery.vocabId(w.romaji))))
       .sort((a,b)=> listenScore(a.romaji)-listenScore(b.romaji));   // weakest listening first
-    const sCand = shuffle((window.Sentences?Sentences.eligibleItems():[]).filter(s=> window.Listening && Listening.sentenceReliable(s.ja)));
+    const sCand = shuffle((window.Sentences?Sentences.eligibleItems():[]).filter(s=> window.Listening && Listening.sentenceReliable(s.ja) && frontierGateSentence(s)));
     const nSent = sCand.length ? Math.min(Math.floor(P.counts.listening/2), sCand.length) : 0;
     const nWord = P.counts.listening - nSent;
     for(const w of wCand){ if(listenQ.filter(q=>q.itemType==='vocab').length>=nWord) break; const q=qVocabListening(w,'listening',P.vpool); if(take(q)){ q.prio=430; listenQ.push(q); } }
@@ -12297,7 +12341,7 @@ hwPracticeQuiz('hwq18Box', HWQ18);
         if(varietyQ.length<need){ const vShuf=shuffle(P.vp.slice());
           for(const v of vShuf){ if(varietyQ.length>=need) break; const q=qConjugation(v,'review'); if(q && take(q)){ q.prio=290; varietyQ.push(q); } } }
         if(varietyQ.length<need){ const sShuf=shuffle(P.spool.slice());
-          for(const s of sShuf){ if(varietyQ.length>=need) break; const q=qSentence(s,'production'); if(q && take(q)){ q.prio=280; varietyQ.push(q); } } }
+          for(const s of sShuf){ if(varietyQ.length>=need) break; if(!frontierGateSentence(s)) continue; const q=qSentence(s,'production'); if(q && take(q)){ q.prio=280; varietyQ.push(q); } } }
       }
     }
     // order the review bucket by its full priority (overdue + mistakes + weakness) so the most
@@ -12340,11 +12384,20 @@ hwPracticeQuiz('hwq18Box', HWQ18);
     // restoring saved values would snap the user's new pick straight back. Saved prefs are
     // applied once at init (see restoreStudyPrefs below). Here we only read current values.
     if($('studyFocus') && $('studyFocus').value) focusLes=$('studyFocus').value;
-    if($('studyFocusHint')) $('studyFocusHint').style.display = (focusLes==='all') ? 'none' : '';
+    const lessonFocus = focusLes!=='all' && focusLes!=='allfull';
+    if($('studyFocusHint')) $('studyFocusHint').style.display = lessonFocus ? '' : 'none';
+    if($('studyProgHint')) $('studyProgHint').style.display = (focusLes==='all') ? '' : 'none';
     const size=+$('studyLen').value, newLim=+$('studyNew').value;
     const P=plan(size,newLim);
+    let progRow='';
+    if(focusLes==='all'){ const fi=frontierInfo();
+      progRow = fi.allClear
+        ? '<tr><td style="padding:3px 14px 3px 0" colspan="2"><b style="color:var(--good)">✓ All lesson grammar unlocked</b> — full mixed review.</td></tr>'
+        : '<tr><td style="padding:3px 14px 3px 0">Now learning</td><td style="font-weight:700;text-align:right">Lesson '+String(fi.current||'l1').replace(/^l/i,'')+'</td></tr>'
+         +'<tr><td style="padding:3px 14px 3px 0">Grammar mastered</td><td style="font-weight:700;text-align:right">'+fi.cleared+' / '+fi.total+' lessons</td></tr>'; }
     const row=(label,n)=>'<tr><td style="padding:3px 14px 3px 0">'+label+'</td><td style="font-weight:700;text-align:right">'+n+'</td></tr>';
     $('studyCounts').innerHTML='<table>'+
+      progRow+
       row('Due reviews', P.dueCount)+
       row('Weak items', P.weakCount)+
       row('Sentence practice', P.counts.production)+
@@ -12767,7 +12820,7 @@ hwPracticeQuiz('hwq18Box', HWQ18);
   // test hook: would a LEGACY generic 'conjugation' review be skipped because form-specific records exist?
   function legacyConjSkipped(vid){ const it=Mastery.getItem(vid);
     return !!(it && it.skills && Object.keys(it.skills).some(s=>s.indexOf('conjugation:')===0)); }
-  if(typeof window!=='undefined') window.__StudyToday={ plan, buildSession, vocabPool, verbPool, sentencePool, chooseVocabSkill, newQuestion, isIntroduced, markIntroduced, introShown, newUsedToday, conjProbe, legacyConjSkipped, qVocabListening, qListenSentence, qOralWord, qOralSentence, qReadComprehension, qRespond }; // for tests
+  if(typeof window!=='undefined') window.__StudyToday={ plan, buildSession, vocabPool, verbPool, sentencePool, refreshFrontier, frontierInfo, lessonCleared, chooseVocabSkill, newQuestion, isIntroduced, markIntroduced, introShown, newUsedToday, conjProbe, legacyConjSkipped, qVocabListening, qListenSentence, qOralWord, qOralSentence, qReadComprehension, qRespond }; // for tests
 })();
 
 /* ============================================================================
