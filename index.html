@@ -2603,22 +2603,20 @@
   </details>
 
   <details id="gramPatQuizWrap" open style="margin:0 0 22px">
-    <summary style="cursor:pointer;font-weight:700;color:var(--ink);font-size:1.05rem;padding:6px 0">Quiz — name the pattern</summary>
-    <div class="tip" style="margin-top:8px">Read the meaning and the building blocks, then type the Japanese <b>pattern</b> (romaji). Example: "I think" with an i-adjective → <b>to omoimasu</b>. Many phrasings work, and you can reveal the answer or mark your own right.</div>
+    <summary style="cursor:pointer;font-weight:700;color:var(--ink);font-size:1.05rem;padding:6px 0">Flashcards — name the pattern</summary>
+    <div class="tip" style="margin-top:8px">Read the meaning and the building blocks, say the Japanese <b>pattern</b> in your head, then <b>Show answer</b> to check. Example: "I think" with an i-adjective → <b>to omoimasu</b>. No grading — just flip and move on.</div>
     <div class="fc-bar" style="justify-content:flex-start">
       <label style="font-weight:600;color:var(--ink2)">Scope: <select id="gpqScope" class="quiz-input" style="width:auto;display:inline-block;padding:4px 8px"></select></label>
       <button class="btn" id="gpqShuffle">Shuffle</button>
       <span id="gpqScore" style="margin-left:8px;color:var(--ink2);font-size:.85rem"></span>
     </div>
-    <div class="note" id="gpqBox" style="min-height:150px">
+    <div class="note" id="gpqBox" style="min-height:150px;cursor:pointer">
       <div id="gpqTag" style="font-size:.72rem;text-transform:uppercase;letter-spacing:.06em;color:var(--accent);font-weight:700"></div>
       <div id="gpqMeaning" style="font-size:1.3rem;font-weight:700;margin:6px 0 4px"></div>
       <div id="gpqHint" style="font-size:.95rem;color:var(--ink2);margin-bottom:10px"></div>
-      <input id="gpqIn" class="quiz-input" autocorrect="off" autocapitalize="off" autocomplete="off" spellcheck="false" style="max-width:480px" placeholder="type the pattern in romaji…">
-      <div id="gpqFb" style="margin-top:10px;min-height:22px;font-weight:600"></div>
-      <div style="margin-top:8px">
-        <button class="btn primary" id="gpqCheck">Check</button>
-        <button class="btn" id="gpqShow">Show answer</button>
+      <div id="gpqFb" style="margin-top:4px;min-height:40px"></div>
+      <div style="margin-top:10px">
+        <button class="btn primary" id="gpqShow">Show answer</button>
         <button class="btn" id="gpqNext">Next →</button>
       </div>
     </div>
@@ -5544,6 +5542,9 @@ const Mastery = (function(){
       return ready;
     },
     peekSession: () => sess.queue.slice(),
+    // cancel a pending in-session reappearance (used when the learner self-marks a miss as correct,
+    // so it isn't re-served at the end of the session)
+    cancelRelearn: (itemId, skill) => { sess.queue = sess.queue.filter(q => !(q.itemId===itemId && (!skill || q.skill===skill))); },
     // maintenance / testing
     stats: () => {
       let items = 0, records = 0;
@@ -10813,31 +10814,25 @@ const PQ=[
       const sel=document.getElementById('gpqScope');
       if(sel){ const cats=[...new Set(items.map(i=>i.cat))];
         sel.innerHTML='<option value="all">All patterns ('+items.length+')</option>'+cats.map(c=>'<option value="'+c.replace(/"/g,'')+'">'+c.replace(/&amp;/g,'&')+'</option>').join(''); }
-      let order=items.slice(), pos=0, recorded=false, right=0, done=0;
+      let pos=0, flipped=false;
       const $=id=>document.getElementById(id);
       function scoped(){ const v=sel?sel.value:'all'; return v==='all'?items.slice():items.filter(i=>i.cat===v); }
-      function updScore(){ if($('gpqScore')) $('gpqScore').textContent = done?(right+' / '+done+' correct'):''; }
-      function reveal(q){ return '<b>'+annotate(q.answer)+'</b>'+(q.rule?' <span style="color:var(--ink2)">— '+esc(q.rule)+'</span>':'')
+      function reveal(q){ return '<b style="font-size:1.15rem">'+annotate(q.answer)+'</b>'+(q.rule?' <span style="color:var(--ink2)">— '+esc(q.rule)+'</span>':'')
         +(q.ja?'<br><span style="color:var(--ink2)">e.g. '+annotate(q.ja)+' ('+esc(q.en)+')</span>':''); }
-      function draw(){ order=scoped(); if(!order.length){ qbox.innerHTML='Nothing in this scope.'; return; }
-        if(pos>=order.length) pos=0; const q=order[pos]; recorded=false;
+      function draw(){ const order=scoped(); if(!order.length){ qbox.innerHTML='Nothing in this scope.'; return; }
+        if(pos>=order.length) pos=0; const q=order[pos]; flipped=false;
+        if($('gpqScore')) $('gpqScore').textContent=(pos+1)+' / '+order.length;
         $('gpqTag').textContent=q.cat.replace(/&amp;/g,'&')+(q.les?(' · '+q.les):'');
         $('gpqMeaning').innerHTML='Pattern for: <span style="color:var(--accent)">'+esc(q.cue)+'</span>';
         $('gpqHint').innerHTML=q.hint?('Build: '+esc(q.hint)):'';
-        $('gpqIn').value=''; $('gpqFb').innerHTML=''; updScore(); $('gpqIn').focus(); }
-      function grade(){ const q=order[pos]; const v=$('gpqIn').value; if(!v.trim()) return; const nu=norm(v);
-        const ok = nu.length>=2 && (q.accept.some(a=>nu.includes(norm(a))) || nu===norm(q.rule));
-        if(!recorded){ recorded=true; done++; if(ok) right++; }
-        const fb=$('gpqFb');
-        if(ok){ fb.innerHTML='<span style="color:var(--good)">✓ Correct!</span> &nbsp; '+reveal(q); }
-        else { fb.innerHTML='<div style="color:var(--ink2)">Compare with the answer:</div><div style="margin-top:4px">'+reveal(q)+'</div>'
-            +'<div style="margin-top:6px"><button class="btn" type="button" id="gpqMine" style="padding:4px 12px">Mine’s right too</button></div>';
-          const mb=$('gpqMine'); if(mb) mb.onclick=()=>{ right++; mb.disabled=true; mb.textContent='✓ counted'; updScore(); }; }
-        if(q.ja) speakSentence(q.ja); updScore(); }
-      $('gpqCheck').onclick=grade;
-      $('gpqShow').onclick=()=>{ const q=order[pos]; $('gpqFb').innerHTML='<span style="color:var(--ink2)">Answer:</span> '+reveal(q); if(q.ja) speakSentence(q.ja); };
+        $('gpqFb').innerHTML='<span class="hint">Tap “Show answer” (or the card) to flip.</span>';
+        const sb=$('gpqShow'); if(sb){ sb.textContent='Show answer'; sb.disabled=false; } }
+      function flip(){ const order=scoped(); const q=order[pos]; if(!q) return; flipped=true;
+        $('gpqFb').innerHTML=reveal(q); const sb=$('gpqShow'); if(sb){ sb.textContent='Answer shown'; sb.disabled=true; }
+        if(q.ja) try{ speakSentence(q.ja); }catch(e){} }
+      $('gpqShow').onclick=flip;
+      qbox.onclick=e=>{ if(e.target.closest('button')||e.target.closest('select')) return; if(!flipped) flip(); };
       $('gpqNext').onclick=()=>{ pos=(pos+1)%(scoped().length||1); draw(); };
-      $('gpqIn').addEventListener('keydown',e=>{ if(e.key==='Enter') grade(); });
       if(sel) sel.onchange=()=>{ pos=0; draw(); };
       if($('gpqShuffle')) $('gpqShuffle').onclick=()=>{ items.sort(()=>Math.random()-0.5); pos=0; draw(); };
       draw();
@@ -11946,11 +11941,14 @@ hwPracticeQuiz('hwq18Box', HWQ18);
   function lessonCleared(les){ const ids=lessonGrammarIds(les); if(!ids.size) return true;
     let good=0; ids.forEach(id=>{ if(Mastery.getMastery(id,'sentenceProduction')>=PROG_THRESH) good++; });
     return good/ids.size >= PROG_CLEAR; }
+  const PROG_WINDOW=3;   // keep a rolling window of this many lessons' grammar live at once (variety, still front-loaded)
   function refreshFrontier(){ _progOn=progressionOn();
     if(!_progOn){ _unlocked=null; return; }
     if(!_lesById) buildLesById();
-    const gl=grammarLessonOrder(); _unlocked=new Set();
-    for(const l of gl){ _unlocked.add(l); if(!lessonCleared(l)) break; }   // open up to (and including) the first un-cleared lesson
+    const gl=grammarLessonOrder();
+    let fi=gl.findIndex(l=>!lessonCleared(l)); if(fi<0) fi=gl.length-1;   // first not-yet-mastered lesson
+    const top=Math.min(gl.length-1, fi+(PROG_WINDOW-1));                   // + a couple ahead for variety
+    _unlocked=new Set(gl.slice(0, top+1));
   }
   // REVIEW gate: a due/weak GRAMMAR, SENTENCE, or CONJUGATION-FORM item from a still-locked lesson is
   // held back until that lesson unlocks — so hard later-lesson material you tried earlier stops piling on.
@@ -12531,9 +12529,11 @@ hwPracticeQuiz('hwq18Box', HWQ18);
   function currentQ(){ return sess.queue[sess.pos]; }
   let asked0=0, answeredThis=false, gotThis=false;
   function draw(){
-    // pull any in-session reappearances that are now ready, append to queue
-    const ready=Mastery.dueThisSession();
-    ready.forEach(r=>{ const q=questionForRecord(r,'review',planCache.vById,planCache.vconjById,planCache.sById,planCache.vpool,planCache.spool); if(q) sess.queue.push(q); });
+    // pull any in-session reappearances that are now ready, append to queue — but an item may reappear
+    // at most ONCE per session (prevents the same card looping many times in one sitting).
+    const ready=Mastery.dueThisSession(); sess.reCount=sess.reCount||{};
+    ready.forEach(r=>{ const k=r.itemId+'|'+r.skill; if((sess.reCount[k]||0)>=1) return; sess.reCount[k]=(sess.reCount[k]||0)+1;
+      const q=questionForRecord(r,'review',planCache.vById,planCache.vconjById,planCache.sById,planCache.vpool,planCache.spool); if(q) sess.queue.push(q); });
     if(sess.pos>=sess.queue.length){ return finish(); }
     const q=currentQ(); answeredThis=false; gotThis=false; asked0=Date.now();
     const total=sess.queue.length;
@@ -12837,8 +12837,10 @@ hwPracticeQuiz('hwq18Box', HWQ18);
       if(!ok) extra='<div style="margin-top:7px"><button class="btn" type="button" id="spMine" style="padding:4px 12px">My answer is also correct ✓</button></div>';
       $('studyFb').innerHTML = head + '<div style="margin-top:5px;color:var(--ink2)">Course target: '+annotate(res.target)+'</div>' + (q.ruleNote||'') + extra;
       if(!ok){ const mb=$('spMine'); if(mb) mb.onclick=()=>{
-        // learner confirms a valid alternative → credit mastery + clear the just-logged mistake, no penalty
+        // learner confirms a valid alternative → credit mastery + clear the just-logged mistake, no penalty,
+        // and REMOVE the pending in-session reappearance so it doesn't come back at the end.
         try{ Mastery.recordCorrect(q.itemId, q.skill, {itemType:q.itemType}); }catch(e){}
+        try{ Mastery.cancelRelearn(q.itemId, q.skill); }catch(e){}
         if(window.Mistakes){ try{ Mistakes.creditItem(q.itemId,'sentenceProduction'); }catch(e){} }
         const k=q.itemId+'|'+q.skill; sess.stats.missedKeys.delete(k); delete sess.stats.wrong[q.itemId]; gotThis=true;
         sess.stats.endScore[k]=Mastery.getMastery(q.itemId,q.skill);
