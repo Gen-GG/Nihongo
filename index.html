@@ -2602,6 +2602,28 @@
     <div id="gramQuickRef"></div>
   </details>
 
+  <details id="gramPatQuizWrap" open style="margin:0 0 22px">
+    <summary style="cursor:pointer;font-weight:700;color:var(--ink);font-size:1.05rem;padding:6px 0">Quiz — name the pattern</summary>
+    <div class="tip" style="margin-top:8px">Read the meaning and the building blocks, then type the Japanese <b>pattern</b> (romaji). Example: "I think" with an i-adjective → <b>to omoimasu</b>. Many phrasings work, and you can reveal the answer or mark your own right.</div>
+    <div class="fc-bar" style="justify-content:flex-start">
+      <label style="font-weight:600;color:var(--ink2)">Scope: <select id="gpqScope" class="quiz-input" style="width:auto;display:inline-block;padding:4px 8px"></select></label>
+      <button class="btn" id="gpqShuffle">Shuffle</button>
+      <span id="gpqScore" style="margin-left:8px;color:var(--ink2);font-size:.85rem"></span>
+    </div>
+    <div class="note" id="gpqBox" style="min-height:150px">
+      <div id="gpqTag" style="font-size:.72rem;text-transform:uppercase;letter-spacing:.06em;color:var(--accent);font-weight:700"></div>
+      <div id="gpqMeaning" style="font-size:1.3rem;font-weight:700;margin:6px 0 4px"></div>
+      <div id="gpqHint" style="font-size:.95rem;color:var(--ink2);margin-bottom:10px"></div>
+      <input id="gpqIn" class="quiz-input" autocorrect="off" autocapitalize="off" autocomplete="off" spellcheck="false" style="max-width:480px" placeholder="type the pattern in romaji…">
+      <div id="gpqFb" style="margin-top:10px;min-height:22px;font-weight:600"></div>
+      <div style="margin-top:8px">
+        <button class="btn primary" id="gpqCheck">Check</button>
+        <button class="btn" id="gpqShow">Show answer</button>
+        <button class="btn" id="gpqNext">Next →</button>
+      </div>
+    </div>
+  </details>
+
   <h3 style="margin-top:6px">Grammar flashcards — memorize the rules</h3>
   <div class="tip">The front shows the <b>pattern</b>. Tap the card (or <b>Flip</b>) to reveal <b>when to use it</b>, <b>how to form it</b>, and an example you can hear. Filter by lesson and shuffle. This is the set to drill until each rule is automatic.</div>
   <div class="fc-bar">
@@ -10764,6 +10786,62 @@ const PQ=[
       html+='<table style="width:100%;border-collapse:collapse">'+tableFor(leftover)+'</table>';
     }
     box.innerHTML='<div style="overflow-x:auto">'+html+'</div>';
+
+    /* ---- Quiz: name the pattern (meaning + building blocks → the Japanese construction) ---- */
+    (function buildPatternQuiz(){
+      const qbox=document.getElementById('gpqBox'); if(!qbox) return;
+      const EMD='—';
+      const catOfPat={}; CATS.forEach(c=>c.p.forEach(p=>{ if(!(p in catOfPat)) catOfPat[p]=c.t; }));
+      const ENGRE=/\b(past|negative|habit|casual|adjectives?|order|plain|polite|positive|comparison|possessive|choices|exists?|most|favorite|doing|when|but|because|become|interested|inviting|never|seems?|looks?|should|times?|which|there|prefer|the|only|depends|aren|you're|thing|take|get|decide|explain)\b/i;
+      const clean=s=>(s||'').replace(/\([^)]*\)/g,'').replace(/^~+/,'').replace(/^\.+|\.+$/g,'').trim();
+      const norm=s=>(s||'').toLowerCase().replace(/[~\s]/g,'').replace(/[.,/()\-·’'!?→…]/g,'');
+      const items=orderPat.map(pat=>{ const g=byPat[pat]; if(!g) return null;
+        const hasDash=pat.indexOf(EMD)>=0;
+        let before=hasDash?pat.slice(0,pat.indexOf(EMD)).trim():'', after=hasDash?pat.slice(pat.indexOf(EMD)+1).trim():'';
+        let cue, answer;
+        if(hasDash && !ENGRE.test(before)){ cue=after; answer=clean(before); }        // "construction — meaning"
+        else if(hasDash){ cue=before; answer=clean(after); }                            // "description — construction"
+        else { cue=g.en||pat; const r=g.rule||''; answer=clean(r.indexOf('+')>=0?r.split('+').pop():r); }
+        const rule=g.rule||'';
+        const ruleCore=clean(rule.indexOf('+')>=0?rule.split('+').pop():rule);
+        // accept the primary construction, the rule's final chunk, or the whole rule
+        const accept=[answer, ruleCore].map(clean).filter(a=>a && !ENGRE.test(a) && a.length>=2);
+        if(!accept.length) return null;
+        let hint=''; if(rule){ const a=accept.find(x=>rule.indexOf(x)>=0); hint = a ? rule.split(a).join('____') : rule; }
+        return { pat, cue, answer:accept[0], accept, rule, hint, les:g.les||'', ja:g.ja||'', en:g.en||'', cat:catOfPat[pat]||'More patterns' };
+      }).filter(Boolean);
+      const sel=document.getElementById('gpqScope');
+      if(sel){ const cats=[...new Set(items.map(i=>i.cat))];
+        sel.innerHTML='<option value="all">All patterns ('+items.length+')</option>'+cats.map(c=>'<option value="'+c.replace(/"/g,'')+'">'+c.replace(/&amp;/g,'&')+'</option>').join(''); }
+      let order=items.slice(), pos=0, recorded=false, right=0, done=0;
+      const $=id=>document.getElementById(id);
+      function scoped(){ const v=sel?sel.value:'all'; return v==='all'?items.slice():items.filter(i=>i.cat===v); }
+      function updScore(){ if($('gpqScore')) $('gpqScore').textContent = done?(right+' / '+done+' correct'):''; }
+      function reveal(q){ return '<b>'+annotate(q.answer)+'</b>'+(q.rule?' <span style="color:var(--ink2)">— '+esc(q.rule)+'</span>':'')
+        +(q.ja?'<br><span style="color:var(--ink2)">e.g. '+annotate(q.ja)+' ('+esc(q.en)+')</span>':''); }
+      function draw(){ order=scoped(); if(!order.length){ qbox.innerHTML='Nothing in this scope.'; return; }
+        if(pos>=order.length) pos=0; const q=order[pos]; recorded=false;
+        $('gpqTag').textContent=q.cat.replace(/&amp;/g,'&')+(q.les?(' · '+q.les):'');
+        $('gpqMeaning').innerHTML='Pattern for: <span style="color:var(--accent)">'+esc(q.cue)+'</span>';
+        $('gpqHint').innerHTML=q.hint?('Build: '+esc(q.hint)):'';
+        $('gpqIn').value=''; $('gpqFb').innerHTML=''; updScore(); $('gpqIn').focus(); }
+      function grade(){ const q=order[pos]; const v=$('gpqIn').value; if(!v.trim()) return; const nu=norm(v);
+        const ok = nu.length>=2 && (q.accept.some(a=>nu.includes(norm(a))) || nu===norm(q.rule));
+        if(!recorded){ recorded=true; done++; if(ok) right++; }
+        const fb=$('gpqFb');
+        if(ok){ fb.innerHTML='<span style="color:var(--good)">✓ Correct!</span> &nbsp; '+reveal(q); }
+        else { fb.innerHTML='<div style="color:var(--ink2)">Compare with the answer:</div><div style="margin-top:4px">'+reveal(q)+'</div>'
+            +'<div style="margin-top:6px"><button class="btn" type="button" id="gpqMine" style="padding:4px 12px">Mine’s right too</button></div>';
+          const mb=$('gpqMine'); if(mb) mb.onclick=()=>{ right++; mb.disabled=true; mb.textContent='✓ counted'; updScore(); }; }
+        if(q.ja) speakSentence(q.ja); updScore(); }
+      $('gpqCheck').onclick=grade;
+      $('gpqShow').onclick=()=>{ const q=order[pos]; $('gpqFb').innerHTML='<span style="color:var(--ink2)">Answer:</span> '+reveal(q); if(q.ja) speakSentence(q.ja); };
+      $('gpqNext').onclick=()=>{ pos=(pos+1)%(scoped().length||1); draw(); };
+      $('gpqIn').addEventListener('keydown',e=>{ if(e.key==='Enter') grade(); });
+      if(sel) sel.onchange=()=>{ pos=0; draw(); };
+      if($('gpqShuffle')) $('gpqShuffle').onclick=()=>{ items.sort(()=>Math.random()-0.5); pos=0; draw(); };
+      draw();
+    })();
   })();
   let gramFilter='all';
   function renderGrammar(){
@@ -12097,12 +12175,12 @@ hwPracticeQuiz('hwq18Box', HWQ18);
     const sl=shortFormLabel(key), sfx=formSuffix(key);
     return { cat, itemId:Mastery.vocabId(v[0]), itemType:'vocab', skill:conjSkill(key), conj:{dict:v[0],key,mode:'direct'},
       kind:'Conjugation · form', mode:'type', accept:[ans], say:ans, reveal:()=>annotate(ans),
-      // Plain-English prompt: the small orange tag is just the REGISTER (polite / casual); the big line is
-      // the conjugated meaning in everyday English ("didn't do"), so there's no grammar jargon to decode.
-      // Dictionary form + the exact "~masu" suffix stay in the hint so the question still tests you.
+      // Unambiguous prompt: show the EXACT dictionary verb (so a synonym that means the same thing can't be
+      // marked wrong), its plain meaning, and which form to produce. The small orange tag is the register /
+      // construction. This tests the conjugation itself, not guessing which same-meaning word was intended.
       prompt:'<div style="font-size:.72rem;text-transform:uppercase;letter-spacing:.06em;color:var(--accent);font-weight:700">'+esc(registerTag(key))+'</div>'+
-             '<div style="font-size:1.35rem;font-weight:600;margin-top:6px">'+esc(englishForm(v[1],key))+'</div>',
-      hintReading: annotate(v[0])+(sfx?' <span style="color:var(--ink2)">('+esc(sfx)+')</span>':''), hintReadingLabel:'Show dictionary form' }; }
+             '<div style="font-size:1.55rem;font-weight:700;margin-top:6px">'+annotate(v[0])+'</div>'+
+             '<div style="font-size:.95rem;color:var(--ink2);margin-top:6px">'+esc(_baseVerb(v[1]))+' &nbsp;·&nbsp; write the <b>'+esc(shortFormLabel(key))+'</b> form'+(sfx?' <span style="opacity:.75">('+esc(sfx)+')</span>':'')+' in romaji</div>' }; }
   function qConjContext(v, key, sent, cat){ const ans=window.Forms?Forms.formString(v[0],key):null; if(!ans||!sent) return null;
     const tag=registerTag(key);
     // Context mode now tests the WHOLE sentence (the English shown is a full sentence, so the answer is a
@@ -12117,7 +12195,13 @@ hwPracticeQuiz('hwq18Box', HWQ18);
       prompt:'<div style="font-size:1.2rem;font-weight:600">'+esc(sent.en)+'</div>'+
              '<div style="font-size:.85rem;color:var(--ink2);margin-top:6px">Write the <b>whole sentence</b> in <b>'+esc(tag)+'</b> Japanese (romaji)</div>',
       hintReading: annotate(v[0]), hintReadingLabel:'Show the verb' }; }
-  function qConjAdaptive(v, cat, forceKey){ const keys=eligibleFormKeys(v); if(!keys.length) return null;
+  // Some verbs are already potential/stative ("can hear", "can see", "can do", "be visible/audible") — asking
+  // for their potential / volitional / want-to form makes no sense (and produces garbled "can can hear" prompts).
+  // Restrict those verbs to the plain forms only.
+  function isStativeVerb(v){ const g=(v[1]||'').toLowerCase(), d=(v[0]||'').toLowerCase();
+    return /^can\b|be able|audible|visible/.test(g) || ['dekiru','kikoeru','mieru','wakaru','aru','iru'].includes(d); }
+  function conjKeyOK(v,key){ return !(isStativeVerb(v) && ['potential','potentialneg','volitional','tai','tari','sugiru'].includes(key)); }
+  function qConjAdaptive(v, cat, forceKey){ const keys=eligibleFormKeys(v).filter(k=>conjKeyOK(v,k)); if(!keys.length) return null;
     const key = (forceKey && keys.indexOf(forceKey)>=0) ? forceKey : keys[Math.floor(Math.random()*keys.length)];
     const m=conjMastery(v[0], key);
     if(m.seen && m.score>=0.5){ const sent=contextSentenceFor(v[0],key); const q=sent?qConjContext(v,key,sent,cat):null; if(q) return q; }
