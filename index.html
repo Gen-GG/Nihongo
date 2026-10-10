@@ -372,10 +372,8 @@
   <button data-tab="practice">Practice</button>
   <button data-tab="cards">Flashcards</button>
   <button data-tab="quiz">Quiz</button>
-  <button data-tab="phrases">Phrases &amp; Talk</button>
   <button data-tab="kana">あ Kana</button>
   <button data-tab="homework">Homework</button>
-  <button data-tab="mistakes">Mistake Bank</button>
   <button data-tab="progress">Progress</button>
 
   <button id="panda" title="Click me for a yuzu shower! " aria-label="Dancing panda">
@@ -499,20 +497,18 @@
 </section>
 
 <!-- ============ MISTAKE BANK ============ -->
-<section id="mistakes">
-  <h2>Mistake Bank</h2>
+<section id="progress">
+  <h2>Progress</h2>
+  <div class="tip">A read-only diagnostic of how well you're retrieving the material <b>currently in this course</b> — not an overall Japanese-proficiency score. Bands describe course-material mastery: New → Learning → Developing → Functional → Strong. "Strong" means you're currently retrieving reliably (spaced reviews still keep it fresh), not "finished forever."</div>
+  <div id="progBody"></div>
+
+  <h2 style="margin-top:36px;border-top:2px solid rgba(120,120,120,.16);padding-top:24px">Mistake Bank</h2>
   <div class="tip">The specific errors you keep making, grouped by kind. Recurring recent mistakes float to the top and get a little extra priority in <b>Study Today</b>. As you start getting a concept right again, it fades and eventually resolves — it only comes back if the mistake returns. This is diagnostic; it doesn't change your mastery scores.</div>
   <div class="fc-bar" style="margin:10px 0">
     <label style="font-weight:600;color:var(--ink2)"><input type="checkbox" id="mbResolved"> Show resolved</label>
     <button class="btn" id="mbBack" style="display:none">← All categories</button>
   </div>
   <div id="mbBody"></div>
-</section>
-
-<section id="progress">
-  <h2>Progress</h2>
-  <div class="tip">A read-only diagnostic of how well you're retrieving the material <b>currently in this course</b> — not an overall Japanese-proficiency score. Bands describe course-material mastery: New → Learning → Developing → Functional → Strong. "Strong" means you're currently retrieving reliably (spaced reviews still keep it fresh), not "finished forever."</div>
-  <div id="progBody"></div>
 </section>
 
 <!-- ============ NOTES ============ -->
@@ -2602,62 +2598,6 @@
     <div id="gramQuickRef"></div>
   </details>
 
-  <details id="gramPatQuizWrap" open style="margin:0 0 22px">
-    <summary style="cursor:pointer;font-weight:700;color:var(--ink);font-size:1.05rem;padding:6px 0">Flashcards — name the pattern</summary>
-    <div class="tip" style="margin-top:8px">Read the meaning and the building blocks, say the Japanese <b>pattern</b> in your head, then <b>Show answer</b> to check. Example: "I think" with an i-adjective → <b>to omoimasu</b>. No grading — just flip and move on.</div>
-    <div class="fc-bar" style="justify-content:flex-start">
-      <label style="font-weight:600;color:var(--ink2)">Scope: <select id="gpqScope" class="quiz-input" style="width:auto;display:inline-block;padding:4px 8px"></select></label>
-      <button class="btn" id="gpqShuffle">Shuffle</button>
-      <span id="gpqScore" style="margin-left:8px;color:var(--ink2);font-size:.85rem"></span>
-    </div>
-    <div class="note" id="gpqBox" style="min-height:150px;cursor:pointer">
-      <div id="gpqTag" style="font-size:.72rem;text-transform:uppercase;letter-spacing:.06em;color:var(--accent);font-weight:700"></div>
-      <div id="gpqMeaning" style="font-size:1.3rem;font-weight:700;margin:6px 0 4px"></div>
-      <div id="gpqHint" style="font-size:.95rem;color:var(--ink2);margin-bottom:10px"></div>
-      <div id="gpqFb" style="margin-top:4px;min-height:40px"></div>
-      <div style="margin-top:10px">
-        <button class="btn primary" id="gpqShow">Show answer</button>
-        <button class="btn" id="gpqNext">Next →</button>
-      </div>
-    </div>
-  </details>
-
-  <h3 style="margin-top:6px">Grammar flashcards — memorize the rules</h3>
-  <div class="tip">The front shows the <b>pattern</b>. Tap the card (or <b>Flip</b>) to reveal <b>when to use it</b>, <b>how to form it</b>, and an example you can hear. Filter by lesson and shuffle. This is the set to drill until each rule is automatic.</div>
-  <div class="fc-bar">
-    <label style="font-weight:600;color:var(--ink2)">Lesson: <select id="gfcLes" class="quiz-input" style="width:auto;display:inline-block;padding:4px 8px"></select></label>
-    <button class="btn" id="gfcShuffle">Shuffle</button>
-  </div>
-  <div id="gfcCard" class="note" style="min-height:150px;cursor:pointer;display:flex;flex-direction:column;justify-content:center"></div>
-  <div style="margin-top:8px">
-    <button class="btn" id="gfcPrev">← Back</button>
-    <button class="btn primary" id="gfcFlip">Flip</button>
-    <button class="btn" id="gfcNext">Next →</button>
-    <span id="gfcProg" style="margin-left:8px;color:var(--ink2);font-size:.85rem"></span>
-  </div>
-
-  <h3 style="margin-top:28px">Grammar quiz — when &amp; how to use each rule</h3>
-  <div class="tip">Two ways to test yourself: <b>When</b> — read a situation and pick the right pattern; <b>How</b> — see a pattern and pick how it's formed. Instant feedback with the rule and an example. Filter by lesson.</div>
-  <div class="fc-bar">
-    <label style="font-weight:600;color:var(--ink2)">Mode: <select id="gqzMode" class="quiz-input" style="width:auto;display:inline-block;padding:4px 8px">
-      <option value="mix" selected>Mixed</option>
-      <option value="when">When — situation → pattern</option>
-      <option value="how">How — pattern → rule</option>
-    </select></label>
-    <label style="font-weight:600;color:var(--ink2)">Lesson: <select id="gqzLes" class="quiz-input" style="width:auto;display:inline-block;padding:4px 8px"></select></label>
-    <button class="btn" id="gqzNew">New question</button>
-    <span id="gqzScore" style="margin-left:8px;color:var(--ink2);font-size:.85rem"></span>
-  </div>
-  <div id="gqzBox" class="note" style="min-height:150px"></div>
-
-  <h3 style="margin-top:28px">Pick the particle</h3>
-  <div class="tip">Read the everyday sentence, look at the <b>verb at the end</b>, and tap the particle for each blank. These sentences are <b>polite (–<span class="cw">masu</span> / <span class="cw">desu</span>)</b> — the safe way to talk to anyone. Instant feedback + why + hear it.</div>
-  <div id="pdrill" class="note"></div>
-
-  <h3 style="margin-top:28px">Which particle does the verb want?</h3>
-  <div class="tip">The fastest fix for "which particle?" is to learn each <b>verb with the particle it demands</b>. Pick the particle this verb wants for its key noun.</div>
-  <div id="vpdrill" class="note"></div>
-
   <h3 style="margin-top:28px">How it works (the notes)</h3>
   <p>The wall most beginners hit — "how do I know what word goes first?" — comes from your brain still treating Japanese as English with the words rearranged. It isn't. It runs on a different idea, and once it clicks, the "what order?" problem mostly dissolves.</p>
 
@@ -3066,387 +3006,6 @@
   </div><!-- /quizSentWrap -->
 </section>
 
-<!-- ============ PHRASES ============ -->
-<section id="phrases">
-  <h2>Phrases</h2>
-
-  <div class="fc-bar" style="margin-bottom:12px">
-    <label style="font-weight:600;color:var(--ink2)">Mode:
-      <select id="phraseMode" class="quiz-input" style="width:auto;display:inline-block;padding:4px 8px">
-        <option value="reference">Phrase reference</option>
-        <option value="convo">Conversation practice</option>
-      </select>
-    </label>
-  </div>
-
-  <!-- ===== Conversation Practice ===== -->
-  <div id="convoWrap" style="display:none">
-    <div class="tip">Texting-style back-and-forth. Read (or <b>▶ hear</b>) each line, then type a natural reply in romaji. Many phrasings are accepted — dropped が/を/は are fine. This trains <b>situation → Japanese</b>, not translating word-by-word.</div>
-    <div id="convoStart">
-      <div class="fc-bar">
-        <label style="font-weight:600;color:var(--ink2)">Topic:
-          <select id="convoCat" class="quiz-input" style="width:auto;display:inline-block;padding:4px 8px">
-            <option value="mixed" selected>Random / Mixed</option>
-            <option value="everyday">Everyday</option>
-            <option value="home">Home</option>
-            <option value="food">Food</option>
-            <option value="plans">Plans</option>
-            <option value="friends">Friends</option>
-            <option value="travel">Travel</option>
-            <option value="restaurant">Restaurant</option>
-            <option value="shopping">Shopping</option>
-            <option value="bouldering">Bouldering</option>
-          </select>
-        </label>
-        <label style="font-weight:600;color:var(--ink2)">Level:
-          <select id="convoLevel" class="quiz-input" style="width:auto;display:inline-block;padding:4px 8px">
-            <option value="beginner">Beginner — English shown</option>
-            <option value="normal" selected>Normal — English on tap</option>
-            <option value="challenge">Challenge — Japanese only</option>
-          </select>
-        </label>
-        <button class="btn primary" id="convoBegin">Start conversation →</button>
-      </div>
-    </div>
-    <div id="convoRun" style="display:none">
-      <div id="convoTitle" style="font-weight:700;color:var(--accent);margin:6px 0"></div>
-      <div class="chat" id="convoChat"></div>
-      <div id="convoInputRow" style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap;align-items:center">
-        <input id="convoInput" class="quiz-input" autocorrect="off" autocapitalize="off" autocomplete="off" spellcheck="false" style="max-width:420px" placeholder="type your reply in romaji…">
-        <button class="btn primary" id="convoSend">Reply</button>
-        <button class="btn" id="convoHint" style="font-size:.85rem">Show hint</button>
-        <button class="btn" id="convoQuit" style="font-size:.85rem;color:var(--ink2);margin-left:auto">End</button>
-      </div>
-      <div id="convoFb" style="margin-top:10px;min-height:20px;font-weight:600"></div>
-    </div>
-    <div id="convoDone" style="display:none">
-      <h3 style="margin-bottom:6px">Conversation complete</h3>
-      <div id="convoRecap" class="note" style="max-width:560px"></div>
-      <div style="margin-top:14px"><button class="btn primary" id="convoAgain">New conversation →</button> <button class="btn" id="convoRetry">Retry this one ↺</button></div>
-    </div>
-  </div>
-
-  <!-- ===== Phrase reference (existing static content) ===== -->
-  <div id="phraseReference">
-  <div class="lesson-block" data-lesson="trial">
-    <h3 style="color:var(--accent)">Trial lesson · 0803</h3>
-    <div class="note" id="phraseBox"></div>
-    <div class="tip"><b>Your self-intro to practice out loud:</b><br>
-    "<span class="cw">Hajimemashite</span>. <span class="cw">Watashi</span> <span class="cw">no</span> <span class="cw">namae</span> <span class="cw">wa</span> <span class="cw">Genna</span> <span class="cw">desu</span>. <span class="cw">Watashi</span> <span class="cw">no</span> <span class="cw">kuni</span> <span class="cw">wa</span> <span class="cw">America</span> <span class="cw">desu</span>.
-    <span class="cw">Shumi</span> <span class="cw">wa</span> <span class="cw">rokku</span> <span class="cw">kuraimingu</span> <span class="cw">desu</span>. <span class="cw">Yoroshiku</span> <span class="cw">onegaishimasu</span>."</div>
-  </div>
-
-  <div class="lesson-block" data-lesson="l1">
-    <h3 style="color:var(--accent)">Lesson 1 · 0810</h3>
-    <div class="note" id="phraseBoxL1"></div>
-    <div class="tip"><b>Your fuller self-intro to practice:</b><br>
-    "<span class="cw">Konnichiwa</span>. <span class="cw">Watashi</span> <span class="cw">no</span> <span class="cw">namae</span> <span class="cw">wa</span> <span class="cw">Genna</span> <span class="cw">desu</span>. <span class="cw">Shusshin</span> <span class="cw">wa</span> <span class="cw">amerika</span> <span class="cw">desu</span>.
-    <span class="cw">Shigoto</span> <span class="cw">wa</span> <span class="cw">shikaeiseishi</span> <span class="cw">desu</span>. <span class="cw">Shumi</span> <span class="cw">wa</span> <span class="cw">rokkukuraimingu</span> <span class="cw">desu</span>.
-    <span class="cw">Ryoushin</span> <span class="cw">wa</span> <span class="cw">italiajin</span> <span class="cw">desu</span>. <span class="cw">Yoroshiku</span> <span class="cw">onegaishimasu</span>."</div>
-  </div>
-
-  <div class="lesson-block" data-lesson="l2">
-    <h3 style="color:var(--accent)">Lesson 2 · 0813</h3>
-    <div class="note" id="phraseBoxL2"></div>
-    <div class="tip"><b>Date + meal + likes, all together:</b><br>
-    "<span class="cw">Kyou</span> <span class="cw">wa</span> <span class="cw">hachi</span>-<span class="cw">gatsu</span> <span class="cw">mikka</span> <span class="cw">desu</span>. <span class="cw">Asagohan</span> <span class="cw">wa</span> <span class="cw">pan</span> <span class="cw">wo</span> <span class="cw">tabemashita</span>.
-    <span class="cw">Tonkotsu</span> <span class="cw">ramen</span> <span class="cw">ga</span> <span class="cw">ichiban</span> <span class="cw adj-na">suki</span> <span class="cw">desu</span>. <span class="cw">Rainen</span> <span class="cw">nihon</span> <span class="cw">ni</span> <span class="cw">ikimasu</span>."</div>
-  </div>
-
-  <div class="lesson-block" data-lesson="l3">
-    <h3 style="color:var(--accent)">Lesson 3 · 0818</h3>
-    <div class="note" id="phraseBoxL3"></div>
-    <div class="tip"><b>A day described with day + place + past tense:</b><br>
-    "<span class="cw">Kinou</span> <span class="cw">wa</span> <span class="cw">doyoubi</span> <span class="cw">deshita</span>. <span class="cw">Jimu</span> <span class="cw">de</span> <span class="cw">borudaringu</span> <span class="cw">wo</span> <span class="cw">shimashita</span>.
-    <span class="cw">Sono</span> <span class="cw">ato</span>, <span class="cw">kafe</span> <span class="cw">de</span> <span class="cw">kouhii</span> <span class="cw">wo</span> <span class="cw">nomimashita</span>. <span class="cw">Raishuu</span> <span class="cw">nihon</span> <span class="cw">ni</span> <span class="cw">ikimasu</span>."</div>
-  </div>
-
-  <div class="lesson-block" data-lesson="l4">
-    <h3 style="color:var(--accent)">Lesson 4 · 0820</h3>
-    <div class="note" id="phraseBoxL4"></div>
-    <div class="tip"><b>this/that + time + adjectives, together:</b><br>
-    "<span class="cw">Kore</span> <span class="cw">wa</span> <span class="cw">watashi</span> <span class="cw">no</span> <span class="cw">sumaho</span> <span class="cw">desu</span>. <span class="cw">Ano</span> <span class="cw">hoteru</span> <span class="cw">wa</span> <span class="cw adj-na">kirei</span> <span class="cw">desu</span>.
-    <span class="cw">Roku</span>-<span class="cw">ji</span> <span class="cw">han</span> <span class="cw">ni</span> <span class="cw">okimasu</span>. <span class="cw">Shuumatsu</span> <span class="cw">wa</span> <span class="cw adj-i">isogashii</span> <span class="cw">desu</span>."</div>
-  </div>
-
-  <div class="lesson-block" data-lesson="l5">
-    <h3 style="color:var(--accent)">Lesson 5 · 0825</h3>
-    <div class="note" id="phraseBoxL5"></div>
-    <div class="tip"><b>Comparing & describing, together:</b><br>
-    "<span class="cw">Natsu</span> <span class="cw">to</span> <span class="cw">fuyu</span>, <span class="cw">docchi</span> <span class="cw">no</span> <span class="cw">hou</span> <span class="cw">ga</span> <span class="cw adj-na">suki</span> <span class="cw">desu</span> <span class="cw">ka</span>? <span class="cw">Natsu</span> <span class="cw">no</span> <span class="cw">hou</span> <span class="cw">ga</span> <span class="cw adj-na">suki</span> <span class="cw">desu</span>.
-    <span class="cw">Kono</span> <span class="cw">hoteru</span> <span class="cw">wa</span> <span class="cw adj-na">kirei</span> <span class="cw">desu</span>. <span class="cw">Kyou</span> <span class="cw">wa</span> <span class="cw adj-i">isogashikatta</span> <span class="cw">desu</span>."</div>
-  </div>
-
-  <div class="lesson-block" data-lesson="l6">
-    <h3 style="color:var(--accent)">Lesson 6 · 0827</h3>
-    <div class="note" id="phraseBoxL6"></div>
-    <div class="tip"><b>Plain negatives, together:</b><br>
-    "<span class="cw">Niku</span> <span class="cw">wo</span> <span class="cw">tabenai</span>. <span class="cw">Kouhii</span> <span class="cw">mo</span> <span class="cw">nomanai</span>. <span class="cw">Kyou</span> <span class="cw">wa</span> <span class="cw">jimu</span> <span class="cw">ni</span> <span class="cw">ikanai</span>.
-    <span class="cw">Getsuyoubi</span> <span class="cw">wa</span> <span class="cw">kaimono</span> <span class="cw">shinai</span>."</div>
-  </div>
-
-  <div class="lesson-block" data-lesson="l7">
-    <h3 style="color:var(--accent)">Lesson 7 · 0831</h3>
-    <div class="note" id="phraseBoxL7"></div>
-    <div class="tip"><b><span class="cw">TE</span>-form in one breath:</b><br>
-    "<span class="cw">Mite</span> <span class="cw">kudasai</span>. <span class="cw">Setsumei</span> <span class="cw">shite</span> <span class="cw">kudasai</span>. <span class="cw">Watashi</span> <span class="cw">no</span> <span class="cw">purin</span> <span class="cw">wo</span> <span class="cw">tabenai</span> <span class="cw">de</span>.
-    <span class="cw">Oshigoto</span> <span class="cw">ni</span> <span class="cw">okurete</span> <span class="cw">imasu</span>."</div>
-  </div>
-
-  <div class="lesson-block" data-lesson="l8">
-    <h3 style="color:var(--accent)">Lesson 8 · 0903</h3>
-    <div class="note" id="phraseBoxL8"></div>
-    <div class="tip"><b>At a restaurant:</b><br>
-    "Nanmei-<span class="cw">sama</span> <span class="cw">desu</span> <span class="cw">ka</span>? — <span class="cw">Futari</span> <span class="cw">desu</span>. <span class="cw">Goyoyaku</span> <span class="cw">wa</span> <span class="cw">arimasen</span>. <span class="cw">Teeburu</span> <span class="cw">seki</span> <span class="cw">ga</span> <span class="cw adj-irr">ii</span> <span class="cw">desu</span>."</div>
-  </div>
-
-  <div class="lesson-block" data-lesson="l9">
-    <h3 style="color:var(--accent)">Lesson 9 · 0907</h3>
-    <div class="note" id="phraseBoxL9"></div>
-    <div class="tip"><b>Preferences &amp; small talk:</b><br>
-    "<span class="cw">Asa</span> <span class="cw">to</span> <span class="cw">yoru</span>, <span class="cw">docchi</span> <span class="cw">no</span> <span class="cw">hou</span> <span class="cw">ga</span> <span class="cw adj-na">suki</span> <span class="cw">desu</span> <span class="cw">ka</span>? — <span class="cw">Yoru</span> <span class="cw">no</span> <span class="cw">hou</span> <span class="cw">ga</span> <span class="cw adj-na">suki</span> <span class="cw">desu</span>." · "Oishikute, <span class="cw adj-na">kirei</span> <span class="cw">de</span>, <span class="cw adj-i">hiroi</span> <span class="cw">resutoran</span> <span class="cw">ga</span> <span class="cw adj-na">suki</span> <span class="cw">desu</span>."</div>
-  </div>
-
-  <div class="lesson-block" data-lesson="l10">
-    <h3 style="color:var(--accent)">Lesson 10 · 0910</h3>
-    <div class="note" id="phraseBoxL10"></div>
-    <div class="tip"><b>Right now &amp; want-to:</b><br>
-    "<span class="cw">Ima</span> <span class="cw">nani</span> <span class="cw">wo</span> <span class="cw">shite</span> <span class="cw">imasu</span> <span class="cw">ka</span>? — <span class="cw">Ima</span> <span class="cw">nihongo</span> <span class="cw">wo</span> <span class="cw">benkyou</span> <span class="cw">shite</span> <span class="cw">imasu</span>." · "<span class="cw">Raamen</span> <span class="cw">wo</span> <span class="cw">tabetai</span> <span class="cw">desu</span>."</div>
-  </div>
-
-  <div class="lesson-block" data-lesson="l11">
-    <h3 style="color:var(--accent)">Lesson 11 · 0914</h3>
-    <div class="note" id="phraseBoxL11"></div>
-    <div class="tip"><b>Try to &amp; want to try to:</b><br>
-    "<span class="cw">Nihon</span> <span class="cw">de</span> <span class="cw">sushi</span> <span class="cw">wo</span> <span class="cw">tabete</span> <span class="cw">mitai</span> <span class="cw">desu</span>." · "<span class="cw">Kore</span> <span class="cw">wo</span> <span class="cw">tabete</span> <span class="cw">mite</span> <span class="cw">kudasai</span>." · "<span class="cw">Gohan</span> <span class="cw">wo</span> <span class="cw">tabete</span> <span class="cw">kara</span>, <span class="cw">koohii</span> <span class="cw">wo</span> <span class="cw">nomimasu</span>."</div>
-  </div>
-
-  <div class="lesson-block" data-lesson="l12">
-    <h3 style="color:var(--accent)">Lesson 12 · 0917</h3>
-    <div class="note" id="phraseBoxL12"></div>
-    <div class="tip"><b>Habits &amp; "let's":</b><br>
-    "<span class="cw">Isshoni</span> <span class="cw">gohan</span> <span class="cw">wo</span> <span class="cw">tabemashou</span>." · "<span class="cw">Mainichi</span> <span class="cw">yasai</span> <span class="cw">wo</span> <span class="cw">taberu</span> <span class="cw">you</span> <span class="cw">ni</span> <span class="cw">suru</span>." · "<span class="cw">Koohii</span> <span class="cw">wo</span> <span class="cw">nomisuginai</span> <span class="cw">you</span> <span class="cw">ni</span> <span class="cw">suru</span>."</div>
-  </div>
-
-  <div class="lesson-block" data-lesson="l13">
-    <h3 style="color:var(--accent)">Lesson 13 · 0921</h3>
-    <div class="note" id="phraseBoxL13"></div>
-    <div class="tip"><b>Experiences &amp; te-form:</b><br>
-    "<span class="cw">Onsen</span> <span class="cw">ni</span> <span class="cw">haitta</span> <span class="cw">koto</span> <span class="cw">ga</span> <span class="cw">arimasu</span> <span class="cw">ka</span>?" · "<span class="cw">Asagohan</span> <span class="cw">wo</span> <span class="cw">tabete</span> <span class="cw">kara</span>, <span class="cw">shigoto</span> <span class="cw">ni</span> <span class="cw">ikimasu</span>." · "<span class="cw">Kyou</span> <span class="cw">haikingu</span> <span class="cw">ni</span> <span class="cw">ikimasen</span> <span class="cw">ka</span>?"</div>
-  </div>
-
-  <div class="lesson-block" data-lesson="l14">
-    <h3 style="color:var(--accent)">Lesson 14 · 0924</h3>
-    <div class="note" id="phraseBoxL14"></div>
-    <div class="tip"><b>Feelings &amp; past:</b><br>
-    "<span class="cw">Kyou</span> <span class="cw">wa</span> <span class="cw">tanoshikatta</span> <span class="cw">desu</span>." · "<span class="cw">Tomodachi</span> <span class="cw">ni</span> <span class="cw">atta</span> <span class="cw">kara</span>, <span class="cw">ureshikatta</span> <span class="cw">desu</span>." · "<span class="cw">Muzukashikatta</span> <span class="cw">kedo</span>, <span class="cw">tanoshikatta</span> <span class="cw">desu</span>."</div>
-  </div>
-
-  <div class="lesson-block" data-lesson="l15">
-    <h3 style="color:var(--accent)">Lesson 15 · 0928</h3>
-    <div class="note" id="phraseBoxL15"></div>
-    <div class="tip"><b>Conditionals &amp; plans:</b><br>
-    "<span class="cw">Jikan</span> <span class="cw">ga</span> <span class="cw">attara</span>, <span class="cw">borudaringu</span> <span class="cw">wo</span> <span class="cw">shiyou</span>." · "<span class="cw">Samukattara</span>, <span class="cw">jaketto</span> <span class="cw">wo</span> <span class="cw">kimasu</span>." · "<span class="cw">Bangohan</span> <span class="cw">no</span> <span class="cw">shokuzai</span> <span class="cw">wo</span> <span class="cw">kai</span> <span class="cw">ni</span> <span class="cw">ikimasu</span>."</div>
-  </div>
-
-  <div class="lesson-block" data-lesson="l16">
-    <h3 style="color:var(--accent)">Lesson 16 · 1001</h3>
-    <div class="note" id="phraseBoxL16"></div>
-    <div class="tip"><b>~tari &amp; plans:</b><br>
-    "<span class="cw">Shuumatsu</span> <span class="cw">wa</span> <span class="cw">eiga</span> <span class="cw">wo</span> <span class="cw">mitari</span>, <span class="cw">koohii</span> <span class="cw">wo</span> <span class="cw">nondari</span> <span class="cw">shimasu</span>." · "<span class="cw">Nihon</span> <span class="cw">ni</span> <span class="cw">ittara</span> <span class="cw">sushi</span> <span class="cw">wo</span> <span class="cw">tabetari</span> <span class="cw">suru</span> <span class="cw">yotei</span> <span class="cw">desu</span>."</div>
-  </div>
-
-  <div class="lesson-block" data-lesson="l17">
-    <h3 style="color:var(--accent)">Lesson 17 · 1005 — Review</h3>
-    <div class="note" id="phraseBoxL17"></div>
-    <div class="tip"><b>Cumulative review:</b><br>
-    "<span class="cw">Konomae</span> <span class="cw">inu</span> <span class="cw">wo</span> <span class="cw">doubutsu</span> <span class="cw">byouin</span> <span class="cw">ni</span> <span class="cw">tsurete</span> <span class="cw">ikimashita</span>." · "<span class="cw">Sensei</span> <span class="cw">wa</span> <span class="cw">omoshirokute</span> <span class="cw">yasashii</span> <span class="cw">desu</span>." · "<span class="cw">Koko</span> <span class="cw">de</span> <span class="cw">tabete</span> <span class="cw">wa</span> <span class="cw">dame</span> <span class="cw">desu</span>."</div>
-  </div>
-
-  <div class="lesson-block" data-lesson="l18">
-    <h3 style="color:var(--accent)">Lesson 18 · 1008</h3>
-    <div class="note" id="phraseBoxL18"></div>
-    <div class="tip"><b>Intentions &amp; depends:</b><br>
-    "<span class="cw">Konya</span> <span class="cw">wa</span> <span class="cw">hayaku</span> <span class="cw">neyou</span> <span class="cw">to</span> <span class="cw">omotte</span> <span class="cw">imasu</span>." · "<span class="cw">Nihon</span> <span class="cw">de</span> <span class="cw">tabeta</span> <span class="cw">no</span> <span class="cw">wa</span> <span class="cw">sushi</span> <span class="cw">desu</span>." · "<span class="cw">Hi</span> <span class="cw">ni</span> <span class="cw">yoru</span>."</div>
-  </div>
-
-  <h2 style="margin-top:48px;border-top:2px solid rgba(120,120,120,.16);padding-top:28px">Talk</h2>
-  <div class="fc-bar" style="justify-content:flex-start">
-    <label style="font-weight:600;color:var(--ink2)">Voice:</label>
-    <select id="voiceSel"></select>
-    <label style="font-weight:600;color:var(--ink2)">Speed</label>
-    <input id="rateSel" type="range" min="0.6" max="1" step="0.05" value="0.9" style="accent-color:var(--ink2)">
-    <label style="font-weight:600;color:var(--ink2)">Cuteness </label>
-    <input id="pitchSel" type="range" min="1" max="1.8" step="0.05" value="1.35" style="accent-color:var(--accent)">
-    <button class="btn" id="voiceTest">Test</button>
-  </div>
-  <div class="hint" style="margin-top:0">The picker prefers <b>female</b> voices, and “Cuteness” raises the pitch to sound younger and softer. Voices marked are the most natural.<br>
-  <b>For the cutest free voice:</b> open this file in <b>Microsoft Edge</b> and pick <b>“Nanami Online (Natural)”</b> — it's a soft young-woman voice and by far the nicest one you can get without extra software.</div>
-
-  <div class="lesson-block" data-lesson="trial">
-  <h3 style="color:var(--accent)">Trial lesson · 0803</h3>
-  <div class="tip"><b>A few small new words</b> used in the replies below:
-    <b><span class="cw">nan</span></b> = what &nbsp;·&nbsp; <b><span class="cw">doko</span></b> = where &nbsp;·&nbsp; <b><span class="cw">iie</span></b> = no &nbsp;·&nbsp;
-    <b>~masen</b> = polite "don't/not" &nbsp;·&nbsp; <b><span class="cw">demo</span></b> = but. They're marked <span class="newtag">new</span> where they appear.</div>
-  <h3>The whole exchange as a chat</h3>
-  <div class="chat" id="chat"></div>
-  </div><!-- /trial -->
-
-  <div class="lesson-block" data-lesson="l1">
-  <h3 style="color:var(--accent)">Lesson 1 · 0810</h3>
-  <div class="tip"><b>New this lesson:</b> <b><span class="cw">imasu</span></b> = have / there is &nbsp;·&nbsp; <b><span class="cw">mo</span></b> = also &nbsp;·&nbsp;
-    <b><span class="cw">chigaimasu</span></b> = that's not right &nbsp;·&nbsp; <b><span class="cw">nanijin</span></b> = what nationality &nbsp;·&nbsp; <b>made</b> = to / until. Marked <span class="newtag">new</span> below.</div>
-  <h3>The whole exchange as a chat</h3>
-  <div class="chat" id="chatL1"></div>
-  </div><!-- /l1 -->
-
-  <div class="lesson-block" data-lesson="l2">
-  <h3 style="color:var(--accent)">Lesson 2 · 0813</h3>
-  <div class="tip"><b>New this lesson:</b> <b><span class="cw">gatsu</span></b> = month &nbsp;·&nbsp; <b><span class="cw">tabemashita</span></b> = ate (past) &nbsp;·&nbsp;
-    <b><span class="cw">ichiban</span></b> = most / favorite &nbsp;·&nbsp; <b><span class="cw">wo</span></b> = object marker &nbsp;·&nbsp; <b><span class="cw">ikimasu</span></b> = go &nbsp;·&nbsp; <b><span class="cw">isshoni</span></b> = together. Marked <span class="newtag">new</span> below.</div>
-  <h3>The whole exchange as a chat</h3>
-  <div class="chat" id="chatL2"></div>
-  </div><!-- /l2 -->
-
-  <div class="lesson-block" data-lesson="l3">
-  <h3 style="color:var(--accent)">Lesson 3 · 0818</h3>
-  <div class="tip"><b>New this lesson:</b> <b><span class="cw">youbi</span></b> = day of week &nbsp;·&nbsp; <b><span class="cw">ni</span></b> = to (a place) &nbsp;·&nbsp;
-    <b><span class="cw">de</span></b> = at (where you act) &nbsp;·&nbsp; <b><span class="cw">ikimasu</span>/<span class="cw">kaerimasu</span>/<span class="cw">aimasu</span></b> = go/return/meet &nbsp;·&nbsp; <b>~<span class="cw">mashita</span></b> = did. Marked <span class="newtag">new</span> below.</div>
-  <h3>The whole exchange as a chat</h3>
-  <div class="chat" id="chatL3"></div>
-  </div><!-- /l3 -->
-
-  <div class="lesson-block" data-lesson="l4">
-  <h3 style="color:var(--accent)">Lesson 4 · 0820</h3>
-  <div class="tip"><b>New this lesson:</b> <b><span class="cw">kore</span>/<span class="cw">sore</span>/<span class="cw">are</span></b> = this/that/that-there &nbsp;·&nbsp; <b><span class="cw">kono</span>/<span class="cw">sono</span>/<span class="cw">ano</span></b> = + a noun &nbsp;·&nbsp;
-    <b><span class="cw">ka</span></b> = or &nbsp;·&nbsp; <b><span class="cw">no</span> <span class="cw adj-i">chikaku</span></b> = near &nbsp;·&nbsp; <b><span class="cw">han</span></b> = half past &nbsp;·&nbsp; <b><span class="cw">nemasu</span></b> = sleep. Marked <span class="newtag">new</span> below.</div>
-  <h3>The whole exchange as a chat</h3>
-  <div class="chat" id="chatL4"></div>
-  </div><!-- /l4 -->
-
-  <div class="lesson-block" data-lesson="l5">
-  <h3 style="color:var(--accent)">Lesson 5 · 0825</h3>
-  <div class="tip"><b>New this lesson:</b> <b>~ <span class="cw">no</span> <span class="cw">hou</span> <span class="cw">ga</span></b> = comparison ("the ~ side is more…") &nbsp;·&nbsp; <b><span class="cw">docchi</span></b> = which (of two) &nbsp;·&nbsp; <b><span class="cw">tenki</span></b>/weather &nbsp;·&nbsp; adjective <b>past tense</b> (<span class="cw adj-i">isogashii</span> → <span class="cw adj-i">isogashikatta</span>) &nbsp;·&nbsp; <b>~ <span class="cw">mae</span> <span class="cw">ni</span></b> = before ~-ing.</div>
-  <h3>The whole exchange as a chat</h3>
-  <div class="chat" id="chatL5"></div>
-  </div><!-- /l5 -->
-
-  <div class="lesson-block" data-lesson="l6">
-  <h3 style="color:var(--accent)">Lesson 6 · 0827</h3>
-  <div class="tip"><b>New this lesson:</b> the <b><span class="cw">NAI</span>-form</b> (plain negative) &nbsp;·&nbsp; <b><span class="cw">tabenai</span></b> = don't eat (casual) &nbsp;·&nbsp; <b><span class="cw">nomanai</span> / <span class="cw">ikanai</span> / <span class="cw">shinai</span> / <span class="cw">konai</span></b> &nbsp;·&nbsp; <b><span class="cw">nanimo</span></b> + negative = "not anything". Marked <span class="newtag">new</span> below.</div>
-  <h3>The whole exchange as a chat</h3>
-  <div class="chat" id="chatL6"></div>
-  </div><!-- /l6 -->
-
-  <div class="lesson-block" data-lesson="l7">
-  <h3 style="color:var(--accent)">Lesson 7 · 0831</h3>
-  <div class="tip"><b>New this lesson:</b> the <b><span class="cw">TE</span>-form</b> &nbsp;·&nbsp; <b>~<span class="cw">te</span> <span class="cw">kudasai</span></b> = please do &nbsp;·&nbsp; <b>~<span class="cw">nai</span> <span class="cw">de</span> <span class="cw">kudasai</span></b> = please don't &nbsp;·&nbsp; <b>~<span class="cw">te</span> <span class="cw">imasu</span></b> = -ing &nbsp;·&nbsp; <b><span class="cw">node</span>/<span class="cw">kara</span></b> = because &nbsp;·&nbsp; <b><span class="cw">toki</span></b> = when &nbsp;·&nbsp; <b><span class="cw">zenzen</span>/<span class="cw">amari</span> ~<span class="cw">nai</span></b>. Marked <span class="newtag">new</span> below.</div>
-  <h3>The whole exchange as a chat</h3>
-  <div class="chat" id="chatL7"></div>
-  </div><!-- /l7 -->
-
-  <div class="lesson-block" data-lesson="l8">
-  <h3 style="color:var(--accent)">Lesson 8 · 0903</h3>
-  <div class="tip"><b>New this lesson:</b> <b><span class="cw">naru</span></b> (become) &nbsp;·&nbsp; <b><span class="cw">node</span>/<span class="cw">nanode</span></b> (because) &nbsp;·&nbsp; <b>~<span class="cw">te</span> <span class="cw">mo</span> <span class="cw adj-irr">ii</span> <span class="cw">desu</span> <span class="cw">ka</span></b> (may I?) &nbsp;·&nbsp; <b>~<span class="cw">to</span> <span class="cw">omoimasu</span></b> (I think) &nbsp;·&nbsp; <b><span class="cw">arimasu</span>/<span class="cw">imasu</span></b> &nbsp;·&nbsp; <b>~<span class="cw">tai</span> <span class="cw">desu</span></b> (want to) &nbsp;·&nbsp; restaurant Japanese. Marked <span class="newtag">new</span> below.</div>
-  <h3>The whole exchange as a chat</h3>
-  <div class="chat" id="chatL8"></div>
-  </div><!-- /l8 -->
-
-  <div class="lesson-block" data-lesson="l9">
-  <h3 style="color:var(--accent)">Lesson 9 · 0907</h3>
-  <div class="tip"><b>New this lesson:</b> <b>past-tense small talk</b> &nbsp;·&nbsp; <b>~<span class="cw">no</span> <span class="cw">hou</span> <span class="cw">ga</span></b> (I prefer) &nbsp;·&nbsp; <b>~<span class="cw">toki</span></b> (when) &nbsp;·&nbsp; <b><span class="cw">kyoumi</span> <span class="cw">ga</span> <span class="cw">aru</span></b> (interested in) &nbsp;·&nbsp; joining adjectives <b>kute / <span class="cw">de</span></b> &nbsp;·&nbsp; <b><span class="cw">te</span>-form</b> chains.</div>
-  <h3>The whole exchange as a chat</h3>
-  <div class="chat" id="chatL9"></div>
-  </div><!-- /l9 -->
-
-  <div class="lesson-block" data-lesson="l10">
-  <h3 style="color:var(--accent)">Lesson 10 · 0910</h3>
-  <div class="tip"><b>New this lesson:</b> <b>~<span class="cw">te</span> <span class="cw">imasu</span></b> (I'm ~ing now) &nbsp;·&nbsp; <b>~<span class="cw">tai</span> <span class="cw">desu</span></b> (want to) &nbsp;·&nbsp; <b><span class="cw">yotei</span></b> (plans) &nbsp;·&nbsp; <b><span class="cw">kara</span>…<span class="cw">made</span> / ~<span class="cw">kan</span></b> (time at work).</div>
-  <h3>The whole exchange as a chat</h3>
-  <div class="chat" id="chatL10"></div>
-  </div><!-- /l10 -->
-
-  <div class="lesson-block" data-lesson="l11">
-  <h3 style="color:var(--accent)">Lesson 11 · 0914</h3>
-  <div class="tip"><b>New this lesson:</b> <b>~<span class="cw">te</span> <span class="cw">miru</span></b> (try) &nbsp;·&nbsp; <b>~<span class="cw">te</span> <span class="cw">mitai</span></b> (want to try) &nbsp;·&nbsp; <b>~<span class="cw">te</span> <span class="cw">kara</span></b> (after) &nbsp;·&nbsp; <b>~<span class="cw">te</span> <span class="cw">wa</span> <span class="cw">ikemasen</span></b> (must not) &nbsp;·&nbsp; <b><span class="cw">sunde</span>/<span class="cw">kekkon</span> <span class="cw">shite</span> <span class="cw">imasu</span></b> (states) &nbsp;·&nbsp; <b><span class="cw">kedo</span></b> (but).</div>
-  <h3>The whole exchange as a chat</h3>
-  <div class="chat" id="chatL11"></div>
-  </div><!-- /l11 -->
-
-  <div class="lesson-block" data-lesson="l12">
-  <h3 style="color:var(--accent)">Lesson 12 · 0917</h3>
-  <div class="tip"><b>New this lesson:</b> <b>~<span class="cw">you</span>/<span class="cw">mashou</span></b> (let's) &nbsp;·&nbsp; <b>~<span class="cw">you</span> <span class="cw">ni</span> <span class="cw">suru</span></b> (make a habit) &nbsp;·&nbsp; <b>~<span class="cw">sugiru</span></b> (too much) &nbsp;·&nbsp; <b>~<span class="cw">nai</span> <span class="cw">you</span> <span class="cw">ni</span> <span class="cw">suru</span></b> (try not to).</div>
-  <h3>The whole exchange as a chat</h3>
-  <div class="chat" id="chatL12"></div>
-  </div><!-- /l12 -->
-
-  <div class="lesson-block" data-lesson="l13">
-  <h3 style="color:var(--accent)">Lesson 13 · 0921</h3>
-  <div class="tip"><b>New this lesson:</b> the <b><span class="cw">te</span>-form family</b> &nbsp;·&nbsp; <b>casual past</b> (<span class="cw">ta</span>) &nbsp;·&nbsp; <b>~<span class="cw">ta</span> <span class="cw">koto</span> <span class="cw">ga</span> <span class="cw">aru</span></b> (experiences) &nbsp;·&nbsp; <b>~<span class="cw">sou</span></b> (looks like) &nbsp;·&nbsp; <b><span class="cw">yori</span></b> (more than) &nbsp;·&nbsp; <b>~<span class="cw">masen</span> <span class="cw">ka</span>?</b> (inviting).</div>
-  <h3>The whole exchange as a chat</h3>
-  <div class="chat" id="chatL13"></div>
-  </div><!-- /l13 -->
-
-  <div class="lesson-block" data-lesson="l14">
-  <h3 style="color:var(--accent)">Lesson 14 · 0924</h3>
-  <div class="tip"><b>New this lesson:</b> <b>adjective past</b> (<span class="cw">~katta</span> / <span class="cw">datta</span>) &nbsp;·&nbsp; <b><span class="cw">kara</span></b> (because) &nbsp;·&nbsp; <b><span class="cw">toki</span></b> (when) &nbsp;·&nbsp; <b><span class="cw">kedo</span> / <span class="cw">dakedo</span></b> (but) &nbsp;·&nbsp; feelings vocabulary.</div>
-  <h3>The whole exchange as a chat</h3>
-  <div class="chat" id="chatL14"></div>
-  </div><!-- /l14 -->
-
-  <div class="lesson-block" data-lesson="l15">
-  <h3 style="color:var(--accent)">Lesson 15 · 0928</h3>
-  <div class="tip"><b>New this lesson:</b> <b>~<span class="cw">tara</span></b> (if/when) &nbsp;·&nbsp; <b>volitional</b> (~<span class="cw">you</span>) &nbsp;·&nbsp; <b>~<span class="cw">ni</span> <span class="cw">iku</span></b> (go to do) &nbsp;·&nbsp; <b>~<span class="cw">toki</span></b> (when) &nbsp;·&nbsp; <b>potential</b> (can / can't).</div>
-  <h3>The whole exchange as a chat</h3>
-  <div class="chat" id="chatL15"></div>
-  </div><!-- /l15 -->
-
-  <div class="lesson-block" data-lesson="l16">
-  <h3 style="color:var(--accent)">Lesson 16 · 1001</h3>
-  <div class="tip"><b>New this lesson:</b> <b>~<span class="cw">tari</span> <span class="cw">~tari</span> <span class="cw">suru</span></b> (do things like…) &nbsp;·&nbsp; <b><span class="cw">yotei</span> / <span class="cw">tsumori</span></b> (plan / going to) &nbsp;·&nbsp; <b><span class="cw">de</span></b> (reason) &nbsp;·&nbsp; <b><span class="cw">~chuu</span></b> (during) &nbsp;·&nbsp; <b><span class="cw">dewa</span></b> (in ~'s case).</div>
-  <h3>The whole exchange as a chat</h3>
-  <div class="chat" id="chatL16"></div>
-  </div><!-- /l16 -->
-
-  <div class="lesson-block" data-lesson="l17">
-  <h3 style="color:var(--accent)">Lesson 17 · 1005</h3>
-  <div class="tip"><b>Review lesson:</b> no new grammar — this pulls together <b>sentence order</b>, <b>particles</b> (<span class="cw">ni</span> vs <span class="cw">de</span>), <b>adjective past</b> &amp; joining (<span class="cw">~kute</span> / <span class="cw">de</span>), the whole <b><span class="cw">te</span>-form family</b>, <b><span class="cw">~tai</span></b>, <b>volitional</b>, and <b>polite ↔ casual</b>, with a little new vocab (<span class="cw">tsureteiku</span>, <span class="cw">kowagaru</span>, <span class="cw">okoru</span>, <span class="cw">owaraseru</span>, <span class="cw">aisatsu</span>…).</div>
-  <h3>The whole exchange as a chat</h3>
-  <div class="chat" id="chatL17"></div>
-  </div><!-- /l17 -->
-
-  <div class="lesson-block" data-lesson="l18">
-  <h3 style="color:var(--accent)">Lesson 18 · 1008</h3>
-  <div class="tip"><b>New this lesson:</b> softer intentions (<span class="cw">~you</span> <span class="cw">to</span> <span class="cw">omoimasu</span> / <span class="cw">omotte</span> <span class="cw">imasu</span>), negative questions (<span class="cw">~nai</span> <span class="cw">no</span>? / <span class="cw">~nain</span> <span class="cw">desu</span> <span class="cw">ka</span>?), <span class="cw">no</span> <span class="cw">wa</span> ("the thing that…"), <span class="cw">ni</span> <span class="cw">yoru</span> (it depends), <span class="cw">~kai</span> <span class="cw">me</span> (Nth time), and hypothetical <span class="cw">~tara</span> questions.</div>
-  <h3>The whole exchange as a chat</h3>
-  <div class="chat" id="chatL18"></div>
-  </div><!-- /l18 -->
-
-  <div class="lesson-block" data-lesson="all">
-  <h3 style="color:var(--accent)">Everyday conversations — grammar in action</h3>
-  <div class="tip">Real questions &amp; answers you'll actually meet, grouped by the grammar you're learning: <b class="adj-i">adjective past (–<span class="cw">katta</span> <span class="cw">desu</span>)</b>, <b class="adj-na"><span class="cw">na</span>-adjective past (<span class="cw">deshita</span>)</b>, plain-past &amp; negative-past verbs, and <b><span class="cw">te</span>-forms</b>. Shows in the <b>All lessons</b> view. Tap any word to hear it.</div>
-  <h4>Adjectives in the past (i-adj → –<span class="cw">katta</span> <span class="cw">desu</span> · <span class="cw">na</span>-adj → <span class="cw">deshita</span>)</h4>
-  <div class="chat" id="chatEveA"></div>
-  <h4>Past &amp; negative-past verbs (–<span class="cw">mashita</span> / –masen <span class="cw">deshita</span>)</h4>
-  <div class="chat" id="chatEveB"></div>
-  <h4><span class="cw">Te</span>-forms in real life</h4>
-  <div class="chat" id="chatEveC"></div>
-  <h4>Out and about (restaurant, shops, street)</h4>
-  <div class="chat" id="chatEveD"></div>
-  </div><!-- /everyday -->
-
-  <div class="lesson-block" data-lesson="all">
-  <h3 style="color:var(--accent);margin-top:40px">Two full conversations — polite vs. casual</h3>
-  <div class="tip">The <b>same kinds of questions and answers</b> in both registers, so you can see how grammar changes. The first is <b>entirely polite</b> (<span class="cw">desu</span> / <span class="cw">masu</span>) — how you'd speak with someone you've just met or aren't close to. The second is <b>entirely casual</b> (plain form) — how you'd talk with a close friend. Tap any word to hear it.</div>
-
-  <h4>① Polite — catching up with a coworker (<span class="cw">desu</span> / <span class="cw">masu</span> throughout)</h4>
-  <div class="chat" id="chatConvoPolite"></div>
-
-  <h4 style="margin-top:28px">② Casual — making plans with a close friend (plain form throughout)</h4>
-  <div class="chat" id="chatConvoCasual"></div>
-  </div><!-- /convos -->
-  </div><!-- /phraseReference -->
-</section>
 
 <!-- ============ KANA ============ -->
 <section id="kana">
@@ -10767,26 +10326,24 @@ const PQ=[
       let rows='';
       pats.forEach(p=>{ const g=byPat[p]; if(!g) return; used[p]=1;
         rows+='<tr style="border-bottom:1px solid var(--line)">'+
-          '<td style="padding:8px 14px 8px 0;vertical-align:top;min-width:150px"><div style="font-weight:600">'+esc(g.pat)+
-            ' <span style="color:var(--ink2);font-weight:400;font-size:.72rem;white-space:nowrap">'+esc(g.les)+'</span></div>'+
-            '<div style="color:var(--ink2);font-size:.85rem;margin-top:2px">'+esc(g.rule)+'</div></td>'+
-          '<td style="padding:8px 0;vertical-align:top;font-size:.9rem"><span style="color:#1560c0;font-weight:600">'+esc(g.ja)+'</span><br>'+
-            '<span style="color:var(--ink2)">'+esc(g.en)+'</span></td></tr>';
+          // col 1: pattern + rule (the "formula")
+          '<td style="padding:4px 12px 4px 0;vertical-align:top;width:42%"><b>'+esc(g.pat)+'</b>'+
+            '<div style="color:var(--ink2);font-size:.82rem;line-height:1.3">'+esc(g.rule)+'</div></td>'+
+          // col 2: one example, JA then EN inline
+          '<td style="padding:4px 0;vertical-align:top;font-size:.86rem"><span style="color:#1560c0;font-weight:600">'+esc(g.ja)+'</span> '+
+            '<span style="color:var(--ink2)">— '+esc(g.en)+'</span></td></tr>';
       });
       return rows;
     }
+    const catHead=t=>'<div style="font-weight:700;color:var(--accent);margin:14px 0 3px;font-size:.92rem;border-bottom:2px solid var(--accent);padding-bottom:2px">'+t+'</div>';
     let html='';
     CATS.forEach(c=>{ const rows=tableFor(c.p); if(!rows) return;
-      html+='<div style="font-weight:700;color:var(--accent);margin:18px 0 6px;font-size:.95rem;border-bottom:1px solid var(--line);padding-bottom:3px">'+c.t+'</div>';
-      html+='<table style="width:100%;border-collapse:collapse">'+rows+'</table>';
+      html+=catHead(c.t)+'<table style="width:100%;border-collapse:collapse">'+rows+'</table>';
     });
     // safety net: any pattern not yet placed into a type group still shows (keeps future lessons visible)
     const leftover=orderPat.filter(p=>!used[p]);
-    if(leftover.length){
-      html+='<div style="font-weight:700;color:var(--accent);margin:18px 0 6px;font-size:.95rem;border-bottom:1px solid var(--line);padding-bottom:3px">More patterns</div>';
-      html+='<table style="width:100%;border-collapse:collapse">'+tableFor(leftover)+'</table>';
-    }
-    box.innerHTML='<div style="overflow-x:auto">'+html+'</div>';
+    if(leftover.length){ html+=catHead('More patterns')+'<table style="width:100%;border-collapse:collapse">'+tableFor(leftover)+'</table>'; }
+    box.innerHTML='<div style="overflow-x:auto;font-size:.95rem">'+html+'</div>';
 
     /* ---- Quiz: name the pattern (meaning + building blocks → the Japanese construction) ---- */
     (function buildPatternQuiz(){
@@ -12962,7 +12519,8 @@ hwPracticeQuiz('hwq18Box', HWQ18);
   }
   $('mbResolved').onchange=render;
   $('mbBack').onclick=()=>{ openCat=null; render(); };
-  const nav=document.querySelector('nav button[data-tab="mistakes"]'); if(nav) nav.addEventListener('click',()=>{ openCat=null; render(); });
+  // Mistake Bank now lives inside the Progress tab — re-render when that tab is opened.
+  const nav=document.querySelector('nav button[data-tab="progress"]'); if(nav) nav.addEventListener('click',()=>{ openCat=null; render(); });
   render();
 })();
 
@@ -13163,6 +12721,7 @@ if (typeof window !== 'undefined') window.Progress = Progress;
     box.innerHTML=h;
   }
   const nav=document.querySelector('nav button[data-tab="progress"]'); if(nav) nav.addEventListener('click', render);
+  try{ render(); }catch(e){}   // initial paint so the tab is never blank
 })();
 </script>
 </body>
