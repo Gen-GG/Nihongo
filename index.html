@@ -372,6 +372,7 @@
   <button data-tab="practice">Practice</button>
   <button data-tab="cards">Flashcards</button>
   <button data-tab="quiz">Quiz</button>
+  <button data-tab="travel">✈ Phrases</button>
   <button data-tab="kana">あ Kana</button>
   <button data-tab="homework">Homework</button>
   <button data-tab="progress">Progress</button>
@@ -3006,6 +3007,25 @@
   </div><!-- /quizSentWrap -->
 </section>
 
+<!-- ============ TRAVEL PHRASES ============ -->
+<section id="travel">
+  <h2>Phrases — everyday Japanese for your trip</h2>
+  <div class="tip">Real, useful lines for traveling in Japan — polite forms that work with anyone (strangers, staff, shops). Pick a situation, read the English, say it in your head, then flip to check and hear it. No grading — just learn the ones you'll actually use.</div>
+  <div class="fc-bar" id="tphCats" style="flex-wrap:wrap;gap:6px"></div>
+  <div class="note" id="tphCard" style="min-height:150px;cursor:pointer;margin-top:10px">
+    <div id="tphCat" style="font-size:.72rem;text-transform:uppercase;letter-spacing:.06em;color:var(--accent);font-weight:700"></div>
+    <div id="tphEn" style="font-size:1.3rem;font-weight:700;margin:8px 0"></div>
+    <div id="tphJa" class="pj" style="min-height:42px;font-size:1.1rem"></div>
+    <div style="margin-top:10px">
+      <button class="btn primary" id="tphShow">Show Japanese</button>
+      <button class="btn" id="tphNext">Next →</button>
+      <button class="btn" id="tphShuffle">Shuffle</button>
+      <span id="tphProg" style="margin-left:8px;color:var(--ink2);font-size:.85rem"></span>
+    </div>
+  </div>
+  <h3 style="margin-top:22px">All phrases in this situation <span style="font-weight:400;font-size:.85rem;color:var(--ink2)">— tap any line to hear it</span></h3>
+  <div class="note" id="tphList"></div>
+</section>
 
 <!-- ============ KANA ============ -->
 <section id="kana">
@@ -10302,24 +10322,24 @@ const PQ=[
     GRAMMAR.forEach(g=>{ if(byPat[g.pat]) return; byPat[g.pat]=g; orderPat.push(g.pat); });
     // grammar-type groups, in a learning-friendly order; each lists the exact patterns it owns
     const CATS=[
-      {t:'Sentence basics &amp; pointing', p:['desu — X is Y','no — \'s / my / your (possessive)','kore / sore / are — this one / that one','kono / sono / ano','ga suki — I like X','sentence order — Time + Place + Object + Verb','Verb + no wa — the thing that I…']},
-      {t:'Particles', p:['wo — object','ni — destination / time','de — place of action / means','ni vs de — destination vs action place','shika ~nai — only / nothing but']},
-      {t:'Question &amp; comparing words', p:['nande / doushite — why?','ka — or (choices)','dore / docchi — which one','ichiban — the most / favorite','no hou ga — prefer / compare','yori — more than (comparison)']},
-      {t:'i-adjectives', p:['i-adjective + noun','i-adjective past','i-adjective negative','adjective past — i-adj (~katta)','adjective past negative (~kunakatta)','~sou — looks / seems','~sugi — too ~ (i-adjective)','omoshiroi / yasashii — review adjectives']},
-      {t:'na-adjectives', p:['na-adjective + noun','na-adjective past','adjective past — na-adj / noun (datta)']},
-      {t:'Describing change &amp; degree', p:['naru — become','~sugiru — do too much (verb)']},
-      {t:'Verbs — polite (–masu)', p:['past — mashita','polite negative — masen','past negative — masen deshita','~masen ka — inviting']},
-      {t:'Verbs — plain &amp; casual (incl. past)', p:['plain negative — nai','casual past — plain ta-form','plain past negative — ~nakatta','~nai no? — aren\'t you? (casual)','~nain desu ka? — you\'re not? (polite)']},
-      {t:'Verbs — te-form family', p:['te-form + kudasai','te mo ii desu ka — may I?','te wa ikemasen — must not','te wa dame desu — must not','te imasu — doing now / state','te kara — after doing','te kara — after doing (review)','te miru — try doing','te mitai — want to try']},
-      {t:'Verbs — potential (can / can\'t)', p:['potential form — can (verb)','potential — can (verb)','potential negative — can\'t','potential past — could / couldn\'t','dekiru — can / be able to','mieru / kikoeru — can see / hear']},
-      {t:'Verbs — volitional &amp; habits', p:['volitional — let\'s (~you / ~mashou)','volitional — let\'s / I\'ll (~you)','volitional + to suru — try to do','~you to omoimasu — I think I\'ll','~you to omotte imasu — I\'m planning to','you ni suru — make an effort / habit','negative habit — ~nai you ni suru','dekirudake — as much as possible']},
-      {t:'Verbs — want, plan &amp; go-to-do', p:['tai desu — want to','yotei desu — plan to','tsumori desu — going to / intend to','~ni iku — go to do']},
-      {t:'Conditionals (~tara)', p:['~tara — if / when','~tara — conditional (verb)','~tara — conditional (i-adjective)','~tara — conditional (na-adj / noun)','~tara — conditional (review)','~tara hypothetical — if you could…']},
-      {t:'Listing examples (~tari)', p:['~tari ~tari suru — do things like']},
-      {t:'Connecting ideas — because / but / when / before · after / and', p:['kara / node — because','kara — because (reason + result)','de — reason / circumstance','kedo / dakedo — but','kedo / dakedo — but (past)','toki — when','toki — when (feeling)','~toki — when (verb / noun)','kute / de — join adjectives','mae ni — before doing','no ato ni — after doing','~chuu — during / in the middle of','~dewa — in ~\'s case','konomae — the other day']},
-      {t:'Opinions, advice &amp; likelihood', p:['to omoimasu — I think','~to omoimasu — I think (L13)','ta hou ga ii — better to','~no hazu desu — should be','ga ii / demo ii desu ka — prefer / is it OK','dou deshita ka — how was it?','~ni yoru — it depends on']},
-      {t:'Existence &amp; experience', p:['arimasu / imasu — there is / exists','kyoumi ga aru — interested in','~ta koto ga aru — have done before','~ta koto ga nai — never done','nan kai — how many times','~kai me — the Nth time']},
-      {t:'Everyday verbs &amp; expressions', p:['tsurete iku — take someone along','kowagaru — gets scared','okoru — get angry','owaraseru — get things done','setsumei suru — explain','gaishutsu suru — go out','kimeru / kimaru — decide / be decided']}
+      {t:'The desu family — "X is Y", this / that, my / your', p:['desu — X is Y','no — \'s / my / your (possessive)','kore / sore / are — this one / that one','kono / sono / ano','ga suki — I like X','sentence order — Time + Place + Object + Verb','Verb + no wa — the thing that I…']},
+      {t:'The particle family (wa · ga · wo · ni · de)', p:['wo — object','ni — destination / time','de — place of action / means','ni vs de — destination vs action place','shika ~nai — only / nothing but']},
+      {t:'The question &amp; comparing family', p:['nande / doushite — why?','ka — or (choices)','dore / docchi — which one','ichiban — the most / favorite','no hou ga — prefer / compare','yori — more than (comparison)']},
+      {t:'The i-adjective family', p:['i-adjective + noun','i-adjective past','i-adjective negative','adjective past — i-adj (~katta)','adjective past negative (~kunakatta)','~sou — looks / seems','~sugi — too ~ (i-adjective)','omoshiroi / yasashii — review adjectives']},
+      {t:'The na-adjective family', p:['na-adjective + noun','na-adjective past','adjective past — na-adj / noun (datta)']},
+      {t:'The become / too-much family (naru · sugiru)', p:['naru — become','~sugiru — do too much (verb)']},
+      {t:'The polite-verb family (~masu)', p:['past — mashita','polite negative — masen','past negative — masen deshita','~masen ka — inviting']},
+      {t:'The plain &amp; past verb family (~nai · ~ta)', p:['plain negative — nai','casual past — plain ta-form','plain past negative — ~nakatta','~nai no? — aren\'t you? (casual)','~nain desu ka? — you\'re not? (polite)']},
+      {t:'The te-form family', p:['te-form + kudasai','te mo ii desu ka — may I?','te wa ikemasen — must not','te wa dame desu — must not','te imasu — doing now / state','te kara — after doing','te kara — after doing (review)','te miru — try doing','te mitai — want to try']},
+      {t:'The potential family (can / can\'t)', p:['potential form — can (verb)','potential — can (verb)','potential negative — can\'t','potential past — could / couldn\'t','dekiru — can / be able to','mieru / kikoeru — can see / hear']},
+      {t:'The volitional family (let\'s / I\'ll · habits)', p:['volitional — let\'s (~you / ~mashou)','volitional — let\'s / I\'ll (~you)','volitional + to suru — try to do','~you to omoimasu — I think I\'ll','~you to omotte imasu — I\'m planning to','you ni suru — make an effort / habit','negative habit — ~nai you ni suru','dekirudake — as much as possible']},
+      {t:'The want / plan family (~tai · yotei · tsumori)', p:['tai desu — want to','yotei desu — plan to','tsumori desu — going to / intend to','~ni iku — go to do']},
+      {t:'The ~tara family (if / when)', p:['~tara — if / when','~tara — conditional (verb)','~tara — conditional (i-adjective)','~tara — conditional (na-adj / noun)','~tara — conditional (review)','~tara hypothetical — if you could…']},
+      {t:'The ~tari family (listing examples)', p:['~tari ~tari suru — do things like']},
+      {t:'The connector family (because · but · when · before/after · and)', p:['kara / node — because','kara — because (reason + result)','de — reason / circumstance','kedo / dakedo — but','kedo / dakedo — but (past)','toki — when','toki — when (feeling)','~toki — when (verb / noun)','kute / de — join adjectives','mae ni — before doing','no ato ni — after doing','~chuu — during / in the middle of','~dewa — in ~\'s case','konomae — the other day']},
+      {t:'The opinion family (to omoimasu · hazu · hou ga ii)', p:['to omoimasu — I think','~to omoimasu — I think (L13)','ta hou ga ii — better to','~no hazu desu — should be','ga ii / demo ii desu ka — prefer / is it OK','dou deshita ka — how was it?','~ni yoru — it depends on']},
+      {t:'The existence &amp; experience family', p:['arimasu / imasu — there is / exists','kyoumi ga aru — interested in','~ta koto ga aru — have done before','~ta koto ga nai — never done','nan kai — how many times','~kai me — the Nth time']},
+      {t:'The everyday-expression family', p:['tsurete iku — take someone along','kowagaru — gets scared','okoru — get angry','owaraseru — get things done','setsumei suru — explain','gaishutsu suru — go out','kimeru / kimaru — decide / be decided']}
     ];
     const used={};
     function tableFor(pats){
@@ -12722,6 +12742,104 @@ if (typeof window !== 'undefined') window.Progress = Progress;
   }
   const nav=document.querySelector('nav button[data-tab="progress"]'); if(nav) nav.addEventListener('click', render);
   try{ render(); }catch(e){}   // initial paint so the tab is never blank
+})();
+
+/* ---------- TRAVEL PHRASES (practical everyday Japanese, self-check flashcards) ---------- */
+const TRAVELPH=[
+  // Getting around
+  {cat:'Getting around', en:'Excuse me… (to get attention / sorry)', ja:'Sumimasen.'},
+  {cat:'Getting around', en:'Where is the station?', ja:'Eki wa doko desu ka?'},
+  {cat:'Getting around', en:'Where is the bathroom?', ja:'Toire wa doko desu ka?'},
+  {cat:'Getting around', en:'Does this train go to Shibuya?', ja:'Kono densha wa Shibuya ni ikimasu ka?'},
+  {cat:'Getting around', en:'Which platform (track number)?', ja:'Nanbansen desu ka?'},
+  {cat:'Getting around', en:'One ticket to Kyoto, please.', ja:'Kyouto made ichimai onegaishimasu.'},
+  {cat:'Getting around', en:'To this address, please. (in a taxi)', ja:'Kono juusho made onegaishimasu.'},
+  {cat:'Getting around', en:'How much is it to the airport?', ja:'Kuukou made ikura desu ka?'},
+  {cat:'Getting around', en:'Please stop here.', ja:'Koko de tomete kudasai.'},
+  {cat:'Getting around', en:'Please go straight.', ja:'Massugu itte kudasai.'},
+  {cat:'Getting around', en:'Please turn right / left.', ja:'Migi / hidari ni magatte kudasai.'},
+  {cat:'Getting around', en:'Is it far?', ja:'Tooi desu ka?'},
+  {cat:'Getting around', en:"I'm lost.", ja:'Michi ni mayoimashita.'},
+  {cat:'Getting around', en:'Could you show me the way?', ja:'Michi wo oshiete kuremasen ka?'},
+  // Eating & shopping
+  {cat:'Eating & shopping', en:'How much is this?', ja:'Kore wa ikura desu ka?'},
+  {cat:'Eating & shopping', en:"I'll take this one.", ja:'Kore wo kudasai.'},
+  {cat:'Eating & shopping', en:"I'm just looking, thanks.", ja:'Mite iru dake desu.'},
+  {cat:'Eating & shopping', en:'Do you take credit cards?', ja:'Kaado wa tsukaemasu ka?'},
+  {cat:'Eating & shopping', en:'Can I pay with cash?', ja:'Genkin de ii desu ka?'},
+  {cat:'Eating & shopping', en:'Is tax included?', ja:'Zeikomi desu ka?'},
+  {cat:'Eating & shopping', en:'A bag, please.', ja:'Fukuro wo onegaishimasu.'},
+  {cat:'Eating & shopping', en:'Can I try this on?', ja:'Shichaku shite mo ii desu ka?'},
+  {cat:'Eating & shopping', en:'Do you have a bigger / smaller size?', ja:'Motto ookii / chiisai saizu wa arimasu ka?'},
+  {cat:'Eating & shopping', en:'Where is the register?', ja:'Reji wa doko desu ka?'},
+  {cat:'Eating & shopping', en:'A receipt, please.', ja:'Reshiito wo onegaishimasu.'},
+  // Restaurants
+  {cat:'Restaurants', en:"I'd like to make a reservation.", ja:'Yoyaku wo onegaishimasu.'},
+  {cat:'Restaurants', en:'A table for two, please.', ja:'Futari onegaishimasu.'},
+  {cat:'Restaurants', en:'Excuse me, can I order?', ja:'Sumimasen, chuumon ii desu ka?'},
+  {cat:'Restaurants', en:'Do you have an English menu?', ja:'Eigo no menyuu wa arimasu ka?'},
+  {cat:'Restaurants', en:'What do you recommend?', ja:'Osusume wa nan desu ka?'},
+  {cat:'Restaurants', en:"I'll have this, please.", ja:'Kore wo onegaishimasu.'},
+  {cat:'Restaurants', en:'One of these, please.', ja:'Kore wo hitotsu kudasai.'},
+  {cat:'Restaurants', en:'Water, please.', ja:'Omizu wo onegaishimasu.'},
+  {cat:'Restaurants', en:'Is this spicy?', ja:'Kore wa karai desu ka?'},
+  {cat:'Restaurants', en:"I can't eat raw fish.", ja:'Nama no sakana wa taberaremasen.'},
+  {cat:'Restaurants', en:'The check, please.', ja:'Okaikei onegaishimasu.'},
+  {cat:'Restaurants', en:'Can we pay separately?', ja:'Betsubetsu de onegaishimasu.'},
+  {cat:'Restaurants', en:"To go, please. (takeout)", ja:'Mochikaeri de onegaishimasu.'},
+  {cat:'Restaurants', en:'It was delicious. (thanks for the meal)', ja:'Gochisousama deshita.'},
+  // Meeting people / small talk
+  {cat:'Meeting people', en:'Hello / Good afternoon.', ja:'Konnichiwa.'},
+  {cat:'Meeting people', en:'Nice to meet you.', ja:'Hajimemashite.'},
+  {cat:'Meeting people', en:"I'm Gen. (introducing yourself)", ja:'Gen to moushimasu.'},
+  {cat:'Meeting people', en:"What's your name?", ja:'Onamae wa nan desu ka?'},
+  {cat:'Meeting people', en:'Where are you from?', ja:'Doko kara kimashita ka?'},
+  {cat:'Meeting people', en:"I'm from America.", ja:'Amerika kara kimashita.'},
+  {cat:'Meeting people', en:'Do you speak English?', ja:'Eigo wo hanasemasu ka?'},
+  {cat:'Meeting people', en:"I'm still learning Japanese.", ja:'Mada nihongo wo benkyou shite imasu.'},
+  {cat:'Meeting people', en:'Only a little.', ja:'Sukoshi dake desu.'},
+  {cat:'Meeting people', en:'It was nice to meet you.', ja:'Oai dekite yokatta desu.'},
+  {cat:'Meeting people', en:'See you / take care.', ja:'Mata ne.'},
+  // Daily life & logistics
+  {cat:'Daily life', en:'Thank you very much.', ja:'Arigatou gozaimasu.'},
+  {cat:'Daily life', en:'Check-in, please.', ja:'Chekkuin onegaishimasu.'},
+  {cat:'Daily life', en:'I have a reservation under Gen.', ja:'Gen de yoyaku shite imasu.'},
+  {cat:'Daily life', en:'What time is check-out?', ja:'Chekkuauto wa nanji desu ka?'},
+  {cat:'Daily life', en:"I don't understand.", ja:'Wakarimasen.'},
+  {cat:'Daily life', en:'Could you say that again?', ja:'Mou ichido onegaishimasu.'},
+  {cat:'Daily life', en:'Could you speak more slowly?', ja:'Mou sukoshi yukkuri onegaishimasu.'},
+  {cat:'Daily life', en:'One moment, please.', ja:'Chotto matte kudasai.'},
+  {cat:'Daily life', en:'Could you help me?', ja:'Tetsudatte kuremasen ka?'},
+  {cat:'Daily life', en:'Is there wifi?', ja:'Waifai wa arimasu ka?'},
+  {cat:'Daily life', en:'Can I charge my phone here?', ja:'Koko de juuden shite mo ii desu ka?'},
+  {cat:'Daily life', en:"I'm okay, thank you. (declining)", ja:'Daijoubu desu.'},
+  {cat:'Daily life', en:'No, thank you.', ja:'Iie, kekkou desu.'},
+  {cat:'Daily life', en:'Yes, please.', ja:'Hai, onegaishimasu.'}
+];
+(function(){
+  const sec=document.getElementById('travel'); if(!sec) return;
+  const $=id=>document.getElementById(id);
+  const cats=[...new Set(TRAVELPH.map(p=>p.cat))];
+  let cur='All', pos=0, flipped=false;
+  function pool(){ return cur==='All'?TRAVELPH.slice():TRAVELPH.filter(p=>p.cat===cur); }
+  function chips(){ $('tphCats').innerHTML=['All',...cats].map(c=>'<button class="btn'+(c===cur?' primary':'')+'" type="button" data-c="'+c+'">'+c+'</button>').join('');
+    $('tphCats').querySelectorAll('[data-c]').forEach(b=>b.onclick=()=>{ cur=b.dataset.c; pos=0; chips(); draw(); list(); }); }
+  function draw(){ const P=pool(); if(!P.length) return; if(pos>=P.length)pos=0; const p=P[pos]; flipped=false;
+    $('tphCat').textContent=p.cat; $('tphEn').textContent=p.en;
+    $('tphJa').innerHTML='<span class="hint">Tap “Show Japanese” (or the card) to reveal.</span>';
+    $('tphProg').textContent=(pos+1)+' / '+P.length; const sb=$('tphShow'); if(sb){ sb.textContent='Show Japanese'; sb.disabled=false; } }
+  function flip(){ const P=pool(); const p=P[pos]; if(!p) return; flipped=true;
+    $('tphJa').innerHTML=annotate(p.ja); const sb=$('tphShow'); if(sb){ sb.textContent='Shown'; sb.disabled=true; }
+    try{ speakSentenceClear(p.ja); }catch(e){} }
+  function list(){ const P=pool();
+    $('tphList').innerHTML='<table style="width:100%;border-collapse:collapse">'+P.map((p,i)=>
+      '<tr class="tphRow" data-i="'+i+'" style="border-bottom:1px solid var(--line);cursor:pointer"><td style="padding:7px 12px 7px 0;color:var(--ink2);font-size:.9rem;width:42%;vertical-align:top">'+p.en+'</td><td style="padding:7px 0" class="pj">'+annotate(p.ja)+'</td></tr>').join('')+'</table>';
+    $('tphList').querySelectorAll('.tphRow').forEach(tr=>tr.onclick=e=>{ if(e.target.closest('button'))return; try{ speakSentenceClear(P[+tr.dataset.i].ja); }catch(err){} }); }
+  $('tphShow').onclick=flip;
+  $('tphCard').onclick=e=>{ if(e.target.closest('button'))return; if(!flipped) flip(); };
+  $('tphNext').onclick=()=>{ pos=(pos+1)%(pool().length||1); draw(); };
+  $('tphShuffle').onclick=()=>{ TRAVELPH.sort(()=>Math.random()-0.5); pos=0; draw(); list(); };
+  chips(); draw(); list();
 })();
 </script>
 </body>
