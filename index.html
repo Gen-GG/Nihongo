@@ -396,7 +396,7 @@
   <button data-tab="practice">Practice</button>
   <button data-tab="cards">Flashcards</button>
   <button data-tab="quiz">Quiz</button>
-  <button data-tab="travel">✈ Phrases</button>
+  <button data-tab="travel">Phrases</button>
   <button data-tab="kana">あ Kana</button>
   <button data-tab="homework">Homework</button>
   <button data-tab="progress">Progress</button>
@@ -550,8 +550,13 @@
 
 
   <div class="lesson-block" data-lesson="all">
-    <h3 style="color:var(--accent)">Grammar patterns — all lessons</h3>
-    <div class="tip">The core grammar from every lesson, each with one strong example. Vocab, grouped by theme, is below.</div>
+    <h3 style="color:var(--accent)">Look up any word — all lessons</h3>
+    <input id="allNotesSearch" class="quiz-input" placeholder="search any word or meaning — e.g. water, mizu, to eat…" style="max-width:520px;margin:2px 0 6px" autocorrect="off" autocapitalize="off" spellcheck="false">
+    <div id="allNotesCount" style="font-size:.82rem;color:var(--ink2);min-height:1.1em;margin-bottom:12px"></div>
+    <div id="allNotes"></div>
+
+    <h3 style="color:var(--accent);margin-top:28px">Grammar patterns — all lessons</h3>
+    <div class="tip">The core grammar from every lesson, each with one strong example.</div>
 
     <h4>1 · Word order — the verb comes last</h4>
     <div class="tip">Japanese tags each word with a <b>particle</b>, then the <b>verb (or <span class="cw">desu</span>) lands at the very end</b>. The middle can shuffle; the end anchors the sentence.</div>
@@ -646,8 +651,6 @@
     <div class="tip"><b><span class="cw">kai</span></b> = times. 4·7·9 have two readings — safe: <b><span class="cw">yon</span> / <span class="cw">nana</span> / <span class="cw">kyuu</span></b>; time keeps <b><span class="cw">yo</span>-<span class="cw">ji</span>, <span class="cw">shichi</span>-<span class="cw">ji</span>, <span class="cw">ku</span>-<span class="cw">ji</span></b>.</div>
     <div class="ex"><b><span class="cw">Isshuukan</span> <span class="cw">ni</span> <span class="cw">sankai</span> <span class="cw">souji</span> <span class="cw">shimasu</span>.</b> — I clean three times a week.</div>
 
-    <h3>Vocabulary — grouped by theme</h3>
-    <div id="allNotes"></div>
   </div>
 
   <div class="lesson-block" data-lesson="trial">
@@ -3375,6 +3378,44 @@
   </div>
   <h3 style="margin-top:22px">All phrases in this situation <span style="font-weight:400;font-size:.85rem;color:var(--ink2)">— tap any line to hear it</span></h3>
   <div class="note" id="tphList"></div>
+
+  <hr style="border:none;border-top:1px solid var(--line);margin:28px 0">
+  <div id="trip">
+  <style>
+    #trip .trip-sec{border:1px solid var(--line);border-radius:12px;margin:10px 0;overflow:hidden;background:var(--card,#fff)}
+    #trip .trip-sec>summary{cursor:pointer;list-style:none;padding:13px 16px;font-weight:700;font-size:1.05rem;color:var(--ink);display:flex;align-items:center;gap:10px}
+    #trip .trip-sec>summary::-webkit-details-marker{display:none}
+    #trip .trip-sec>summary .chev{margin-left:auto;color:var(--ink2);font-size:.9rem;transition:transform .15s}
+    #trip .trip-sec[open]>summary .chev{transform:rotate(90deg)}
+    #trip .trip-sec[open]>summary{border-bottom:1px solid var(--line)}
+    #trip .trip-sec .seclip{font-size:.82rem;color:var(--ink2);font-weight:400;padding:0 16px 10px}
+    #trip .trip-body{padding:4px 10px 10px}
+    #trip .trip-ph{padding:10px 8px;border-bottom:1px solid var(--line)}
+    #trip .trip-ph:last-child{border-bottom:none}
+    #trip .trip-en{font-weight:600;color:var(--ink);font-size:.98rem}
+    #trip .trip-ro{color:#1560c0;font-weight:600;font-size:1.02rem;cursor:pointer}
+    #trip .trip-w{cursor:pointer;border-radius:3px;padding:0 1px}
+    #trip .trip-w:hover{background:#eaf2ff}
+    #trip .trip-hint{background:transparent;border-left:3px solid var(--ink2);margin-left:10px;padding:7px 12px}
+    #trip .trip-hint .trip-en{font-weight:400;font-style:italic;color:var(--ink2);font-size:.86rem}
+    #trip .trip-kn{color:var(--ink2);font-size:.92rem;margin-top:1px}
+    #trip .trip-play{border:1px solid var(--line);background:transparent;border-radius:999px;width:28px;height:28px;cursor:pointer;color:var(--accent);font-size:.8rem;vertical-align:middle;margin-left:6px;padding:0}
+    #trip .trip-play:hover{background:var(--accent);color:#fff}
+    #trip mark{background:#fff3a3;color:inherit;border-radius:3px}
+    #trip .trip-ph.reply{background:var(--bg2,#f3f7f3);border-left:3px solid var(--accent);margin-left:10px;padding-left:12px;border-bottom:1px solid var(--line)}
+    #trip .who{display:inline-block;font-size:.66rem;text-transform:uppercase;letter-spacing:.05em;font-weight:800;padding:1px 6px;border-radius:999px;margin-right:7px;vertical-align:middle}
+    #trip .who.staff{background:#e4ecff;color:#1c47a6}
+    #trip .who.you{background:#e3f5e6;color:#1f7a37}
+  </style>
+  <h2 style="margin-top:4px">Your Japan trip — phrases by situation</h2>
+  <div class="tip">Everything you'll likely need, organized by moment. <b>Each situation is its own section</b> — tap a title to open just that one (they start closed, so it's calm to scan). Every line shows the <b>English</b>, the <b>romaji</b> to say, and the <b>kana</b> below. <b>Tap any word</b> (or the whole line) to hear it. Great to study offline on the plane (audio needs internet).</div>
+  <input id="tripSearch" class="quiz-input" placeholder="search e.g. 'ticket', 'allergy', 'how much'…" style="max-width:520px;margin:4px 0 10px" autocorrect="off" autocapitalize="off" spellcheck="false">
+  <div style="margin:0 0 10px">
+    <button class="btn" id="tripOpenAll" style="font-size:.85rem">Open all</button>
+    <button class="btn" id="tripCloseAll" style="font-size:.85rem">Close all</button>
+  </div>
+  <div id="tripBody"></div>
+  </div>
 </section>
 
 <!-- ============ KANA ============ -->
@@ -10025,16 +10066,16 @@ function renderAllNotes(){
         ["List — ~tari (do things like)","tabetari","nondari"],
         ["Too much — ~sugiru","tabesugiru","nomisugiru"]
       ];
-      html+=`<div style="border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin:8px 0 16px;background:var(--card)">`;
+      html+=`<div class="an-conjref" style="border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin:8px 0 16px;background:var(--card)">`;
       html+=`<div style="font-weight:700;margin-bottom:8px;color:var(--accent)">All verb conjugations (through Lesson 16) — Group 2 <span style="color:#1560c0">taberu</span> · Group 1 <span style="color:#1560c0">nomu</span></div>`;
       html+=CF.map(r=>`<div style="display:grid;grid-template-columns:minmax(150px,1.2fr) 1fr 1fr;gap:8px;align-items:baseline;padding:3px 0;border-top:1px solid var(--line)"><span style="color:var(--ink2);font-size:.82em">${r[0]}</span><span style="color:#1560c0;font-weight:600">${annotate(r[1])}</span><span style="color:#1560c0;font-weight:600">${annotate(r[2])}</span></div>`).join("");
       html+=`<div style="margin-top:9px;font-size:.84em;color:var(--ink2)"><b>Irregulars:</b> suru → ${annotate("shimasu")} / ${annotate("shite")} / ${annotate("shita")} / ${annotate("shinai")} / ${annotate("dekiru")} (can) / ${annotate("shiyou")} (let's). &nbsp; kuru → ${annotate("kimasu")} / ${annotate("kite")} / ${annotate("kita")} / ${annotate("konai")} / ${annotate("koreru")} / ${annotate("koyou")}. &nbsp; iku → ${annotate("ikimasu")} / ${annotate("itte")} / ${annotate("itta")} (special te/ta).</div>`;
       html+=`<div style="margin-top:6px;font-size:.84em;color:var(--ink2)"><b>Adjectives:</b> i-adj ${annotate("takai")} → ${annotate("takakunai")} / ${annotate("takakatta")} / ${annotate("takakunakatta")} / ${annotate("takakute")} / ${annotate("takasou")} (looks) / ${annotate("takasugi")} (too). &nbsp; na-adj ${annotate("kirei")} → ${annotate("kirei")} ja nai / ${annotate("kirei")} ${annotate("datta")} / ${annotate("kirei")} de / ${annotate("kirei")} ni ${annotate("naru")}.</div>`;
       html+=`</div>`;
-      html+=`<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin:8px 0 18px">`;
+      html+=`<div class="an-verbgrid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin:8px 0 18px">`;
       VERBS.forEach(f=>{
         const lines=f.forms.map(fm=>`<div style="display:flex;gap:8px;align-items:baseline;margin:2px 0"><span style="min-width:62px;color:var(--ink2);font-size:.78em">${fm[1]}</span><span style="color:#1560c0;font-weight:600">${annotate(fm[0])}</span></div>`).join("");
-        html+=`<div style="border:1px solid var(--line);border-radius:10px;padding:9px 11px;background:var(--card)"><div style="font-weight:600;margin-bottom:5px;color:var(--ink)">${f.en}</div>${lines}</div>`;
+        html+=`<div class="an-vcard" style="border:1px solid var(--line);border-radius:10px;padding:9px 11px;background:var(--card)"><div style="font-weight:600;margin-bottom:5px;color:var(--ink)">${f.en}</div>${lines}</div>`;
       });
       html+=`</div>`;
       return;
@@ -10081,6 +10122,40 @@ function renderAllNotes(){
   box.innerHTML=html;
 }
 renderAllNotes();
+
+/* ---- All-Notes live search: filter vocab rows + verb cards by romaji / kana / meaning ---- */
+(function(){
+  const inp=document.getElementById('allNotesSearch'), box=document.getElementById('allNotes'), count=document.getElementById('allNotesCount');
+  if(!inp||!box) return;
+  function run(){
+    const q=(inp.value||'').trim().toLowerCase();
+    // 1) rows in tables + verb cards: show/hide individually
+    const rows=box.querySelectorAll('tr');
+    const vcards=box.querySelectorAll('.an-vcard');
+    let hits=0;
+    rows.forEach(tr=>{ const ok=!q||tr.textContent.toLowerCase().includes(q); tr.style.display=ok?'':'none'; if(q&&ok)hits++; });
+    vcards.forEach(c=>{ const ok=!q||c.textContent.toLowerCase().includes(q); c.style.display=ok?'':'none'; if(q&&ok)hits++; });
+    // the big conjugation-reference block + adjective legend are reference-only → hide while searching
+    box.querySelectorAll('.an-conjref,.adj-legend').forEach(e=>{ e.style.display=q?'none':''; });
+    // 2) walk sections (each <h3> + the elements until the next <h3>); hide a section with nothing visible
+    let group=null; const groups=[];
+    [...box.children].forEach(el=>{ if(el.tagName==='H3'){ groups.push(group=[el]); } else if(group){ group.push(el); } else { groups.push([el]); } });
+    groups.forEach(g=>{
+      const has = !q || g.some(el=> el.querySelectorAll && (
+        [...el.querySelectorAll('tr')].some(t=>t.style.display!=='none') ||
+        [...el.querySelectorAll('.an-vcard')].some(c=>c.style.display!=='none')
+      ));
+      g.forEach(el=>{
+        if(q && el.classList && (el.classList.contains('an-conjref')||el.classList.contains('adj-legend'))){ el.style.display='none'; return; }
+        el.style.display = has ? '' : 'none';
+      });
+    });
+    count.textContent = q ? (hits? hits+' match'+(hits===1?'':'es')+' for "'+inp.value.trim()+'"' : 'No matches for "'+inp.value.trim()+'" — try the romaji or the English meaning.') : '';
+  }
+  inp.addEventListener('input', run);
+  // re-focus clears nothing; pressing Esc clears
+  inp.addEventListener('keydown', e=>{ if(e.key==='Escape'){ inp.value=''; run(); } });
+})();
 
 /* ---------- GRAMMAR: pick-the-particle drill ---------- */
 /* Phonetic romaji -> kana, so conjugated forms and words not in the dictionary
@@ -13525,7 +13600,8 @@ const TRAVELPH=[
   {cat:'Eating & shopping', en:'A receipt, please.', ja:'Reshiito wo onegaishimasu.'},
   // Restaurants
   {cat:'Restaurants', en:"I'd like to make a reservation.", ja:'Yoyaku wo onegaishimasu.'},
-  {cat:'Restaurants', en:'A table for two, please.', ja:'Futari onegaishimasu.'},
+  {cat:'Restaurants', en:'Two people. (answering "how many?")', ja:'Futari desu.'},
+  {cat:'Restaurants', en:'For two, please. (at the door)', ja:'Ni-mei de onegaishimasu.'},
   {cat:'Restaurants', en:'Excuse me, can I order?', ja:'Sumimasen, chuumon ii desu ka?'},
   {cat:'Restaurants', en:'Do you have an English menu?', ja:'Eigo no menyuu wa arimasu ka?'},
   {cat:'Restaurants', en:'What do you recommend?', ja:'Osusume wa nan desu ka?'},
@@ -13590,6 +13666,310 @@ const TRAVELPH=[
   $('tphNext').onclick=()=>{ pos=(pos+1)%(pool().length||1); draw(); };
   $('tphShuffle').onclick=()=>{ TRAVELPH.sort(()=>Math.random()-0.5); pos=0; draw(); list(); };
   chips(); draw(); list();
+})();
+
+/* ================= TRIP — scenario travel guide ================= */
+(function(){
+  const $=id=>document.getElementById(id);
+  if(!$('tripBody')) return;
+  // Each section: {icon, title, tip, items:[[English, romaji, kana], ...]}
+  const TRIP=[
+    {title:"Essentials & “I don’t understand”", tip:"The lines that rescue any conversation. Memorize these first.", items:[
+      ["Thank you (very much).","Arigatou gozaimasu.","ありがとうございます。"],
+      ["Excuse me / Sorry. (also to get attention)","Sumimasen.","すみません。"],
+      ["Please.","Onegaishimasu.","おねがいします。"],
+      ["Yes. / No.","Hai. / Iie.","はい。／いいえ。"],
+      ["I'm okay, thanks. (declining)","Daijoubu desu.","だいじょうぶです。"],
+      ["Sorry, one more time please.","Sumimasen, mou ichido onegaishimasu.","すみません、もういちどおねがいします。"],
+      ["Please speak more slowly.","Motto yukkuri onegaishimasu.","もっとゆっくりおねがいします。"],
+      ["Sorry, I don't understand.","Sumimasen, wakarimasen.","すみません、わかりません。"],
+      ["What is this?","Kore wa nan desu ka?","これはなんですか？"],
+      ["Is it here?","Koko desu ka?","ここですか？"],
+      ["Is this okay?","Kore de daijoubu desu ka?","これでだいじょうぶですか？"],
+      ["How do I use this?","Kore, douyatte tsukaimasu ka?","これ、どうやってつかいますか？"],
+      ["Can this be in English?","Eigo ni dekimasu ka?","えいごにできますか？"]
+    ]},
+    {title:"Immigration & passport control", tip:"Catch the key word, answer short. Blue = officer · green = you.", items:[
+      ["Passport, please.","Pasupooto onegaishimasu.","パスポートおねがいします。","staff"],
+      ["Yes, here you go.","Hai, douzo.","はい、どうぞ。","you"],
+      ["How long will you be in Japan?","Nihon ni dore kurai imasu ka?","にほんにどれくらいいますか？","staff"],
+      ["Two weeks.","Nishuukan desu.","にしゅうかんです。","you"],
+      ["Listen for: dore kurai = how long / how much","","","hint"],
+      ["Are you here for travel?","Ryokou desu ka?","りょこうですか？","staff"],
+      ["Yes, I'm traveling.","Hai, ryokou desu.","はい、りょこうです。","you"],
+      ["Are you here for tourism?","Kankou desu ka?","かんこうですか？","staff"],
+      ["Yes, that's right.","Hai, sou desu.","はい、そうです。","you"],
+      ["Where are you staying?","Doko ni tomarimasu ka?","どこにとまりますか？","staff"],
+      ["First, we're staying in Tokyo.","Saisho wa Tokyo ni tomarimasu.","さいしょはとうきょうにとまります。","you"],
+      ["Listen for: doko = where · tomaru = stay overnight","","","hint"],
+      ["Have you been to Japan before?","Nihon ni kita koto ga arimasu ka?","にほんにきたことがありますか？","staff"],
+      ["Yes, I have.","Hai, arimasu.","はい、あります。","you"]
+    ]},
+    {title:"Customs", tip:"Almost always a simple yes/no. Listen for the noun they name.", items:[
+      ["Anything to declare?","Shinkoku suru mono wa arimasu ka?","しんこくするものはありますか？","staff"],
+      ["No, I don't.","Iie, arimasen.","いいえ、ありません。","you"],
+      ["Do you have any food?","Tabemono wa arimasu ka?","たべものはありますか？","staff"],
+      ["No.","Iie, arimasen.","いいえ、ありません。","you"],
+      ["Do you have meat?","Niku wa arimasu ka?","にくはありますか？","staff"],
+      ["Do you have fruit?","Kudamono wa arimasu ka?","くだものはありますか？","staff"]
+    ]},
+    {title:"Airport train to Shibuya", tip:"Buy tickets, find the platform, check it's the right train. Repeating their answer back is a great trick.", items:[
+      ["Two tickets to Shibuya, please.","Sumimasen. Shibuya made no kippu o futari-bun onegaishimasu.","すみません。しぶやまでのきっぷをふたりぶんおねがいします。","you"],
+      ["(easier) To Shibuya, for two.","Shibuya made, futari desu.","しぶやまで、ふたりです。","you"],
+      ["One way?","Katamichi desu ka?","かたみちですか？","staff"],
+      ["Yes, one way.","Hai, katamichi desu.","はい、かたみちです。","you"],
+      ["Listen for: katamichi = one way (oufuku = round trip)","","","hint"],
+      ["Would you like a reserved seat?","Shitei-seki ni shimasu ka?","していせきにしますか？","staff"],
+      ["Yes, please. / No, it's okay.","Hai, onegaishimasu. / Iie, daijoubu desu.","はい、おねがいします。／いいえ、だいじょうぶです。","you"],
+      ["Which platform is it?","Nanban-sen desu ka?","なんばんせんですか？","you"],
+      ["Platform 3.","Sanban-sen desu.","さんばんせんです。","staff"],
+      ["Platform 3? (repeat to confirm)","Sanban-sen desu ka?","さんばんせんですか？","you"],
+      ["Excuse me, does this train go to Shibuya?","Sumimasen. Kono densha wa Shibuya ni ikimasu ka?","すみません。このでんしゃはしぶやにいきますか？","you"],
+      ["Yes, it does. / No, it doesn't.","Hai, ikimasu. / Iie, ikimasen.","はい、いきます。／いいえ、いきません。","staff"],
+      ["You need to transfer.","Norikae ga hitsuyou desu.","のりかえがひつようです。","staff"],
+      ["Where do I transfer?","Doko de norikaemasu ka?","どこでのりかえますか？","you"]
+    ]},
+    {title:"Taxi", tip:"Show the address on your phone. Doors open automatically; no tipping.", items:[
+      ["To this address, please.","Kono juusho made onegaishimasu.","このじゅうしょまでおねがいします。","you"],
+      ["To Shibuya station, please.","Shibuya eki made onegaishimasu.","しぶやえきまでおねがいします。","you"],
+      ["About how much will it be?","Ikura kurai desu ka?","いくらくらいですか？","you"],
+      ["Please stop here.","Koko de tomete kudasai.","ここでとめてください。","you"],
+      ["Could I have a receipt?","Reshiito wo moraemasu ka?","レシートをもらえますか？","you"]
+    ]},
+    {title:"Hotel check-in", tip:"Reservation name + passport is usually all they need.", items:[
+      ["I have a reservation under Gen.","Gen de yoyaku shite imasu.","ゲンでよやくしています。","you"],
+      ["What time is check-out?","Chekkuauto wa nanji desu ka?","チェックアウトはなんじですか？","you"],
+      ["Is breakfast included?","Choushoku wa tsuite imasu ka?","ちょうしょくはついていますか？","you"],
+      ["Could you hold my luggage?","Nimotsu wo azukatte moraemasu ka?","にもつをあずかってもらえますか？","you"],
+      ["What's the Wi-Fi password?","Waifai no pasuwaado wa nan desu ka?","ワイファイのパスワードはなんですか？","you"]
+    ]},
+    {title:"Café — all the follow-up questions", tip:"The biggest one: they fire lots of quick questions. Just catch the key word and answer with '… de onegaishimasu'.", items:[
+      ["Welcome. (no reply needed)","Irasshaimase.","いらっしゃいませ。","staff"],
+      ["How many people?","Nanmei-sama desu ka?","なんめいさまですか？","staff"],
+      ["Two people.","Futari desu.","ふたりです。","you"],
+      ["Listen for: nanmei = how many people","","","hint"],
+      ["One cafe latte, please.","Kafe rate hitotsu onegaishimasu.","カフェラテひとつおねがいします。","you"],
+      ["One iced cafe latte, please.","Aisu kafe rate hitotsu onegaishimasu.","アイスカフェラテひとつおねがいします。","you"],
+      ["One matcha latte, please.","Matcha rate hitotsu onegaishimasu.","まっちゃラテひとつおねがいします。","you"],
+      ["Hot or iced?","Hotto desu ka? Aisu desu ka?","ホットですか？アイスですか？","staff"],
+      ["Iced, please. / Hot, please.","Aisu de onegaishimasu. / Hotto de onegaishimasu.","アイスでおねがいします。／ホットでおねがいします。","you"],
+      ["Listen for: hotto / aisu","","","hint"],
+      ["What size? (or just 'Saizu wa?')","Saizu wa dou shimasu ka?","サイズはどうしますか？","staff"],
+      ["Medium, please.","M saizu de onegaishimasu.","Mサイズでおねがいします。","you"],
+      ["What kind of milk?","Miruku wa nani ni shimasu ka?","ミルクはなににしますか？","staff"],
+      ["Oat milk, please.","Ooto miruku de onegaishimasu.","オートミルクでおねがいします。","you"],
+      ["Milk words: gyuunyuu = dairy · ooto miruku = oat · tounyuu = soy · aamondo miruku = almond","","","hint"],
+      ["Would you like milk? (with coffee)","Miruku wa irimasu ka?","ミルクはいりますか？","staff"],
+      ["Yes, please. / No, thank you.","Hai, onegaishimasu. / Iie, daijoubu desu.","はい、おねがいします。／いいえ、だいじょうぶです。","you"],
+      ["Would you like sugar?","Satou wa irimasu ka?","さとうはいりますか？","staff"],
+      ["No, thank you.","Iie, daijoubu desu.","いいえ、だいじょうぶです。","you"],
+      ["How sweet would you like it?","Amassa wa dou shimasu ka?","あまさはどうしますか？","staff"],
+      ["Less sweet, please.","Amassa wa sukuname de onegaishimasu.","あまさはすくなめでおねがいします。","you"],
+      ["Sweetness: futsuu = regular · sukuname = less · nashi = none","","","hint"],
+      ["How much ice?","Koori wa dou shimasu ka?","こおりはどうしますか？","staff"],
+      ["Less, please.","Sukuname de onegaishimasu.","すくなめでおねがいします。","you"],
+      ["Ice: futsuu = regular · sukuname = less · nashi = none","","","hint"],
+      ["Will you be eating here?","Kochira de omeshiagari desu ka?","こちらでおめしあがりですか？","staff"],
+      ["Yes, I'll eat here. / To go, please.","Hai, koko de tabemasu. / Mochikaeri de onegaishimasu.","はい、ここでたべます。／もちかえりでおねがいします。","you"],
+      ["Listen for: kochira (here) · mochikaeri (takeaway)","","","hint"],
+      ["Would you like it heated?","Atatamemasu ka?","あたためますか？","staff"],
+      ["Yes, please. / No, thank you.","Hai, onegaishimasu. / Iie, daijoubu desu.","はい、おねがいします。／いいえ、だいじょうぶです。","you"],
+      ["Would you like your drink first?","Nomimono wa saki ni shimasu ka?","のみものはさきにしますか？","staff"],
+      ["Yes, drink first please. / Together is fine.","Hai, saki ni onegaishimasu. / Issho de daijoubu desu.","はい、さきにおねがいします。／いっしょでだいじょうぶです。","you"]
+    ]},
+    {title:"Restaurant — seating to ordering", tip:"They'll ask about protein, rice, spice, sauce, sides. Catch the key word; answer '… de onegaishimasu'.", items:[
+      ["How many people?","Nanmei-sama desu ka?","なんめいさまですか？","staff"],
+      ["Two.","Futari desu.","ふたりです。","you"],
+      ["Do you have a reservation?","Goyoyaku wa arimasu ka?","ごよやくはありますか？","staff"],
+      ["No. / Yes, I have a reservation.","Iie, arimasen. / Hai, yoyaku shite imasu.","いいえ、ありません。／はい、よやくしています。","you"],
+      ["Counter or table?","Kauntaa to teeburu, dochira ga ii desu ka?","カウンターとテーブル、どちらがいいですか？","staff"],
+      ["A table, please. / Counter is fine.","Teeburu ga ii desu. / Kauntaa de daijoubu desu.","テーブルがいいです。／カウンターでだいじょうぶです。","you"],
+      ["Have you decided what to order?","Gochuumon wa okimari desu ka?","ごちゅうもんはおきまりですか？","staff"],
+      ["Yes. / Not yet. / A little more time, please.","Hai. / Mada desu. / Mou sukoshi onegaishimasu.","はい。／まだです。／もうすこしおねがいします。","you"],
+      ["This one, please. (pointing)","Kore onegaishimasu.","これおねがいします。","you"],
+      ["What protein would you like?","Oniku wa nani ni shimasu ka?","おにくはなににしますか？","staff"],
+      ["We have chicken, pork, and beef.","Toriniku, butaniku, gyuuniku ga arimasu.","とりにく、ぶたにく、ぎゅうにくがあります。","staff"],
+      ["Chicken, please.","Toriniku de onegaishimasu.","とりにくでおねがいします。","you"],
+      ["Proteins: toriniku chicken · butaniku pork · gyuuniku beef · sakana fish · sake salmon · maguro tuna · ebi shrimp · kani crab · tamago egg · toufu tofu","","","hint"],
+      ["Rice or bread?","Raisu to pan, dochira ni shimasu ka?","ライスとパン、どちらにしますか？","staff"],
+      ["Rice, please.","Raisu de onegaishimasu.","ライスでおねがいします。","you"],
+      ["How much rice?","Gohan no ryou wa dou shimasu ka?","ごはんのりょうはどうしますか？","staff"],
+      ["A smaller amount, please.","Sukuname de onegaishimasu.","すくなめでおねがいします。","you"],
+      ["Amount: sukuname = small · futsuu = regular · oomori = large","","","hint"],
+      ["How spicy?","Karasa wa dou shimasu ka?","からさはどうしますか？","staff"],
+      ["Normal. / Mild, please.","Futsuu de onegaishimasu. / Sukuname de onegaishimasu.","ふつうでおねがいします。／すくなめでおねがいします。","you"],
+      ["Is spicy food okay?","Karai mono wa daijoubu desu ka?","からいものはだいじょうぶですか？","staff"],
+      ["Yes, it's fine.","Hai, daijoubu desu.","はい、だいじょうぶです。","you"],
+      ["What sauce would you like?","Soo-su wa nani ni shimasu ka?","ソースはなににしますか？","staff"],
+      ["This one, please.","Kore de onegaishimasu.","これでおねがいします。","you"],
+      ["Sauce on the side, please.","Soo-su wa betsu de onegaishimasu.","ソースはべつでおねがいします。","you"],
+      ["Soup or salad?","Suupu to sarada, dochira ni shimasu ka?","スープとサラダ、どちらにしますか？","staff"],
+      ["Salad, please.","Sarada de onegaishimasu.","サラダでおねがいします。","you"],
+      ["What would you like to drink?","Onomimono wa nani ni shimasu ka?","おのみものはなににしますか？","staff"],
+      ["A matcha latte, please.","Matcha rate de onegaishimasu.","まっちゃラテでおねがいします。","you"],
+      ["Would you like anything else?","Hoka ni gochuumon wa arimasu ka?","ほかにごちゅうもんはありますか？","staff"],
+      ["No, that's all.","Iie, ijou desu.","いいえ、いじょうです。","you"],
+      ["Listen for: hoka ni = anything else · ijou desu = that's all","","","hint"]
+    ]},
+    {title:"ONION ALLERGY — say it clearly", tip:"This is a real allergy, so always use the word 'arerugii' — never a vague 'chotto…', which sounds like just a preference.", items:[
+      ["I have an onion allergy.","Sumimasen. Tamanegi no arerugii ga arimasu.","すみません。たまねぎのアレルギーがあります。","you"],
+      ["I can't eat onions — I'm allergic.","Tamanegi wa arerugii de taberaremasen.","たまねぎはアレルギーでたべられません。","you"],
+      ["Does this contain onion?","Kore ni tamanegi wa haitte imasu ka?","これにたまねぎははいっていますか？","you"],
+      ["Listen for: haitte imasu = is contained / is inside","","","hint"],
+      ["Can you make this without onion?","Tamanegi nuki ni dekimasu ka?","たまねぎぬきにできますか？","you"],
+      ["Are all onions a problem?","Tamanegi wa zenbu dame desu ka?","たまねぎはぜんぶだめですか？","staff"],
+      ["Yes, all onion is a problem.","Hai, zenbu dame desu.","はい、ぜんぶだめです。","you"],
+      ["Do you have any allergies?","Arerugii wa arimasu ka?","アレルギーはありますか？","staff"],
+      ["Yes. I have an onion allergy.","Hai. Tamanegi no arerugii ga arimasu.","はい。たまねぎのアレルギーがあります。","you"],
+      ["Is there anything you can't eat?","Taberarenai mono wa arimasu ka?","たべられないものはありますか？","staff"],
+      ["Yes. I can't eat onions. I have an allergy.","Hai. Tamanegi wa taberaremasen. Arerugii ga arimasu.","はい。たまねぎはたべられません。アレルギーがあります。","you"]
+    ]},
+    {title:"Phone reservation", tip:"No visual clues on the phone — rehearse this as a flow. Catch day → time → people.", items:[
+      ["Thank you for calling. This is ___ restaurant.","Odenwa arigatou gozaimasu. ___ de gozaimasu.","おでんわありがとうございます。___ でございます。","staff"],
+      ["Excuse me, I'd like to make a reservation.","Sumimasen, yoyaku shitai n desu ga...","すみません、よやくしたいんですが…","you"],
+      ["What day would you like?","Itsu ga yoroshii desu ka?","いつがよろしいですか？","staff"],
+      ["October 28th.","Juugatsu nijuuhachinichi desu.","じゅうがつにじゅうはちにちです。","you"],
+      ["What time would you like?","Nanji ga yoroshii desu ka?","なんじがよろしいですか？","staff"],
+      ["7:00, please.","Shichiji de onegaishimasu.","しちじでおねがいします。","you"],
+      ["How many people?","Nanmei-sama desu ka?","なんめいさまですか？","staff"],
+      ["Two people.","Futari desu.","ふたりです。","you"],
+      ["7:00 is full.","Shichiji wa ippai desu.","しちじはいっぱいです。","staff"],
+      ["How about 7:30?","Shichiji han wa ikaga desu ka?","しちじはんはいかがですか？","staff"],
+      ["Yes, 7:30 is fine.","Hai, shichiji han de daijoubu desu.","はい、しちじはんでだいじょうぶです。","you"]
+    ]},
+    {title:"Convenience store (7-Eleven etc.)", tip:"You'll hear these constantly. A nod + one word is a normal answer.", items:[
+      ["Would you like this heated?","Atatamemasu ka?","あたためますか？","staff"],
+      ["Yes, please.","Hai, onegaishimasu.","はい、おねがいします。","you"],
+      ["Do you need a bag?","Fukuro wa irimasu ka?","ふくろはいりますか？","staff"],
+      ["No, thanks.","Iie, daijoubu desu.","いいえ、だいじょうぶです。","you"],
+      ["Do you need chopsticks?","Ohashi wa irimasu ka?","おはしはいりますか？","staff"],
+      ["Yes, please.","Hai, onegaishimasu.","はい、おねがいします。","you"],
+      ["Do you need a spoon?","Supuun wa irimasu ka?","スプーンはいりますか？","staff"],
+      ["Do you have a point card?","Pointo kaado wa arimasu ka?","ポイントカードはありますか？","staff"],
+      ["No, I don't.","Iie, arimasen.","いいえ、ありません。","you"]
+    ]},
+    {title:"Clothing / boutique", tip:"'Just looking' is polite and normal. Then ask for size / color / to try it on.", items:[
+      ["Are you looking for something?","Nanika osagashi desu ka?","なにかおさがしですか？","staff"],
+      ["I'm okay, just looking.","Daijoubu desu. Chotto mite imasu.","だいじょうぶです。ちょっとみています。","you"],
+      ["Do you have a medium?","M saizu wa arimasu ka?","Mサイズはありますか？","you"],
+      ["Do you have another color?","Chigau iro wa arimasu ka?","ちがういろはありますか？","you"],
+      ["May I try this on?","Shichaku shite mo ii desu ka?","しちゃくしてもいいですか？","you"],
+      ["Does the size fit okay?","Saizu wa daijoubu desu ka?","サイズはだいじょうぶですか？","staff"],
+      ["A little big. / a little small. / a bit tight here.","Chotto ookii desu. / Chotto chiisai desu. / Koko ga chotto kitsui desu.","ちょっとおおきいです。／ちょっとちいさいです。／ここがちょっときついです。","you"]
+    ]},
+    {title:"Climbing gym", tip:"Register, rent shoes, then the climbing words. 'Oshii!' = so close — you'll hear it a lot.", items:[
+      ["Is this your first time?","Hajimete desu ka?","はじめてですか？","staff"],
+      ["Yes, it's my first time.","Hai, hajimete desu.","はい、はじめてです。","you"],
+      ["Please fill out the registration.","Kaiin touroku o onegaishimasu.","かいいんとうろくをおねがいします。","staff"],
+      ["Do I write here?","Koko ni kakimasu ka?","ここにかきますか？","you"],
+      ["Can I rent climbing shoes?","Kuraimingu shuuzu wa kariraremasu ka?","クライミングシューズはかりられますか？","you"],
+      ["Can I use chalk?","Chooku wa tsukatte mo ii desu ka?","チョークはつかってもいいですか？","you"],
+      ["What grade is this?","Kore wa nan-kyuu desu ka?","これはなんきゅうですか？","you"],
+      ["Can I use this hold?","Kore tsukatte mo ii desu ka?","これつかってもいいですか？","you"],
+      ["How do you climb this? (beta)","Kore, douyatte noborimasu ka?","これ、どうやってのぼりますか？","you"],
+      ["I'll try it.","Yatte mimasu.","やってみます。","you"],
+      ["I'll try one more time.","Mou ikkai yatte mimasu.","もういっかいやってみます。","you"],
+      ["I did it!","Dekita!","できた！","you"],
+      ["So close! (you'll hear this)","Oshii!","おしい！","staff"],
+      ["Listen for: oshii = so close!","","","hint"]
+    ]},
+    {title:"Rental car", tip:"Bring your International Driving Permit + passport. Mostly their questions; answer short.", items:[
+      ["Hello. I have a reservation.","Konnichiwa. Yoyaku shite imasu.","こんにちは。よやくしています。","you"],
+      ["Your name, please.","Onamae o onegaishimasu.","おなまえをおねがいします。","staff"],
+      ["It's Gen.","Gen desu.","ゲンです。","you"],
+      ["Passport and driver's license, please.","Pasupooto to menkyoshou o onegaishimasu.","パスポートとめんきょしょうをおねがいします。","staff"],
+      ["Here you go.","Hai, douzo.","はい、どうぞ。","you"],
+      ["Will two people be driving?","Unten suru no wa futari desu ka?","うんてんするのはふたりですか？","staff"],
+      ["Yes, two people.","Hai, futari desu.","はい、ふたりです。","you"],
+      ["Can the navigation be in English?","Nabi wa eigo ni dekimasu ka?","ナビはえいごにできますか？","you"],
+      ["Is there an ETC toll card?","ETC kaado wa arimasu ka?","ETCカードはありますか？","you"],
+      ["Does this car take regular gas?","Kono kuruma wa regyuraa desu ka?","このくるまはレギュラーですか？","you"],
+      ["Do we return it with a full tank?","Man-tan de kaeshimasu ka?","まんたんでかえしますか？","you"]
+    ]},
+    {title:"Small talk with Japanese people", tip:"Friendly people will ask about you. 'They' = what they ask · 'You' = a ready reply.", items:[
+      ["Where are you from?","Shusshin wa doko desu ka?","しゅっしんはどこですか？","ask"],
+      ["I'm from California. Now I live in Washington.","Shusshin wa California desu. Ima wa Washington ni sunde imasu.","しゅっしんはカリフォルニアです。いまはワシントンにすんでいます。","you"],
+      ["Where is your husband from?","Danna-san wa doko no shusshin desu ka?","だんなさんはどこのしゅっしんですか？","ask"],
+      ["My husband is from Florida.","Danna-san no shusshin wa Florida desu.","だんなさんのしゅっしんはフロリダです。","you"],
+      ["How long are you in Japan?","Nihon ni dore kurai imasu ka?","にほんにどれくらいいますか？","ask"],
+      ["Two weeks.","Nishuukan desu.","にしゅうかんです。","you"],
+      ["How long have you studied Japanese?","Nihongo wa dore kurai benkyou shite imasu ka?","にほんごはどれくらいべんきょうしていますか？","ask"],
+      ["One month.","Ikkagetsu desu.","いっかげつです。","you"],
+      ["What?! One month?!","Ee?! Ikkagetsu?!","ええっ？！いっかげつ？！","ask"],
+      ["How did you study?","Douyatte benkyou shimashita ka?","どうやってべんきょうしましたか？","ask"],
+      ["I made a phone app to study by myself.","Jibun de benkyou suru tame ni, sumaho no apuri o tsukurimashita.","じぶんでべんきょうするために、スマホのアプリをつくりました。","you"],
+      ["Can I download it?","Daunroodo dekimasu ka?","ダウンロードできますか？","ask"],
+      ["No, it's just for personal use.","Iie, jibun de tsukau dake desu.","いいえ、じぶんでつかうだけです。","you"]
+    ]},
+    {title:"Weather, views & gardens", tip:"End with 'ne' to invite a friendly agreement.", items:[
+      ["Nice weather today, isn't it.","Kyou wa ii tenki desu ne.","きょうはいいてんきですね。"],
+      ["It's starting to get cold, isn't it.","Samuku natte kimashita ne.","さむくなってきましたね。"],
+      ["The view is beautiful, isn't it.","Nagame ga kirei desu ne.","ながめがきれいですね。"],
+      ["This garden is very beautiful.","Kono niwa, totemo kirei desu ne.","このにわ、とてもきれいですね。"],
+      ["It's prettier than I expected.","Omotta yori kirei desu.","おもったよりきれいです。"]
+    ]},
+    {title:"Directions, help & trouble", tip:"'Sumimasen, ___ wa doko desu ka?' unlocks the whole city. Last lines are for emergencies.", items:[
+      ["Excuse me, where is ___?","Sumimasen, ___ wa doko desu ka?","すみません、___はどこですか？","you"],
+      ["I'm lost.","Michi ni mayoimashita.","みちにまよいました。","you"],
+      ["Could you show me on the map?","Chizu de oshiete moraemasu ka?","ちずでおしえてもらえますか？","you"],
+      ["How long does it take?","Dono kurai kakarimasu ka?","どのくらいかかりますか？","you"],
+      ["Does anyone speak English?","Eigo ga hanaseru hito wa imasu ka?","えいごがはなせるひとはいますか？","you"],
+      ["Please call an ambulance.","Kyuukyuusha wo yonde kudasai.","きゅうきゅうしゃをよんでください。","you"],
+      ["Help!","Tasukete!","たすけて！","you"]
+    ]}
+  ]
+
+  const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  const hi=(s,q)=>{ if(!q) return esc(s); const i=s.toLowerCase().indexOf(q); if(i<0) return esc(s);
+    return esc(s.slice(0,i))+'<mark>'+esc(s.slice(i,i+q.length))+'</mark>'+esc(s.slice(i+q.length)); };
+
+  function render(q){
+    q=(q||'').trim().toLowerCase();
+    const body=$('tripBody'); body.innerHTML='';
+    let shown=0;
+    TRIP.forEach((sec,si)=>{
+      const matches=sec.items.filter(it=> !q || it[0].toLowerCase().includes(q) || it[1].toLowerCase().includes(q) || sec.title.toLowerCase().includes(q));
+      if(!matches.length) return;
+      shown++;
+      const d=document.createElement('details'); d.className='trip-sec';
+      if(!q && si===0) d.open=true;          // first section open on load
+      if(q) d.open=true;                      // searching → open all matches
+      const sum=document.createElement('summary');
+      sum.innerHTML='<span>'+esc(sec.title)+'</span><span class="chev">›</span>';
+      d.appendChild(sum);
+      if(sec.tip){ const t=document.createElement('div'); t.className='seclip'; t.textContent=sec.tip; d.appendChild(t); }
+      const wrap=document.createElement('div'); wrap.className='trip-body';
+      const say=s=>{ try{ (window.speakSentenceClear||window.speakSentence)(s); }catch(_){ } };
+      matches.forEach(it=>{
+        const role=it[3]||'';   // 'staff'/'ask' = they say · 'you' = your reply · 'hint' = listen-for note · '' = plain phrase
+        if(role==='hint'){
+          const h=document.createElement('div'); h.className='trip-ph trip-hint';
+          h.innerHTML='<div class="trip-en">'+hi(it[0],q)+'</div>';
+          wrap.appendChild(h); return;
+        }
+        const row=document.createElement('div'); row.className='trip-ph'+(role==='you'?' reply':'');
+        const lbl = role==='you'?'You': role==='staff'?'Staff': role==='ask'?'They':'';
+        const badge = lbl ? '<span class="who '+(role==='you'?'you':'staff')+'">'+lbl+'</span>' : '';
+        // split romaji into clickable words (tap a word to hear it; tap the line to hear the whole phrase)
+        const words=it[1].split(/(\s+)/).map(tok=> /^\s+$/.test(tok)||!tok ? tok
+          : '<span class="trip-w" data-w="'+esc(tok)+'">'+hi(tok,q)+'</span>').join('');
+        row.innerHTML='<div class="trip-en">'+badge+hi(it[0],q)+'</div>'+
+          '<div class="trip-ro" title="Tap a word, or the line, to hear it">'+words+'</div>'+
+          '<div class="trip-kn">'+esc(it[2])+'</div>';
+        const ro=row.querySelector('.trip-ro');
+        ro.onclick=(e)=>{ const w=e.target.closest('.trip-w'); say(w? w.dataset.w : it[1]); };
+        wrap.appendChild(row);
+      });
+      d.appendChild(wrap);
+      body.appendChild(d);
+    });
+    if(!shown){ body.innerHTML='<div class="hint" style="padding:16px">No phrases match "'+esc(q)+'". Try another word.</div>'; }
+  }
+
+  $('tripSearch').addEventListener('input', e=>render(e.target.value));
+  $('tripOpenAll').onclick=()=>{ $('tripSearch').value=''; render(''); document.querySelectorAll('#trip .trip-sec').forEach(d=>d.open=true); };
+  $('tripCloseAll').onclick=()=>{ $('tripSearch').value=''; render(''); document.querySelectorAll('#trip .trip-sec').forEach(d=>d.open=false); };
+  render('');
 })();
 </script>
 </body>
